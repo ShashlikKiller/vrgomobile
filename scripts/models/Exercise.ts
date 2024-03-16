@@ -1,11 +1,11 @@
 class Exercise{
     private _description: string;
-    private _instructoin: string[];
+    private _instruction: string[];
     private _images: string;
     public exerciseCompleted: () => void;
-    constructor(exerciseId: number, description: string, instructoin: string[], images: string ){
+    constructor(exerciseId: number, description: string, instruction: string[], images: string ){
         this._description = description;
-        this._instructoin = instructoin;
+        this._instruction = instruction;
         this._images = images;
         this.exerciseCompleted = () => {};
     }
@@ -14,8 +14,8 @@ class Exercise{
         return this._description
     }
 
-    get instructoin(){
-        return this._instructoin
+    get instruction(){
+        return this._instruction
     }
 
     get images(){
@@ -29,7 +29,7 @@ class Exercise{
         //Здесь происходит логика упражнения 
         // Симуляция выполнения упражнения
         setTimeout(() => {
-            console.log(`Exercise ${this._instructoin[0]} completed.`);
+            console.log(`Exercise ${this._instruction[0]} completed.`);
             this.exerciseCompleted(); // Вызываем событие завершения упражнения
         }, 2000);
     }
