@@ -1,4 +1,6 @@
-class Session {
+import { Exercise } from "./Exercise";
+
+export class Session {
     private _exerciseQueue: Exercise[];
 
     constructor() {

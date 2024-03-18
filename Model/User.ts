@@ -1,4 +1,4 @@
-class User{
+export class User{
     private _firstName: string;
     private _lastName: string;
     private _dateOfBirth: string;//(?)

@@ -1,4 +1,4 @@
-class Exercise{
+export class Exercise{
     private _description: string;
     private _instruction: string[];
     private _images: string;
