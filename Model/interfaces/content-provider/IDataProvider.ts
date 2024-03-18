@@ -1,5 +1,5 @@
 import { Provider } from "react";
-
+// Используй в реализации AssetAsync
 export interface IDataSetter{ 
     Set<T>(data:T, tag?:string):Provider<void>;
 }
