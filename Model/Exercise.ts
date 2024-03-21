@@ -14,12 +14,24 @@ export class Exercise{
         return this._description
     }
 
+    set description(value){
+        this._description = value
+    }
+
     get instruction(){
         return this._instruction
     }
 
+    set instruction(value){
+        this._instruction = value
+    }
+
     get images(){
         return this._images
+    }
+
+    set images(value){
+        this._images = value
     }
 
     /**
