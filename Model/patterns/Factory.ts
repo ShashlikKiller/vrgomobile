@@ -13,38 +13,38 @@ export class Factory implements IFactory<Exercise>
    // то надо переделать Create в Create(): Promise<T> и await+then
    Create(): Exercise {
 
-    let _exercise: Exercise = {} as Exercise;
+    let exercise: Exercise = {} as Exercise;
     Promise.all([
     this._dataProvider.Get<string>("exercise/description")
-    .then((_description) => {
+    .then((description) => {
         // Мы подписались на этот promise
         // и по сути уже имеем значения в description по его выполнению
         // Аналогично с остальными полями
-        _exercise.description = _description;
+        exercise.description = description;
     })
     .catch((err) => {
         console.error("Exercise description DataProvider error: ", err);
     }),
 
     this._dataProvider.Get<string[]>("exercise/exers-steps")
-    .then((_instruction) => {
-        _exercise.instruction = _instruction;
+    .then((instruction) => {
+        exercise.instruction = instruction;
     })
     .catch((err) => {
         console.error("Exercise instructions DataProvider error: ", err);
     }),
 
     this._dataProvider.Get<string>("exercise/imgs-urls")
-    .then ((_images) => {
-        _exercise.images = _images;
+    .then ((images) => {
+        exercise.images = images;
     })
     .catch((err) => {
         console.error("Exercise images DataProvider error: ", err)
     })
 ]).then(() => {
-    return _exercise;
+    return exercise;
 });
 console.error("Something went wrong: factory.ts, can't return an exercise");
-return _exercise;
+return exercise;
 }
 }
