@@ -6,7 +6,7 @@ export interface ISelector<T> {
 }
 export interface ISelectorBuilder<T> extends IBuilder<ISelector<T>>{}
 
-export interface IExerciseSelctorBuilder extends ISelectorBuilder<Exercise>{
-    AddPathology(pathology:string):IExerciseSelctorBuilder;
-    AddAffectedRegion(affectedRegion:string[]):IExerciseSelctorBuilder;
+export interface IExerciseSelectorBuilder extends ISelectorBuilder<Exercise>{
+    AddPathology(pathology:string):IExerciseSelectorBuilder;
+    AddAffectedRegion(affectedRegion:string[]):IExerciseSelectorBuilder;
 }

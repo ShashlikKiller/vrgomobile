@@ -1,5 +1,5 @@
 import { Exercise } from "./Exercise";
-import { IExerciseSelctorBuilder, ISelector } from "./interfaces/IExerciseSelector";
+import { IExerciseSelectorBuilder, ISelector } from "./interfaces/IExerciseSelector";
 
 class Selector implements ISelector<Exercise> {
     private pathology: string;
@@ -21,16 +21,16 @@ class Selector implements ISelector<Exercise> {
     }
 }
 
-class ExerciseSelectorBuilder implements IExerciseSelctorBuilder {
+class ExerciseSelectorBuilder implements IExerciseSelectorBuilder {
     private pathology: string = "";
     private affectedRegion: string[] = [];
 
-    AddPathology(pathology: string): IExerciseSelctorBuilder {
+    AddPathology(pathology: string): IExerciseSelectorBuilder {
         this.pathology = pathology;
         return this;
     }
 
-    AddAffectedRegion(affectedRegion: string[]): IExerciseSelctorBuilder {
+    AddAffectedRegion(affectedRegion: string[]): IExerciseSelectorBuilder {
         this.affectedRegion.push(...affectedRegion);
         return this;
     }
