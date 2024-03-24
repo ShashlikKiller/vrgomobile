@@ -3,12 +3,14 @@ import { IDataProvider } from './interfaces/content-provider/IDataProvider';
 
 export class FileIO implements IDataProvider{
     Set<T>(data: T, tag?: string): Promise<void> {
+      if (tag != null) {
         return writeFileAsync(tag, JSON.stringify(data));
+      }
+      return Promise.reject();
     }
 
     Get<T>(tag: string): Promise<T> {
-        const filePath = tag || 'data.json';
-        return readFileAsync(filePath)
+        return readFileAsync(tag)
             .then(data => JSON.parse(data) as T);
     }
 }
