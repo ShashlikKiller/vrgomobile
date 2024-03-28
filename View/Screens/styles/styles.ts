@@ -6,8 +6,7 @@ export default StyleSheet.create({
   // Универсальные стили
     container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+
     backgroundColor: '#232323',
   },
   textDefault: {

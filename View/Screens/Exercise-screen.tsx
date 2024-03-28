@@ -1,6 +1,8 @@
 import React from 'react';
 import { Image, TouchableOpacity, Platform, View, StyleSheet, Text, Button } from 'react-native';
-
+import styles from './styles/styles';
+import ExerciseStep from '../exerciseStep';
+import ExerciseProgression from '../exerciseProgression';
 interface Exercise {
   images: string;
   description: string;
@@ -13,19 +15,23 @@ interface Props {
 
 const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
     return (
-        <View style={styles.body}>
-          <View style={styles.navbar}>
+        <View style={styles1.body}>
+          <View style={styles1.navbar}>
             <Button title="< Назад" color="#ddd" />
-            <Text style={styles.text}>1 из 5 упражнений</Text>
+            <ExerciseProgression currentExercise={1} totalExercises={3} ></ExerciseProgression>
           </View>
-          <View style={styles.content}>
-            <Text style={styles.instructions}>Поставьте две бутылки на расстоянии 1,5 м,</Text>
-            <Image style={styles.image} source={{uri: 'https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album'}} />
+          <View style={styles1.content}>
+            <Text style={styles1.instructions}>{_exercise.description}</Text>
+            <Image style={styles1.image} source={{uri: 'https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album'}} />
             <View>
-              <Text style={styles.step}>Пройдите над бутылками гемиплегичной ногой.</Text>
-              <Text style={styles.step}>Развернитесь и начните снова</Text>
+              <ExerciseStep stepNumb={1} step={_exercise.instruction[0]}>
+              </ExerciseStep>
+              <ExerciseStep stepNumb={2} step={_exercise.instruction[1]}>
+              </ExerciseStep>
+              <ExerciseStep stepNumb={3} step={_exercise.instruction[2]}>
+              </ExerciseStep>
             </View>
-            <View style={styles.btnContainer}>
+            <View style={styles1.btnContainer}>
               <Button title="Старт таймера" color="#555" />
               <Button title="Далее >" color="#ddd" />
             </View>
@@ -34,30 +40,33 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
       );
     };
     
-    const styles = StyleSheet.create({
+    const styles1 = StyleSheet.create({
       body: {
-        backgroundColor: '#181818',
+        backgroundColor: '#232323',
         color: 'white',
         fontFamily: 'Arial',
-        height: '100%',
-        flex: 1
+        height: 'auto',
+        flex: 1,
+
       },
       navbar: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 20,
+        justifyContent: 'center',
+        margin: 20,
       },
       content: {
         margin: 20,
         flexGrow: 1,
+        alignContent: 'center',
+        verticalAlign: 'middle'
       },
       instructions: {
         marginBottom: 20,
-        flex: 1,
+
         color: '#CFCFCF',
-fontSize: 18,
-fontFamily: 'Roboto Mono',
-fontWeight: '300'
+        fontSize: 18,
+        fontFamily: 'Roboto Mono',
+        fontWeight: '300'
       },
       steps: {
         //listStyleType: 'none',
@@ -75,6 +84,7 @@ fontWeight: '300'
         padding: 20,
         textAlign: 'center',
         textDecorationLine: 'none',
+        maxHeight: 50,
         //display: 'inline-block',
         margin: 4,
         flex: 1
@@ -83,52 +93,25 @@ fontWeight: '300'
       btnTimer: {
         backgroundColor: '#555',
         color: 'white',
+        flex: 1
       },
       btnContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
       },
       image: {
-        width: '100%',
-        height: '100%',
-        maxHeight: 320,
-        flex: 1
+        width: 'auto',
+        alignItems: "flex-start",
+        flex: 1,
+
+        marginBottom: 30,
+        marginTop: 30,
+        // verticalAlign: "top"
       },
       text: {
-        fontSize: 40,
+        fontSize: 19,
         flex: 1
       },
     });    
 
 export default ExerciseScreen;
-
-
-
-
-{/* export default function ExerciseScreen(props: { _exercise: Exercise }) {
-  return (
-       <View style={styles.container}>
-      <View style={styles.navbar}>
-          <Button title="< Назад" onPress={() => {}} />
-          <Text>1 из 5 упражнений</Text>
-      </View>
-      <View style={styles.content}>
-          <Text style={styles.instructions}>Поставьте две бутылки на расстоянии 1,5 м,</Text>
-          <img src={`${props._exercise.images}`} style={{width: 200, height: 200}} alt="Изображение с инструкцией" />
-          <View>
-              <Text style={styles.step}>
-              {props._exercise.instruction.map((instruction: String, index: any) => (
-          <><div> {(index + 1).toString()} </div><li key={index}>{instruction.toString()}</li></>
-        ))}
-              </Text>
-              <Text style={styles.step}>Развернитесь и начните снова</Text>
-          </View>
-          <View style={styles.btnContainer}>
-              <Button title="Старт таймера" onPress={() => {}} color="#555" />
-              <Button title="Далее >" onPress={() => {}} color="#ddd" />
-          </View>
-      </View>
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-  </View>
-              ); */ 
-              }
