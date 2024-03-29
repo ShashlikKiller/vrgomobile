@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Image, TouchableOpacity, Platform, View, StyleSheet, Text, Button } from 'react-native';
 import styles from './styles/styles';
 import ExerciseStep from '../exerciseStep';
@@ -16,16 +16,17 @@ interface Props {
 }
 
 const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
-    useEffect(() => {
-        const session = new Session();
+    const [sessionStarted, setSessionStarted] = useState(false);
 
-        // Здесь вы можете добавить упражнения в очередь с помощью метода enqueue
+    const handleStartSession = () => {
+        const session = new Session();
         // Пример:
         // session.enqueue(new Exercise("Упражнение 1", () => console.log("Выполняется упражнение 1")));
         // session.enqueue(new Exercise("Упражнение 2", () => console.log("Выполняется упражнение 2")));
         
-        session.start(); // Начать выполнение сессии
-    }, []);
+        session.start();
+        setSessionStarted(true);
+    };
 
     return (
         <View style={styles1.body}>
@@ -45,7 +46,7 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
               </ExerciseStep>
             </View>
             <View style={styles1.btnContainer}>
-              <Button title="Старт таймера" color="#555" />
+              <Button title="Старт таймера" color="#555" onPress={handleStartSession} disabled={sessionStarted} />
               <Button title="Далее >" color="#ddd" />
             </View>
           </View>
@@ -70,61 +71,4 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
       content: {
         margin: 20,
         flexGrow: 1,
-        alignContent: 'center',
-        verticalAlign: 'middle'
-      },
-      instructions: {
-        marginBottom: 20,
-
-        color: '#CFCFCF',
-        fontSize: 18,
-        fontFamily: 'Roboto Mono',
-        fontWeight: '300'
-      },
-      steps: {
-        //listStyleType: 'none',
-        fontSize: 40,
-        flex: 1
-      },
-      step: {
-        position: 'relative',
-        fontSize: 40,
-        flex: 1
-      },
-      btn: {
-        backgroundColor: '#ddd',
-        color: 'black',
-        padding: 20,
-        textAlign: 'center',
-        textDecorationLine: 'none',
-        maxHeight: 50,
-        //display: 'inline-block',
-        margin: 4,
-        flex: 1
-        //cursor: 'pointer',
-      },
-      btnTimer: {
-        backgroundColor: '#555',
-        color: 'white',
-        flex: 1
-      },
-      btnContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-      },
-      image: {
-        width: 'auto',
-        alignItems: "flex-start",
-        flex: 1,
-
-        marginBottom: 30,
-        marginTop: 30,
-        // verticalAlign: "top"
-      },
-      text: {
-        fontSize: 19,
-        flex: 1
-      },
-    });    
-
-export default ExerciseScreen;
+        alignContent:
