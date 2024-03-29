@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Image, TouchableOpacity, Platform, View, StyleSheet, Text, Button } from 'react-native';
 import styles from './styles/styles';
 import ExerciseStep from '../exerciseStep';
 import ExerciseProgression from '../exerciseProgression';
-import { Session } from '../../Model/Session';
-
 interface Exercise {
   images: string;
   description: string;
@@ -16,17 +14,6 @@ interface Props {
 }
 
 const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
-    useEffect(() => {
-        const session = new Session();
-
-        // Здесь вы можете добавить упражнения в очередь с помощью метода enqueue
-        // Пример:
-        // session.enqueue(new Exercise("Упражнение 1", () => console.log("Выполняется упражнение 1")));
-        // session.enqueue(new Exercise("Упражнение 2", () => console.log("Выполняется упражнение 2")));
-        
-        session.start(); // Начать выполнение сессии
-    }, []);
-
     return (
         <View style={styles1.body}>
           <View style={styles1.navbar}>
