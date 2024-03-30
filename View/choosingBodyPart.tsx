@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { StyleSheet, Text, View, Modal} from 'react-native';
 import { Button } from 'react-native';
 import Checkbox from 'expo-checkbox';
+import { Exercise } from '../Model/Exercise';
+import { FileIO } from '../Model/FileIO';
 
 export default function choosingBodyPart({navigation}: {navigation: any}) {
 
@@ -13,8 +15,18 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
   const [isCheckedLeftLeg, setCheckedLeftLeg] = useState(false);
   const [isCheckedRightLeg, setCheckedRightLeg] = useState(false);
 
+  let fileIO: FileIO = new FileIO()
+
   const loadScene = () => {
+    //navigation.popToTop();
     navigation.navigate('choosePat')
+  }
+  const loadExerciseScene = () => {
+    // пишем в файл, что паталогии и части тела назначены p.s. не работает в браузере
+    // fileIO.Set(1 ,"./View/have_pat.txt")
+    // .then(() => console.log("success"))
+    // .catch(function(e) {console.log(e)})
+    navigation.navigate('doExercise')
   }
   return (
     <View>
@@ -67,6 +79,11 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
         title="Назад"
         onPress={loadScene}
         color={'#B6FFFB'}
+      />
+        <Button
+        title="К упражнениям"
+        onPress={loadExerciseScene}
+        color={"#4630EB"}
       />
     </View>
   );
