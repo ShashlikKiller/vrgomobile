@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, TouchableOpacity, Platform, View, StyleSheet, Text, Button } from 'react-native';
 import styles from './styles/styles';
 import ExerciseStep from '../exerciseStep';
 import ExerciseProgression from '../exerciseProgression';
+import { Session } from '../../Model/Session';
+
 interface Exercise {
   images: string;
   description: string;
@@ -14,6 +16,18 @@ interface Props {
 }
 
 const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
+    const [sessionStarted, setSessionStarted] = useState(false);
+
+    const handleStartSession = () => {
+        const session = new Session();
+
+        // session.enqueue(new Exercise("Упражнение 1", () => console.log("Выполняется упражнение 1")));
+        // session.enqueue(new Exercise("Упражнение 2", () => console.log("Выполняется упражнение 2")));
+        
+        session.start();
+        setSessionStarted(true);
+    };
+
     return (
         <View style={styles1.body}>
           <View style={styles1.navbar}>
@@ -32,7 +46,7 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
               </ExerciseStep>
             </View>
             <View style={styles1.btnContainer}>
-              <Button title="Старт таймера" color="#555" />
+              <Button title="Старт таймера" color="#555" onPress={handleStartSession} disabled={sessionStarted} />
               <Button title="Далее >" color="#ddd" />
             </View>
           </View>
