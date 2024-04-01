@@ -31,12 +31,12 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
     return (
         <View style={styles1.body}>
           <View style={styles1.navbar}>
-            <Button title="< Назад" color="#ddd" />
+            <Button title="< Назад" color="#ddd"/>
             <ExerciseProgression currentExercise={1} totalExercises={3} ></ExerciseProgression>
           </View>
           <View style={styles1.content}>
             <Text style={styles1.instructions}>{_exercise.description}</Text>
-            <Image style={styles1.image} source={{uri: 'https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album'}} />
+            <Image style={styles1.image} source={{uri: _exercise.images }}/>  {/*</Image>'https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album'}} />*/}
             <View>
               <ExerciseStep stepNumb={1} step={_exercise.instruction[0]}>
               </ExerciseStep>
