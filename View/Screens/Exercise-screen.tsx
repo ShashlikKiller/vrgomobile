@@ -38,12 +38,9 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
             <Text style={styles1.instructions}>{_exercise.description}</Text>
             <Image style={styles1.image} source={{uri: _exercise.images }}/>  {/*</Image>'https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album'}} />*/}
             <View>
-              <ExerciseStep stepNumb={1} step={_exercise.instruction[0]}>
-              </ExerciseStep>
-              <ExerciseStep stepNumb={2} step={_exercise.instruction[1]}>
-              </ExerciseStep>
-              <ExerciseStep stepNumb={3} step={_exercise.instruction[2]}>
-              </ExerciseStep>
+        {_exercise.instruction.map((step: string, stepNumb: number) => (
+          <ExerciseStep stepNumb={stepNumb+1} step={step}> </ExerciseStep>
+        ))}
             </View>
             <View style={styles1.btnContainer}>
               <Button title="Старт таймера" color="#555" onPress={handleStartSession} disabled={sessionStarted} />
