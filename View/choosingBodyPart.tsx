@@ -18,7 +18,6 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
   let fileIO: FileIO = new FileIO()
 
   const loadScene = () => {
-    //navigation.popToTop();
     navigation.navigate('choosePat')
   }
   const loadExerciseScene = () => {
