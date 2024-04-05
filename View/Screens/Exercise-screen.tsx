@@ -53,9 +53,9 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
     
     const styles1 = StyleSheet.create({
       body: {
-        backgroundColor: '#232323',
-        color: 'white',
-        fontFamily: 'Arial',
+        //backgroundColor: '#232323',
+        //color: 'white',
+        //fontFamily: 'Arial',
         height: 'auto',
         flex: 1,
 
