@@ -1,60 +1,72 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
-
-import { Dropdown } from 'react-native-element-dropdown';
+import { Button, View, Text, StyleSheet, TextInput } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const data = [
-    { label: 'Инсульт', value: '1' },
-    { label: 'Инфаркт', value: '2' },
-    { label: 'Инклюзия', value: '3' },
-    { label: 'Красный нос', value: '4' },
-    { label: 'Простуда', value: '5' },
-    { label: 'Кашель', value: '6' },
-    { label: 'Мозг рака', value: '7' },
-    { label: 'Нет моей болезни', value: '8' },
-  ];
+  { label: 'Инсульт', value: '1' },
+  { label: 'Инфаркт', value: '2' },
+  { label: 'Инклюзия', value: '3' },
+  { label: 'Красный нос', value: '4' },
+  { label: 'Простуда', value: '5' },
+  { label: 'Кашель', value: '6' },
+  { label: 'Мозг рака', value: '7' },
+];
 
-  const DropdownComponent = () => {
-    const [value, setValue] = useState<string>('');
+const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) => {
+  const [searchText, setSearchText] = useState('');
+  const [value, setValue] = useState<string>('');
 
-    return (
-      <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        data={data}
-        search
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder="Выберите патологию"
-        searchPlaceholder="Поиск"
-        value={value}
-        onChange={item => {
-          setValue(item.value);
-        }}
-        
+  const filteredData = data.filter(item =>
+    item.label.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  return (
+    <View>
+      <TextInput
+        style={styles.inputSearch}
+        placeholder="Поиск"
+        onChangeText={setSearchText}
+        value={searchText}
       />
-    );
+      <DropDownPicker
+        items={filteredData.map(item => ({ label: item.label, value: item.value }))}
+        defaultValue={value}
+        containerStyle={styles.dropdown}
+        onChangeItem={item => {
+          setValue(item.value);
+          onSelect(item.value);
+        }}
+        searchable={true}
+        searchablePlaceholder="Поиск"
+        searchableError="Ничего не найдено"
+        placeholder="Выберите патологию"
+      />
+    </View>
+  );
+};
+
+export default function ChoosePat({ navigation }: { navigation: any }) {
+  const [selectedPathology, setSelectedPathology] = useState<string>('');
+
+  const loadScene = () => {
+    // Можно добавить действие с паталогией
+    navigation.navigate('choosingBodyPart', { selectedPathology });
   };
 
-  
+  const handleNoPathology = () => {
+    setSelectedPathology('no-pathology');
+    loadScene();
+  };
 
-export default function choosePat({navigation}: {navigation: any}) {
-  const loadScene = () => {
-    navigation.navigate('choosingBodyPart')
-  }
-  return( 
+  return (
     <View style={styles.container}>
-      <Text style={styles.text}>Начните вводить патологию или нарушение необходимое к физиотерапии</Text> 
-      <DropdownComponent />
-      <Button
-        title="Далее"
-        onPress={loadScene}
-        color={'#B6FFFB'}
-      />
+      <Text style={styles.text}>
+        Начните вводить патологию или нарушение необходимое к физиотерапии
+      </Text>
+      <DropdownComponent onSelect={setSelectedPathology} />
+      <Button title="Далее" onPress={loadScene} color={'#B6FFFB'} />
+      <Button title="Нет моей паталогии" onPress={handleNoPathology} color={'#B6FFFB'} />
     </View>
   );
 }
@@ -64,39 +76,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+    paddingTop: 20,
   },
   text: {
-    textAlignVertical: 'bottom',
+    textAlign: 'center',
     color: 'black',
     fontSize: 19,
     fontFamily: 'Inter',
     fontWeight: '300',
   },
   dropdown: {
-    margin: 16,
-    height: 50,
-    borderBottomColor: 'gray',
-    
-    borderBottomWidth: 0.5,
+    marginVertical: 16,
+    width: 300,
   },
-  placeholderStyle: {
-    fontSize: 16,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-    color: 'black',
-  },
-  inputSearchStyle: {
+  inputSearch: {
     height: 40,
-    fontSize: 16,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    width: 300,
   },
-  buttonText: {
-    color: '#232323',
-    fontSize: 19,
-    fontFamily: 'Inter',
-    fontWeight: '400',
-  },
-  buttonStyle:{
-    backgroundColor: '#B6FFFB',
-  }
 });
