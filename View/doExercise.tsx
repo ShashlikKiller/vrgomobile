@@ -6,6 +6,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import ExerciseScreen from './Screens/Exercise-screen';
 import { Exercise } from '../Model/Exercise';
 import { ClearStackAndNavigate } from './navigate';
+import styles from './Screens/styles/styles';
 
 
 export default function doExercise({navigation}: {navigation: any}){ //}, exercise: Exercise) {
@@ -16,9 +17,9 @@ export default function doExercise({navigation}: {navigation: any}){ //}, exerci
   const clearStackAndNavigate = () => {
     ClearStackAndNavigate({navigation, path: 'mainScreen'});
   }
-  let exercise: Exercise = new Exercise(1, "a", ["b", "c", "d"], "https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album")
+  let exercise: Exercise = new Exercise(1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", ["b", "c", "d", 'f', 'dddd'], "https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album")
     return( 
-        <View>
+        <View style={styles.container}>
           <Button title='Back' onPress={clearStackAndNavigate}></Button>
           <ExerciseScreen _exercise={exercise}/>
         </View>

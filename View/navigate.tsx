@@ -41,10 +41,11 @@ export default function Navigate(initialScreen: string){
 }
 
 export function ClearStackAndNavigate({ navigation, path } : { navigation : any , path: string}) { 
-    // navigation.reset({
-    //     index: 0,
-    //     routes: [{name: path}]
-    // })
-    navigation.push(path)
+     navigation.dispatch(CommonActions.reset({
+         index: 0,
+         routes: [{name: path}]
+    }))
+    console.log(1);
+    //navigation.push(path)
     return () => navigation.popToTop()
 }
