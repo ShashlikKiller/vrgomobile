@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import { Button, View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 
 import { Dropdown } from 'react-native-element-dropdown';
+import default_styles from './Screens/styles/styles';
+import { NextButton, StepBackButton } from './Buttons/buttonsComponent';
 
 const data = [
     { label: 'Инсульт', value: '1' },
@@ -40,7 +42,6 @@ const data = [
     );
   };
 
-  
 
 export default function choosePat({navigation}: {navigation: any}) {
   const loadScene = () => {
@@ -50,11 +51,7 @@ export default function choosePat({navigation}: {navigation: any}) {
     <View style={styles.container}>
       <Text style={styles.text}>Начните вводить патологию или нарушение необходимое к физиотерапии</Text> 
       <DropdownComponent />
-      <Button
-        title="Далее"
-        onPress={loadScene}
-        color={'#B6FFFB'}
-      />
+      <NextButton action={loadScene}></NextButton>
     </View>
   );
 }

@@ -19,7 +19,10 @@ export default StyleSheet.create({
   btn_next: { // Надо обернуть ее через <ImageBackground> в svgшку кнопки
     width: 328,
     height: 46,
-    padding: 8
+    padding: 8,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textTitle: {
     color: '#232323',
