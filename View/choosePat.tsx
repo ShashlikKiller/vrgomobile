@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Button, View, Text, StyleSheet, TextInput } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { Button, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 const data = [
   { label: 'Инсульт', value: '1' },
@@ -15,33 +14,38 @@ const data = [
 
 const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) => {
   const [searchText, setSearchText] = useState('');
-  const [value, setValue] = useState<string>('');
+  const [selectedItem, setSelectedItem] = useState<string>('');
 
-  const filteredData = data.filter(item =>
-    item.label.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const filterData = (text: string) => {
+    setSearchText(text);
+  };
+
+  const handlePress = (value: string) => {
+    setSelectedItem(value);
+    onSelect(value);
+  };
 
   return (
-    <View>
+    <View style={styles.dropdownContainer}>
       <TextInput
         style={styles.inputSearch}
         placeholder="Поиск"
-        onChangeText={setSearchText}
+        onChangeText={filterData}
         value={searchText}
       />
-      <DropDownPicker
-        items={filteredData.map(item => ({ label: item.label, value: item.value }))}
-        defaultValue={value}
-        containerStyle={styles.dropdown}
-        onChangeItem={item => {
-          setValue(item.value);
-          onSelect(item.value);
-        }}
-        searchable={true}
-        searchablePlaceholder="Поиск"
-        searchableError="Ничего не найдено"
-        placeholder="Выберите патологию"
-      />
+      <View style={styles.dropdown}>
+        {data.map(item => (
+          <TouchableOpacity
+            key={item.value}
+            style={[
+              styles.itemContainer,
+              selectedItem === item.value && styles.selectedItemContainer,
+            ]}
+            onPress={() => handlePress(item.value)}>
+            <Text style={styles.itemText}>{item.label}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 };
@@ -50,7 +54,6 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
   const [selectedPathology, setSelectedPathology] = useState<string>('');
 
   const loadScene = () => {
-    // Можно добавить действие с паталогией
     navigation.navigate('choosingBodyPart', { selectedPathology });
   };
 
@@ -65,8 +68,8 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
         Начните вводить патологию или нарушение необходимое к физиотерапии
       </Text>
       <DropdownComponent onSelect={setSelectedPathology} />
-      <Button title="Далее" onPress={loadScene} color={'#B6FFFB'} />
-      <Button title="Нет моей паталогии" onPress={handleNoPathology} color={'#B6FFFB'} />
+      <Button title="Далее" onPress={loadScene} color={'#666'} />
+      <Button title="Нет моей патологии" onPress={handleNoPathology} color={'#666'} />
     </View>
   );
 }
@@ -74,28 +77,48 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#333',
     alignItems: 'center',
     paddingTop: 20,
   },
   text: {
     textAlign: 'center',
-    color: 'black',
+    color: '#fff',
     fontSize: 19,
     fontFamily: 'Inter',
     fontWeight: '300',
+    marginBottom: 20,
+  },
+  dropdownContainer: {
+    backgroundColor: '#333',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 20,
+    width: 300,
   },
   dropdown: {
-    marginVertical: 16,
-    width: 300,
+    marginTop: 5,
   },
   inputSearch: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#666',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
-    width: 300,
+    color: '#fff',
+    backgroundColor: '#333',
+  },
+  itemContainer: {
+    backgroundColor: '#6CCAFF',
+    padding: 10,
+    marginBottom: 5,
+    borderRadius: 5,
+  },
+  selectedItemContainer: {
+    backgroundColor: '#555',
+  },
+  itemText: {
+    color: '#fff',
   },
 });
