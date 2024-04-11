@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 const data = [
@@ -16,6 +16,10 @@ const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) 
   const [searchText, setSearchText] = useState('');
   const [filteredData, setFilteredData] = useState(data);
   const [selectedItem, setSelectedItem] = useState<string>('');
+
+  useEffect(() => {
+    setSearchText(selectedItem);
+  }, [selectedItem]);
 
   const filterData = (text: string) => {
     const filtered = data.filter(item =>
@@ -41,7 +45,7 @@ const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) 
             item.value === selectedItem && styles.selectedItemContainer
           ]}
           onPress={() => {
-            setSelectedItem(item.value);
+            setSelectedItem(item.label);
             onSelect(item.value);
           }}>
           <Text style={styles.itemText}>{item.label}</Text>
