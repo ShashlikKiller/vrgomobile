@@ -15,6 +15,7 @@ const data = [
 const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) => {
   const [searchText, setSearchText] = useState('');
   const [filteredData, setFilteredData] = useState(data);
+  const [selectedItem, setSelectedItem] = useState<string>('');
 
   const filterData = (text: string) => {
     const filtered = data.filter(item =>
@@ -35,11 +36,14 @@ const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) 
       {filteredData.map(item => (
         <TouchableOpacity
           key={item.value}
-          style={styles.dropdownItem}
+          style={[
+            styles.dropdownItem,
+            item.value === selectedItem && styles.selectedItemContainer
+          ]}
           onPress={() => {
+            setSelectedItem(item.value);
             onSelect(item.value);
           }}>
-          {/* Изменил цвет текста на белый */}
           <Text style={styles.itemText}>{item.label}</Text>
         </TouchableOpacity>
       ))}
