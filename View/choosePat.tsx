@@ -14,38 +14,35 @@ const data = [
 
 const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) => {
   const [searchText, setSearchText] = useState('');
-  const [selectedItem, setSelectedItem] = useState<string>('');
+  const [filteredData, setFilteredData] = useState(data);
 
   const filterData = (text: string) => {
+    const filtered = data.filter(item =>
+      item.label.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredData(filtered);
     setSearchText(text);
   };
 
-  const handlePress = (value: string) => {
-    setSelectedItem(value);
-    onSelect(value);
-  };
-
   return (
-    <View style={styles.dropdownContainer}>
+    <View>
       <TextInput
         style={styles.inputSearch}
         placeholder="Поиск"
         onChangeText={filterData}
         value={searchText}
       />
-      <View style={styles.dropdown}>
-        {data.map(item => (
-          <TouchableOpacity
-            key={item.value}
-            style={[
-              styles.itemContainer,
-              selectedItem === item.value && styles.selectedItemContainer,
-            ]}
-            onPress={() => handlePress(item.value)}>
-            <Text style={styles.itemText}>{item.label}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      {filteredData.map(item => (
+        <TouchableOpacity
+          key={item.value}
+          style={styles.dropdownItem}
+          onPress={() => {
+            onSelect(item.value);
+          }}>
+          {/* Изменил цвет текста на белый */}
+          <Text style={styles.itemText}>{item.label}</Text>
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };
@@ -68,8 +65,8 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
         Начните вводить патологию или нарушение необходимое к физиотерапии
       </Text>
       <DropdownComponent onSelect={setSelectedPathology} />
-      <Button title="Далее" onPress={loadScene} color={'#666'} />
-      <Button title="Нет моей патологии" onPress={handleNoPathology} color={'#666'} />
+      <Button title="Далее" onPress={loadScene} color={'#6CCAFF'} />
+      <Button title="Нет моей паталогии" onPress={handleNoPathology} color={'#6CCAFF'} />
     </View>
   );
 }
@@ -90,7 +87,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   dropdownContainer: {
-    backgroundColor: '#333',
+    backgroundColor: '#666',
     borderRadius: 5,
     padding: 10,
     marginBottom: 20,
@@ -109,14 +106,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     backgroundColor: '#333',
   },
-  itemContainer: {
+  dropdownItem: {
     backgroundColor: '#6CCAFF',
     padding: 10,
     marginBottom: 5,
     borderRadius: 5,
   },
   selectedItemContainer: {
-    backgroundColor: '#555',
+    backgroundColor: '#4682B4',
   },
   itemText: {
     color: '#fff',
