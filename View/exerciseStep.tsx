@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import { StyleSheet, Text } from "react-native";
   
   interface Props {
@@ -5,7 +6,7 @@ import { StyleSheet, Text } from "react-native";
     step: string;
   }
 
-const ExerciseStep: React.FC<Props> = ({ stepNumb, step }) => {
+const ExerciseStep: React.FC<PropsWithChildren<Props>> = ({ stepNumb, step }) => {
 return (
 <div style={{maxWidth: 2000, width: 'auto', height: '30%', maxHeight: 200, flex: 1, marginBottom: 15, background: 'rgba(182, 255, 251, 0.10)', border: '2px rgba(182, 255, 251, 0.20) solid', justifyContent: 'flex-start', alignItems: 'center', gap: 12, display: 'inline-flex'}}>
     <div style={{height: '100%', justifyContent: 'flex-start', alignItems: 'flex-start',  display: 'flex'}}>
