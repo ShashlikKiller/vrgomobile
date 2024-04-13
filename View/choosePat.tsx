@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 const data = [
@@ -15,11 +15,6 @@ const data = [
 const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) => {
   const [searchText, setSearchText] = useState('');
   const [filteredData, setFilteredData] = useState(data);
-  const [selectedItem, setSelectedItem] = useState<string>('');
-
-  useEffect(() => {
-    setSearchText(selectedItem);
-  }, [selectedItem]);
 
   const filterData = (text: string) => {
     const filtered = data.filter(item =>
@@ -27,6 +22,12 @@ const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) 
     );
     setFilteredData(filtered);
     setSearchText(text);
+  };
+
+  const handleSelect = (value: string, label: string) => {
+    onSelect(value);
+    setSearchText(label);
+    setFilteredData([]);
   };
 
   return (
@@ -40,14 +41,8 @@ const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) 
       {filteredData.map(item => (
         <TouchableOpacity
           key={item.value}
-          style={[
-            styles.dropdownItem,
-            item.value === selectedItem && styles.selectedItemContainer
-          ]}
-          onPress={() => {
-            setSelectedItem(item.label);
-            onSelect(item.value);
-          }}>
+          style={styles.dropdownItem}
+          onPress={() => handleSelect(item.value, item.label)}>
           <Text style={styles.itemText}>{item.label}</Text>
         </TouchableOpacity>
       ))}
@@ -73,8 +68,8 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
         Начните вводить патологию или нарушение необходимое к физиотерапии
       </Text>
       <DropdownComponent onSelect={setSelectedPathology} />
+      <Button title="Нет моей паталогии" onPress={handleNoPathology} color={'#666'} />
       <Button title="Далее" onPress={loadScene} color={'#6CCAFF'} />
-      <Button title="Нет моей паталогии" onPress={handleNoPathology} color={'#6CCAFF'} />
     </View>
   );
 }
@@ -94,16 +89,6 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     marginBottom: 20,
   },
-  dropdownContainer: {
-    backgroundColor: '#666',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 20,
-    width: 300,
-  },
-  dropdown: {
-    marginTop: 5,
-  },
   inputSearch: {
     height: 40,
     borderColor: '#666',
@@ -119,9 +104,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 5,
     borderRadius: 5,
-  },
-  selectedItemContainer: {
-    backgroundColor: '#4682B4',
   },
   itemText: {
     color: '#fff',
