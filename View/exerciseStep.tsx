@@ -19,10 +19,9 @@ return (
     
     const styles = StyleSheet.create({
       container: {
-        maxWidth: 2000,
         width: 'auto',
-        height: '100%',
-        maxHeight: 200,
+        height: 'auto',
+        maxHeight: 100,
         flex: 1,
         marginBottom: 15,
         backgroundColor: 'rgba(182, 255, 251, 0.10)',
@@ -31,14 +30,15 @@ return (
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
-        padding: 10,
       },
       stepNumberContainer: {
         height: '100%',
+        width:'7%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(35, 35, 35, 0.30)',
         padding: 2,
+        marginRight: 8
       },
       stepNumber: {
         textAlign: 'center',
@@ -51,6 +51,7 @@ return (
         flex: 1,
         color: 'rgba(255, 255, 255, 0.70)',
         fontSize: 18,
+        flexWrap: 'wrap',
         //fontFamily: 'Roboto Mono',
         fontWeight: '300',
       },

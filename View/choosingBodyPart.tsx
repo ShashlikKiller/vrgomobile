@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, TextBase} from 'react-native';
-import { Button } from 'react-native';
+import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Button, Dimensions} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { Exercise } from '../Model/Exercise';
-import { FileIO } from '../Model/FileIO';
+//import { FileIO } from '../Model/FileIO';
+
+const { width: disp_width, height: disp_height } = Dimensions.get('window');
+// Получаем разрешение экрана
 
 export default function choosingBodyPart({navigation}: {navigation: any}) {
 
@@ -18,7 +20,7 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
   const [isCheckedLeftLeg, CheckLeftLeg] = useState(false);
 
 
-  let fileIO: FileIO = new FileIO()
+  //let fileIO: FileIO = new FileIO()
 
   const loadScene = () => {
     //navigation.popToTop();
@@ -33,7 +35,7 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
   }
 
   return (
-    <View style={styles.background}>
+    <View style={{...styles.background}}>
             <Button title='Подсказка' onPress={() => setModalWindow(true)}></Button>
             <Modal visible={modalWindow}>
            <Text> Инструкция</Text>
@@ -48,7 +50,7 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
            <Text>Больше не показывать</Text>
            <Button title='Понятно' onPress={() => setModalWindow(false)}></Button>
        </Modal>
-    <View style={styles.container}>
+    <View style={{...styles.container}}>
       <View style={styles.row}>
       <TouchableOpacity style={{...styles.expanded, backgroundColor: isCheckedRightHand ? '#393220' : '#323939'}} onPress={() => CheckRightHand(!isCheckedRightHand)}>
             <View style={{flex: 1, justifyContent: 'flex-start'}}>
@@ -97,27 +99,27 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
           <Text>К упражнениям</Text>
         </TouchableOpacity>
       </View>
-      <View style={{top: 0,  left: '50%', right: 0, bottom: 0, aspectRatio: 1, flexDirection: 'column', flex: 1, width: 1, position: 'absolute',  alignSelf: 'center', justifyContent: 'center' }}>
+      <View style={styles.bodypartsview}>
         <View pointerEvents='none' style={{alignSelf: 'center', marginBottom: 5 }}>
         <Image resizeMode='contain' source={require('./bodyparts/head.png')}/>
         </View>        
-        <View style={{ flexDirection: 'row', alignContent: 'center', alignSelf: 'center' }}>
-          <TouchableOpacity style={{marginTop: 25}} onPress={() => CheckRightHand(!isCheckedRightHand)}>
-          <Image  resizeMode='contain' source={isCheckedRightHand ? require('./bodyparts/righthand_on.png') : require('./bodyparts/righthand_off.png')} style={{ marginRight: 5}}/>
+        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+          <TouchableOpacity style={{marginTop: 25, paddingRight: 2}} onPress={() => CheckRightHand(!isCheckedRightHand)}>
+          <Image  source={isCheckedRightHand ? require('./bodyparts/righthand_on.png') : require('./bodyparts/righthand_off.png')}/>
           </TouchableOpacity>
-          <View pointerEvents='none'>
-            <Image resizeMode='contain' source={require('./bodyparts/body.png')} />
+          <View pointerEvents='none' style={{}}>
+            <Image source={require('./bodyparts/body.png')} />
           </View>
-          <TouchableOpacity style={{marginTop: 25}} onPress={() => CheckLeftHand(!isCheckedLeftHand)}>
-            <Image resizeMode='contain'  source={isCheckedLeftHand ? require('./bodyparts/lefthand_on.png') : require('./bodyparts/lefthand_off.png')} style={{ marginLeft: 5}} />
+          <TouchableOpacity style={{marginTop: 25, paddingLeft: 4}} onPress={() => CheckLeftHand(!isCheckedLeftHand)}>
+            <Image source={isCheckedLeftHand ? require('./bodyparts/lefthand_on.png') : require('./bodyparts/lefthand_off.png')} />
           </TouchableOpacity>
         </View>
-        <View  style={{ marginTop: -115, flexDirection: 'row', alignContent: 'center', alignSelf: 'center', padding: 20 }}>
-        <TouchableOpacity style={{}} onPress={() => CheckRightLeg(!isCheckedRightLeg)}>
+        <View  style={{ marginTop: -105, flexDirection: 'row', alignContent: 'center', alignSelf: 'center'}}>
+        <TouchableOpacity onPress={() => CheckRightLeg(!isCheckedRightLeg)}>
           <Image  resizeMode='contain' style={{marginRight: 5}} source={isCheckedRightLeg ? require('./bodyparts/rightleg_on.png') : require('./bodyparts/rightleg_off.png')}/>
         </TouchableOpacity>
-        <TouchableOpacity style={{}} onPress={() => CheckLeftLeg(!isCheckedLeftLeg)}>
-          <Image  resizeMode='contain' style={{marginLeft: 5}} source={isCheckedLeftLeg ? require('./bodyparts/leftleg_on.png') : require('./bodyparts/leftleg_off.png')}/>
+        <TouchableOpacity  onPress={() => CheckLeftLeg(!isCheckedLeftLeg)}>
+          <Image  resizeMode='cover' style={{marginLeft: 5}} source={isCheckedLeftLeg ? require('./bodyparts/leftleg_on.png') : require('./bodyparts/leftleg_off.png')}/>
         </TouchableOpacity>
         </View>
       </View>
@@ -135,6 +137,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#232323',
     margin: 2,
+  },
+  bodypartsview: {
+    top: 0,
+    left: '50%',
+    right: 0,
+    bottom: 0,
+    width: 1,
+    flexDirection: 'column',
+    position: 'absolute',
+    alignSelf: 'center', 
+    justifyContent: 'center',
+    transform: [{scale: (disp_width/disp_height) * disp_height/620}],
   },
   sideText: {
     fontSize: 18,
