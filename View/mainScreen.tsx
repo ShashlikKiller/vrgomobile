@@ -1,4 +1,4 @@
-import { Button, View } from "react-native";
+import { Button, View, Text } from "react-native";
 
 export default function mainScreen({navigation}: {navigation: any}) {
     const loadScene = () => {
@@ -13,13 +13,13 @@ export default function mainScreen({navigation}: {navigation: any}) {
 
     return (
       <View>
-        Ваша паталогия верна?
+        <Text>Ваша паталогия верна?</Text>
         <Button
           title="Изменить"
           onPress={loadPatScene}
           color={'#B6FF1B'}
         />
-        Верно ли выбраны поражённые части тела?
+        <Text>Верно ли выбраны поражённые части тела?</Text>
         <Button
           title="Изменить"
           onPress={loadBodyPartScene}
