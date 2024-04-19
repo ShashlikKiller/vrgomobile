@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import { Button, View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 
 import { Dropdown } from 'react-native-element-dropdown';
+import default_styles from './Screens/styles/styles';
+import { NextButton, StepBackButton } from './Buttons/buttonsComponent';
 
 const data = [
     { label: 'Инсульт', value: '1' },
