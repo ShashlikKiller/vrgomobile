@@ -1,24 +1,46 @@
 export class Timer {
-    private duration: number;
-    private timerId: ReturnType<typeof setTimeout> | null;
+    private _duration: number;
+    private _timerId: ReturnType<typeof setTimeout> | null;
+    private _startTime: number;
+    private _runTime: number;
+    private _isStopped: boolean;
   
     constructor(seconds: number) {
-      this.duration = seconds * 1000;
-      this.timerId = null;
+      this._duration = seconds * 1000;
+      this._timerId = null;
+      this._startTime = 0;
+      this._runTime = 0;
+      this._isStopped = false;
+    }
+
+    public get runTime(){
+      if (!this._isStopped) this._runTime = new Date().getTime() - this._startTime //времени прошло
+      return this._runTime
     }
   
     startTimer(): void {
-      this.timerId = setTimeout(() => {
+      this._startTime = new Date().getTime(); // время старта
+
+      this._timerId = setTimeout(() => { // запускаем таймер
         this.stopTimer();
         console.log("Таймер завершил свою работу");
-      }, this.duration);
+      }, (this._duration - this._runTime)); // на оставшееся время
     }
-  
+    
+    pauseTimer():void {
+      if (this._timerId) {
+        clearTimeout(this._timerId);
+        this._timerId = null;
+      }  
+    }
+
     stopTimer(): void {
-      if (this.timerId) {
-        clearTimeout(this.timerId);
-        this.timerId = null;
+      if (this._timerId) {
+        clearTimeout(this._timerId);
+        this._timerId = null;
       }
+      this._runTime = 0
+      this._isStopped = true;
     }
   }
   

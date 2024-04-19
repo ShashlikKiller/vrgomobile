@@ -40,11 +40,10 @@ const data = [
     );
   };
 
-  
-
-export default function choosePat({navigation}: {navigation: any}) {
-  const loadScene = () => {
-    navigation.navigate('choosingBodyPart')
+export default function choosePat({navigation, route}: {navigation: any, route: any}) {
+  const loadBodyPartScene = () => {
+    // тут будет проверка из файла выбрана ли уже паталогия; навигируемся (да -> в главное меню)(нет -> к выбору части тела)
+    navigation.navigate('choosingBodyPart', {backScene: 'choosePat'}) // пока только в часть тела
   }
   return( 
     <View style={styles.container}>
@@ -52,7 +51,7 @@ export default function choosePat({navigation}: {navigation: any}) {
       <DropdownComponent />
       <Button
         title="Далее"
-        onPress={loadScene}
+        onPress={loadBodyPartScene}
         color={'#B6FFFB'}
       />
     </View>

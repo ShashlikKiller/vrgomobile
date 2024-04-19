@@ -2,11 +2,13 @@ export class Exercise{
     private _description: string;
     private _instruction: string[];
     private _images: string;
+    private _execTimeSec: number;
     public exerciseCompleted: () => void;
-    constructor(exerciseId: number, description: string, instruction: string[], images: string ){
+    constructor(exerciseId: number, execTimeSec: number, description: string, instruction: string[], images: string ){
         this._description = description;
         this._instruction = instruction;
         this._images = images;
+        this._execTimeSec = execTimeSec;
         this.exerciseCompleted = () => {};
     }
 
@@ -32,6 +34,14 @@ export class Exercise{
 
     set images(value){
         this._images = value
+    }
+
+    get execTimeSec(){
+        return this._execTimeSec
+    }
+
+    set execTimeSec(value){
+        this._execTimeSec = value
     }
 
     /**
