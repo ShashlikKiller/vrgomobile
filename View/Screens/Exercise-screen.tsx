@@ -1,53 +1,82 @@
-import React, { useState } from 'react';
-import { Image, TouchableOpacity, Platform, View, StyleSheet, Text, Button } from 'react-native';
-import styles from './styles/styles';
+import React, { useEffect, useState } from 'react';
+import { Image, Dimensions, View, StyleSheet, Text, Button, ScrollView } from 'react-native';
 import ExerciseStep from '../exerciseStep';
 import ExerciseProgression from '../exerciseProgression';
 import { Session } from '../../Model/Session';
+import TooltipWin from '../../tooltipWin';
+// import { Exercise } from '../../Model/Exercise';
+import { Exercise } from '../../Model/Exercise';
 
-interface Exercise {
-  images: string;
-  description: string;
-  instruction: string[];
-}
+// interface Exercise {
+//   images: string;
+//   description: string;
+//   instruction: string[];
+// }
 
 interface Props {
   _exercise: Exercise;
 }
 
-const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
+const { width: disp_width, height: disp_height } = Dimensions.get('window');
+// Получаем разрешение экрана
+
+const ExerciseScreen: React.FC<Props> = ({ _exercise }) => { 
+    const [session, setSession] = useState(new Session());
+    const [currExercise, setCurrExercise] = useState(new Exercise(0,0,"",[""],""));
     const [sessionStarted, setSessionStarted] = useState(false);
+    const [exInstrution, setExInstrution] = useState(currExercise.instruction);
+    const [exImages, setExImages] = useState(currExercise.images);
+    const [exDescription, setExDescription] = useState(currExercise.description);
+    const [runTime, setRunTime] = useState(session.runTime);
 
-    const handleStartSession = () => {
-        const session = new Session();
-
-        // session.enqueue(new Exercise("Упражнение 1", () => console.log("Выполняется упражнение 1")));
-        // session.enqueue(new Exercise("Упражнение 2", () => console.log("Выполняется упражнение 2")));
-        
-        session.start();
-        setSessionStarted(true);
+    const refreshExerciseHandler = (exercise: Exercise) => {
+      setExInstrution(exercise.instruction);
+      setExImages(exercise.images);
+      setExDescription(exercise.description);
     };
 
+    const refreshRunTimeHandler = (runTime: number) => {
+      setRunTime(runTime);
+    };
+
+    const handleStartSession = () => {
+      const emitter = session.emitter;
+      emitter.addListener("refreshExercise", refreshExerciseHandler);
+      emitter.addListener("refreshRunTime", refreshRunTimeHandler);
+
+      // session.enqueue(new Exercise("Упражнение 1", () => console.log("Выполняется упражнение 1")));
+      // session.enqueue(new Exercise("Упражнение 2", () => console.log("Выполняется упражнение 2")));
+      session.enqueue(new Exercise(1, 5, "ddddd",["sdsdsd", "ssss"], "https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album"))
+      session.enqueue(new Exercise(1, 5, "hehe",["11!!111!!", "ccc"], "https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album"))
+
+      session.nextExercise()
+      setSession(session)
+
+      setRunTime(0)
+    };
+
+    useEffect(() => {
+      handleStartSession();
+    }, []);
+
     return (
-        <View style={styles1.body}>
-          <View style={styles1.navbar}>
-            <Button title="< Назад" color="#ddd"/>
-            <ExerciseProgression currentExercise={1} totalExercises={3} ></ExerciseProgression>
-          </View>
+        <ScrollView style={styles1.body}>
           <View style={styles1.content}>
-            <Text style={styles1.instructions}>{_exercise.description}</Text>
-            <Image style={styles1.image} source={{uri: _exercise.images }}/>  {/*</Image>'https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album'}} />*/}
+            <Text style={styles1.instructions}>{exDescription}</Text>
+            <View style={styles1.imageContainer}>
+              <Image style={styles1.image} resizeMode='contain' source={{uri: exImages }}/>
+            </View>
             <View>
-        {_exercise.instruction.map((step: string, stepNumb: number) => (
+        {exInstrution?.map((step: string, stepNumb: number) => (
           <ExerciseStep stepNumb={stepNumb+1} step={step}> </ExerciseStep>
         ))}
             </View>
-            <View style={styles1.btnContainer}>
-              <Button title="Старт таймера" color="#555" onPress={handleStartSession} disabled={sessionStarted} />
-              <Button title="Далее >" color="#ddd" />
+            <View style={styles1.btnContainer}> 
+              <Button title={Math.ceil((runTime+300)/1000).toString()} color="#555" onPress={session.executeExercise} disabled={sessionStarted} />
+              <Button title="Далее >" onPress={session.nextExercise} color="#ddd"/> 
             </View>
           </View>
-        </View>
+        </ScrollView>
       );
     };
     
@@ -56,7 +85,6 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
         //backgroundColor: '#232323',
         //color: 'white',
         //fontFamily: 'Arial',
-        height: 'auto',
         flex: 1,
 
       },
@@ -76,7 +104,7 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
 
         color: '#CFCFCF',
         fontSize: 18,
-        fontFamily: 'Roboto Mono',
+        //fontFamily: 'Roboto Mono',
         fontWeight: '300'
       },
       steps: {
@@ -111,13 +139,19 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
         justifyContent: 'space-between',
       },
       image: {
-        width: 'auto',
-        alignItems: "flex-start",
         flex: 1,
+        resizeMode: 'contain',
+        width: '100%',
+        height: '100%'
 
+      },
+      imageContainer: {
+        flex: 1,
+        alignSelf: 'center',
         marginBottom: 30,
         marginTop: 30,
-        // verticalAlign: "top"
+        width: disp_width - 40,
+        aspectRatio: 1
       },
       text: {
         fontSize: 19,

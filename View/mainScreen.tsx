@@ -1,25 +1,25 @@
-import { Button, View } from "react-native";
+import { Button, View, Text } from "react-native";
 
 export default function mainScreen({navigation}: {navigation: any}) {
-    const loadScene = () => {
+    const loadExerciseScene = () => {
       navigation.navigate('doExercise')
     }
     const loadPatScene = () => {
-      navigation.navigate('choosePat')
+      navigation.navigate('choosePat', {backScene: 'mainScreen'})
     }
     const loadBodyPartScene = () => {
-      navigation.navigate('choosingBodyPart')
+      navigation.navigate('choosingBodyPart', {backScene: 'mainScreen'})
     }
 
     return (
       <View>
-        Ваша паталогия верна?
+        <Text>Ваша паталогия верна?</Text>
         <Button
           title="Изменить"
           onPress={loadPatScene}
           color={'#B6FF1B'}
         />
-        Верно ли выбраны поражённые части тела?
+        <Text>Верно ли выбраны поражённые части тела?</Text>
         <Button
           title="Изменить"
           onPress={loadBodyPartScene}
@@ -27,7 +27,7 @@ export default function mainScreen({navigation}: {navigation: any}) {
         />
         <Button
           title="К упражнениям"
-          onPress={loadScene}
+          onPress={loadExerciseScene}
           color={'#B6FFFB'}
         />
       </View>

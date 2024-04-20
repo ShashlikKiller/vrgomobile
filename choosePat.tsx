@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Button, View, Text, StyleSheet } from 'react-native';
-import {Patient} from './Patient';
+// import {Patient} from './Model/Patient';
 import { Dropdown } from 'react-native-element-dropdown';
 
 const data = [
@@ -19,8 +19,15 @@ export default function choosePat({navigation}: {navigation: any}) {
   const [nameOfPathology, setPathology] = useState<string>('');
 
   const loadScene = () => {
-    patient.pathology = nameOfPathology;
+    // patient.pathology = nameOfPathology;
     navigation.navigate('choosingBodyPart')
+  }
+  const loadExerciseScene = () => {
+    // пишем в файл, что паталогии и части тела назначены p.s. не работает в браузере
+    // fileIO.Set(1 ,"./View/have_pat.txt")
+    // .then(() => console.log("success"))
+    // .catch(function(e) {console.log(e)})
+    navigation.navigate('doExercise')
   }
 
   return( 
