@@ -104,7 +104,7 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
 
         color: '#CFCFCF',
         fontSize: 18,
-        //fontFamily: 'Roboto Mono',
+        fontFamily: 'RobotoMono',
         fontWeight: '300'
       },
       steps: {

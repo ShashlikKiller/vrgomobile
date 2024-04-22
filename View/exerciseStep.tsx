@@ -44,7 +44,7 @@ return (
         textAlign: 'center',
         color: '#B6FFFB',
         fontSize: 19,
-        //fontFamily: 'Inter',
+        fontFamily: 'Inter',
         fontWeight: '400',
       },
       stepDescription: {
@@ -52,7 +52,7 @@ return (
         color: 'rgba(255, 255, 255, 0.70)',
         fontSize: 18,
         flexWrap: 'wrap',
-        //fontFamily: 'Roboto Mono',
+        fontFamily: 'RobotoMono',
         fontWeight: '300',
       },
     });
