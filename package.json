@@ -8,11 +8,6 @@
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
-  "resolutions": {
-    "@types/react": "18.2.0",
-    "@types/react-dom": "18.2.0",
-    "graphql": "^16.5.0"
-  },
   "dependencies": {
     "@expo/metro-runtime": "~3.1.3",
     "@react-navigation/native": "^6.1.17",
@@ -29,8 +24,7 @@
     "react-native-reanimated": "^3.8.1",
     "react-native-svg": "^15.1.0",
     "react-native-svg-transformer": "^1.3.0",
-    "react-native-web": "~0.19.6",
-    "react-navigation": "^5.0.0"
+    "react-native-web": "~0.19.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

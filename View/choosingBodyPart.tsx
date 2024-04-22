@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Button, Dimensions} from 'react-native';
+import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Dimensions} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { Exercise } from '../Model/Exercise';
+import { HelpButton, UnderstandButton, BackButton, NextButton } from './Buttons/buttonsComponent';
 //import { FileIO } from '../Model/FileIO';
 
 const { width: disp_width, height: disp_height } = Dimensions.get('window');
@@ -35,7 +36,7 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
 
   return (
     <View style={{...styles.background}}>
-            <Button title='Подсказка' onPress={() => setModalWindow(true)}></Button>
+            <HelpButton action={() => setModalWindow(true)}></HelpButton>
             <Modal visible={modalWindow}>
            <Text> Инструкция</Text>
            <Text>Аватар будет к вам лицом. 
@@ -47,7 +48,7 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
                color={isCheckedModalWin ? '#4630EB' : undefined}
            />
            <Text>Больше не показывать</Text>
-           <Button title='Понятно' onPress={() => setModalWindow(false)}></Button>
+           <UnderstandButton action={() => setModalWindow(false)}></UnderstandButton>
        </Modal>
     <View style={{...styles.container}}>
       <View style={styles.row}>
@@ -87,16 +88,8 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
         </TouchableOpacity>
       </View>
       <View style={styles.bottom_btn_navbar}>
-      <TouchableOpacity
-          onPress={loadScene}
-          style={styles.button}>
-          <Text>Назад</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={loadExerciseScene}
-          style={styles.button}>
-          <Text>К упражнениям</Text>
-        </TouchableOpacity>
+      <BackButton action={loadScene} />
+        <NextButton action={loadExerciseScene} />
       </View>
       <View style={styles.bodypartsview}>
         <View pointerEvents='none' style={{alignSelf: 'center', marginBottom: 5 }}>
@@ -164,17 +157,6 @@ const styles = StyleSheet.create({
   bottom_btn_navbar: {
     flexDirection: 'row',
     alignContent: 'space-between'
-  },
-  button: {
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    borderRadius: 4,
-    backgroundColor: '#FF0000',
-    alignSelf: 'flex-start',
-    marginHorizontal: '1%',
-    marginBottom: 6,
-    minWidth: '48%',
-    textAlign: 'center',
   },
   expanded: {
     flex: 1,

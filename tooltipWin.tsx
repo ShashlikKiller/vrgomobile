@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, Button, Modal, View} from 'react-native';
 import Checkbox from 'expo-checkbox';
+import { UnderstandButton } from './View/Buttons/buttonsComponent';
 
 
 interface TooltipProps { 
@@ -29,7 +30,7 @@ export default function TooltipWin({modalWindow, textHead, textBody, toggleModal
                    color={isCheckedModalWin ? '#4630EB' : undefined}
                 />
                 <Text>Больше не показывать</Text>
-                <Button title='Понятно' onPress={() => toggleModal()}></Button>
+                <UnderstandButton action={() => toggleModal()}></UnderstandButton>
            </Modal>
         </View>
         

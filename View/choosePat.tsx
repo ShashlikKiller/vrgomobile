@@ -1,61 +1,76 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Button, View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
-
-import { Dropdown } from 'react-native-element-dropdown';
-import default_styles from './Screens/styles/styles';
-import { NextButton, StepBackButton } from './Buttons/buttonsComponent';
+import { Button, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { NextButton } from './Buttons/buttonsComponent';
 
 const data = [
-    { label: 'Инсульт', value: '1' },
-    { label: 'Инфаркт', value: '2' },
-    { label: 'Инклюзия', value: '3' },
-    { label: 'Красный нос', value: '4' },
-    { label: 'Простуда', value: '5' },
-    { label: 'Кашель', value: '6' },
-    { label: 'Мозг рака', value: '7' },
-    { label: 'Нет моей болезни', value: '8' },
-  ];
+  { label: 'Инсульт', value: '1' },
+  { label: 'Инфаркт', value: '2' },
+  { label: 'Инклюзия', value: '3' },
+  { label: 'Красный нос', value: '4' },
+  { label: 'Простуда', value: '5' },
+  { label: 'Кашель', value: '6' },
+  { label: 'Мозг рака', value: '7' },
+];
 
-  const DropdownComponent = () => {
-    const [value, setValue] = useState<string>('');
+const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) => {
+  const [searchText, setSearchText] = useState('');
+  const [filteredData, setFilteredData] = useState(data);
 
-    return (
-      <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        data={data}
-        search
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder="Выберите патологию"
-        searchPlaceholder="Поиск"
-        value={value}
-        onChange={item => {
-          setValue(item.value);
-        }}
-        
-      />
+  const filterData = (text: string) => {
+    const filtered = data.filter(item =>
+      item.label.toLowerCase().includes(text.toLowerCase())
     );
+    setFilteredData(filtered);
+    setSearchText(text);
   };
 
-export default function choosePat({navigation, route}: {navigation: any, route: any}) {
-  const loadBodyPartScene = () => {
-    // тут будет проверка из файла выбрана ли уже паталогия; навигируемся (да -> в главное меню)(нет -> к выбору части тела)
-    navigation.navigate('choosingBodyPart', {backScene: 'choosePat'}) // пока только в часть тела
-  }
-  return( 
-    <View style={styles.container}>
-      <Text style={styles.text}>Начните вводить патологию или нарушение необходимое к физиотерапии</Text> 
-      <DropdownComponent />
-      <Button
-        title="Далее"
-        onPress={loadBodyPartScene}
-        color={'#B6FFFB'}
+  const handleSelect = (value: string, label: string) => {
+    onSelect(value);
+    setSearchText(label);
+    setFilteredData([]);
+  };
+
+  return (
+    <View>
+      <TextInput
+        style={styles.inputSearch}
+        placeholder="Поиск"
+        onChangeText={filterData}
+        value={searchText}
       />
+      {filteredData.map(item => (
+        <TouchableOpacity
+          key={item.value}
+          style={styles.dropdownItem}
+          onPress={() => handleSelect(item.value, item.label)}>
+          <Text style={styles.itemText}>{item.label}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+};
+
+export default function ChoosePat({ navigation }: { navigation: any }) {
+  const [selectedPathology, setSelectedPathology] = useState<string>('');
+
+  const loadScene = () => {
+    navigation.navigate('choosingBodyPart', { selectedPathology });
+  };
+
+  const handleNoPathology = () => {
+    setSelectedPathology('no-pathology');
+    loadScene();
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>
+        Начните вводить патологию или нарушение необходимое к физиотерапии
+      </Text>
+      <DropdownComponent onSelect={setSelectedPathology} />
+      <Button title="Нет моей паталогии" onPress={handleNoPathology} color={'#666'} />
+      <NextButton action={loadScene}/>
     </View>
   );
 }
@@ -63,41 +78,35 @@ export default function choosePat({navigation, route}: {navigation: any, route: 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#333',
     alignItems: 'center',
+    paddingTop: 20,
   },
   text: {
-    textAlignVertical: 'bottom',
-    color: 'black',
+    textAlign: 'center',
+    color: '#fff',
     fontSize: 19,
     fontFamily: 'Inter',
     fontWeight: '300',
+    marginBottom: 20,
   },
-  dropdown: {
-    margin: 16,
-    height: 50,
-    borderBottomColor: 'gray',
-    
-    borderBottomWidth: 0.5,
-  },
-  placeholderStyle: {
-    fontSize: 16,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-    color: 'black',
-  },
-  inputSearchStyle: {
+  inputSearch: {
     height: 40,
-    fontSize: 16,
+    borderColor: '#666',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    color: '#fff',
+    backgroundColor: '#333',
   },
-  buttonText: {
-    color: '#232323',
-    fontSize: 19,
-    fontFamily: 'Inter',
-    fontWeight: '400',
+  dropdownItem: {
+    backgroundColor: '#6CCAFF',
+    padding: 10,
+    marginBottom: 5,
+    borderRadius: 5,
   },
-  buttonStyle:{
-    backgroundColor: '#B6FFFB',
-  }
+  itemText: {
+    color: '#fff',
+  },
 });
