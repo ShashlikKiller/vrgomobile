@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Button, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { NextButton } from './Buttons/buttonsComponent';
 
 const data = [
   { label: 'Инсульт', value: '1' },
@@ -69,7 +70,7 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
       </Text>
       <DropdownComponent onSelect={setSelectedPathology} />
       <Button title="Нет моей паталогии" onPress={handleNoPathology} color={'#666'} />
-      <Button title="Далее" onPress={loadScene} color={'#6CCAFF'} />
+      <NextButton action={loadScene}/>
     </View>
   );
 }
