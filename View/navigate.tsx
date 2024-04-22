@@ -18,22 +18,22 @@ export default function Navigate(initialScreen: string){
             <Stack.Screen
                 name="choosePat"
                 component={choosePat}
-                options={{title: 'Выбор патологии'}}
+                options={{title: 'Выбор патологии',  headerShown: false}}
                 />
             <Stack.Screen
                 name="choosingBodyPart"
                 component={choosingBodyPart}
-                options={{title: 'Выбор части тела'}}
+                options={{title: 'Выбор части тела',  headerShown: false}}
                 />
             <Stack.Screen 
                 name="doExercise"
                 component={doExercise}
-                options={{}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen 
                 name="mainScreen"
                 component={mainScreen}
-                options={{}}
+                options={{ headerShown: false }}
             />
         </Stack.Navigator>
     </NavigationContainer>
