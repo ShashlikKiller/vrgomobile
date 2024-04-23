@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Dimensions, View, StyleSheet, Text, Button, ScrollView } from 'react-native';
-import ExerciseStep from '../exerciseStep';
-import ExerciseProgression from '../exerciseProgression';
-import { Session } from '../../Model/Session';
-import TooltipWin from '../../tooltipWin';
-// import { Exercise } from '../../Model/Exercise';
-import { Exercise } from '../../Model/Exercise';
+import ExerciseStep from '@components/exerciseStep';
+import { Session } from '@models/Session';
+import { Exercise } from '@models/Exercise';
 
 // interface Exercise {
 //   images: string;
@@ -20,7 +17,7 @@ interface Props {
 const { width: disp_width, height: disp_height } = Dimensions.get('window');
 // Получаем разрешение экрана
 
-const ExerciseScreen: React.FC<Props> = ({ _exercise }) => { 
+const ExerciseComponent: React.FC<Props> = ({ _exercise }) => { 
     const [session, setSession] = useState(new Session());
     const [currExercise, setCurrExercise] = useState(new Exercise(0,0,"",[""],""));
     const [sessionStarted, setSessionStarted] = useState(false);
@@ -44,8 +41,6 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
       emitter.addListener("refreshExercise", refreshExerciseHandler);
       emitter.addListener("refreshRunTime", refreshRunTimeHandler);
 
-      // session.enqueue(new Exercise("Упражнение 1", () => console.log("Выполняется упражнение 1")));
-      // session.enqueue(new Exercise("Упражнение 2", () => console.log("Выполняется упражнение 2")));
       session.enqueue(new Exercise(1, 5, "ddddd",["sdsdsd", "ssss"], "https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album"))
       session.enqueue(new Exercise(1, 5, "hehe",["11!!111!!", "ccc"], "https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album"))
 
@@ -159,4 +154,4 @@ const ExerciseScreen: React.FC<Props> = ({ _exercise }) => {
       },
     });    
 
-export default ExerciseScreen;
+export default ExerciseComponent;

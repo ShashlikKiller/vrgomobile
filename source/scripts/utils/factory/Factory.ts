@@ -1,6 +1,6 @@
-import { IFactory } from "../interfaces/IFactory";
-import { Exercise } from "../Exercise";
-import {IDataGetter} from "../interfaces/content-provider/IDataProvider";
+import { IFactory } from "@scripts/interfaces/IFactory";
+import { Exercise } from "@models/Exercise";
+import {IDataGetter} from "@scripts/interfaces/content-provider/IDataProvider";
 
 export class Factory implements IFactory<Exercise>
 {

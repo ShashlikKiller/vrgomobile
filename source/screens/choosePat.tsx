@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Button, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { NextButton } from './Buttons/buttonsComponent';
+import { NextButton } from '@components/buttonsComponent';
 
 const data = [
   { label: 'Инсульт', value: '1' },

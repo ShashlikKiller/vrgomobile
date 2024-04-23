@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { ImageBackground } from 'react-native';
 // import styles from './styles'; - вот так получать потом
 
 export default StyleSheet.create({

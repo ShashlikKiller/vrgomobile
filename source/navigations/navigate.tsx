@@ -1,13 +1,11 @@
 import React from "react";
-import choosePat from "./choosePat";
-import choosingBodyPart from "./choosingBodyPart";
+import choosingBodyPart from "@screens/choosingBodyPart";
 
+import choosePat from "@screens/choosePat";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, CommonActions } from "@react-navigation/native";
-import { Exercise } from "../Model/Exercise";
-import doExercise from "./doExercise";
-import initialScreen from "./mainScreen";
-import mainScreen from "./mainScreen";
+import doExercise from "@screens/session";
+import mainScreen from "@screens/main";
 
 const Stack = createStackNavigator();
 
