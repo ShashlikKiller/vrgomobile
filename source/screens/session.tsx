@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
-
-import { Dropdown } from 'react-native-element-dropdown';
-import ExerciseScreen from './Screens/Exercise-screen';
-import { Exercise } from '../Model/Exercise';
-import { ClearStackAndNavigate } from './navigate';
-import styles from './Screens/styles/styles';
-import { BackButton } from './Buttons/buttonsComponent';
+import styles from '@styles/styles';
+import { View, } from 'react-native';
+import { Exercise } from '@models/Exercise';
+import { BackButton } from '@components/buttonsComponent';
+import ExerciseComponent from '@components/exerciseComponent';
+import { ClearStackAndNavigate } from '@navigations/navigate';
 
 
 export default function doExercise({navigation}: {navigation: any}){
@@ -22,7 +19,7 @@ export default function doExercise({navigation}: {navigation: any}){
     return( 
         <View style={styles.container}>
           <BackButton action={clearStackAndNavigate}></BackButton>
-          <ExerciseScreen _exercise={exercise}/>
+          <ExerciseComponent _exercise={exercise}/>
         </View>
         
     );

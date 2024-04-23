@@ -1,5 +1,5 @@
-import { Exercise } from "../Exercise";
-import { IFactory } from "../interfaces/IFactory";
+import { Exercise } from "@models/Exercise";
+import { IFactory } from "../../interfaces/IFactory";
 
 export class FactoryExample implements IFactory<Exercise> {
     Create(): Exercise {

@@ -1,6 +1,6 @@
 import EventEmitter from "react-native/Libraries/vendor/emitter/EventEmitter";
 import { Exercise } from "./Exercise";
-import { Timer } from "./Timer";
+import { Timer } from "@utils/Timer";
 
 export class Session {
     private _exerciseQueue: Exercise[];

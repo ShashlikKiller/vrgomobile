@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, Button, Modal, View} from 'react-native';
 import Checkbox from 'expo-checkbox';
-import { UnderstandButton } from './View/Buttons/buttonsComponent';
+import { UnderstandButton } from '@components/buttonsComponent';
 
 
 interface TooltipProps { 

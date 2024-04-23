@@ -1,5 +1,5 @@
-import { Exercise } from "./Exercise";
-import { IExerciseSelectorBuilder, ISelector } from "./interfaces/IExerciseSelector";
+import { Exercise } from "@models/Exercise";
+import { IExerciseSelectorBuilder, ISelector } from "../interfaces/IExerciseSelector";
 
 class Selector implements ISelector<Exercise> {
     private pathology: string;
@@ -44,9 +44,9 @@ class ExerciseSelectorBuilder implements IExerciseSelectorBuilder {
 let selectorBuilder = new ExerciseSelectorBuilder();
 let selector = selectorBuilder.AddPathology("Патология").AddAffectedRegion(["Рука", "Нога"]).Build();
 let exercises = [
-    new Exercise(1, "Exercise 1 with Патология and Рука", ["Step 1", "Step 2"], "image1.jpg"),
-    new Exercise(2, "Exercise 2 with Нога", ["Step 1", "Step 2", "Step 3"], "image2.jpg"),
-    new Exercise(3, "Exercise 3 without Патология", ["Step 1"], "image3.jpg")
+    new Exercise(1, 12, "Exercise 1 with Патология and Рука", ["Step 1", "Step 2"], "image1.jpg"),
+    new Exercise(2, 12, "Exercise 2 with Нога", ["Step 1", "Step 2", "Step 3"], "image2.jpg"),
+    new Exercise(3, 12, "Exercise 3 without Патология", ["Step 1"], "image3.jpg")
 ];
 let selectedExercises = selector.Select(exercises);
 console.log(selectedExercises);
