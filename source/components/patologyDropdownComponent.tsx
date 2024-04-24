@@ -5,6 +5,20 @@ import { View, TextInput, ScrollView, StyleSheet, Dimensions, } from 'react-nati
 const { width: disp_width } = Dimensions.get('window');
 const sideMargin = 16;
 
+const dataFromJson = [ // Здесь мы берем откуда-то массив патологий
+  { label: 'Инсульт', value: '1' },
+  { label: 'Инфаркт', value: '2' },
+  { label: 'Инклюзия', value: '3' },
+  { label: 'Красный нос', value: '4' },
+  { label: 'Простуда', value: '5' },
+  { label: 'Кашель', value: '6' },
+  { label: 'Мозг рака', value: '7' },
+  { label: 'Инсульт2', value: '8' }];
+
+  const NoPatology = {label: 'Нет моей патологии', value: '0'};
+
+  const data = [...dataFromJson, NoPatology];
+
 interface Item {
     value: string;
     label: string;
@@ -12,10 +26,10 @@ interface Item {
 
 interface DropdownProps {
     onSelect: (value: string) => void;
-    data: Item[];
+    //data: Item[];
 }
 
-export const DropdownComponent = ({ onSelect, data }: DropdownProps) => {
+export const DropdownComponent = ({ onSelect }: DropdownProps) => {
     const [searchText, setSearchText] = useState('');
     const [filteredData, setFilteredData] = useState(data);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
@@ -37,16 +51,18 @@ export const DropdownComponent = ({ onSelect, data }: DropdownProps) => {
       const selectedItem = data.find(item => item.value === value);
       if (selectedItem) {
         onSelect(value);
-        setSearchText(label);
-  
-        setFilteredData([]); 
+        // Обнуление фильтров и поиска после выбора элемента.
+        // Можно сохранить фильтр, вместо '' = label и закомментить setFilteredData.
+        setSearchText('');
+        setFilteredData(data); 
+        //
         setSelectedItem(selectedItem);
         setIsFocused(false);
       }
     };
   
     return (
-      <View style={{flex: 1, width: disp_width - sideMargin*2}}>
+      <View style={styles.container}>
         {isFocused ? (
           <TextInput
             style={styles.inputText}
@@ -54,7 +70,7 @@ export const DropdownComponent = ({ onSelect, data }: DropdownProps) => {
             placeholderTextColor="#888888"
             onChangeText={filterData}
             value={searchText}
-            //onBlur={() => setIsFocused(false)} // Обработчик события потери фокуса
+            // onBlur={() => {setIsFocused(false)}} // Обработчик события потери фокуса
           />
         ) : (
           <SelectedPatology text={selectedItem ? selectedItem.label : 'Начните вводить свою патологию.'} 
@@ -90,6 +106,11 @@ export const DropdownComponent = ({ onSelect, data }: DropdownProps) => {
   export default DropdownComponent;
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        width: disp_width - sideMargin*2, 
+        backgroundColor: '#232323'
+    },
     inputText: {
         margin: 4,
         borderWidth: 2,
