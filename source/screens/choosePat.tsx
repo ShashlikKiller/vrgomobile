@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { Button, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { NextButton } from '@components/buttonsComponent';
+import DropdownComponent from '@components/patologyDropdownComponent';
+import React, { useState } from 'react';
+import { View, Button, Text, StyleSheet } from 'react-native';
 
-const data = [
+const dataFromJson = [ // Здесь мы берем откуда-то массив патологий
   { label: 'Инсульт', value: '1' },
   { label: 'Инфаркт', value: '2' },
   { label: 'Инклюзия', value: '3' },
@@ -11,45 +10,14 @@ const data = [
   { label: 'Простуда', value: '5' },
   { label: 'Кашель', value: '6' },
   { label: 'Мозг рака', value: '7' },
-];
+  { label: 'Инсульт2', value: '8' }];
 
-const DropdownComponent = ({ onSelect }: { onSelect: (value: string) => void }) => {
-  const [searchText, setSearchText] = useState('');
-  const [filteredData, setFilteredData] = useState(data);
+const NoPatology = {label: 'Нет моей патологии', value: '0'};
 
-  const filterData = (text: string) => {
-    const filtered = data.filter(item =>
-      item.label.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredData(filtered);
-    setSearchText(text);
-  };
+const sideMargin = 16;
 
-  const handleSelect = (value: string, label: string) => {
-    onSelect(value);
-    setSearchText(label);
-    setFilteredData([]);
-  };
+const data = [...dataFromJson, NoPatology];
 
-  return (
-    <View>
-      <TextInput
-        style={styles.inputSearch}
-        placeholder="Поиск"
-        onChangeText={filterData}
-        value={searchText}
-      />
-      {filteredData.map(item => (
-        <TouchableOpacity
-          key={item.value}
-          style={styles.dropdownItem}
-          onPress={() => handleSelect(item.value, item.label)}>
-          <Text style={styles.itemText}>{item.label}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
-};
 
 export default function ChoosePat({ navigation }: { navigation: any }) {
   const [selectedPathology, setSelectedPathology] = useState<string>('');
@@ -58,55 +26,49 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
     navigation.navigate('choosingBodyPart', { selectedPathology });
   };
 
-  const handleNoPathology = () => {
-    setSelectedPathology('no-pathology');
-    loadScene();
-  };
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>
-        Начните вводить патологию или нарушение необходимое к физиотерапии
-      </Text>
-      <DropdownComponent onSelect={setSelectedPathology} />
-      <Button title="Нет моей паталогии" onPress={handleNoPathology} color={'#666'} />
-      <NextButton action={loadScene}/>
+    <View style={styles.background}>
+      <View style={styles.container}>
+        <Text style={styles.guideText}>
+          Начните вводить патологию или нарушение необходимое к физиотерапии
+        </Text>
+        <DropdownComponent onSelect={setSelectedPathology} data={data} />
+        <Button title="Далее" onPress={loadScene} color={'#6CCAFF'} />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#333',
+  background: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#232323',
     alignItems: 'center',
-    paddingTop: 20,
+    padding: sideMargin
   },
-  text: {
-    textAlign: 'center',
-    color: '#fff',
-    fontSize: 19,
+  scrollbar: {
+    backgroundColor: '#FFFFFF',
+    width: 9,
+    borderColor: '#343434',
+    borderWidth: 2,
+    height: '100%'
+  },
+  container: {
+    alignItems: 'center',
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    padding: sideMargin
+  },
+  guideText: {
     fontFamily: 'Inter',
     fontWeight: '300',
-    marginBottom: 20,
-  },
-  inputSearch: {
-    height: 40,
-    borderColor: '#666',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
+    fontSize: 23,
+    color: '#FFFFFF',
+    marginTop: 10,
     marginBottom: 10,
-    color: '#fff',
-    backgroundColor: '#333',
-  },
-  dropdownItem: {
-    backgroundColor: '#6CCAFF',
-    padding: 10,
-    marginBottom: 5,
-    borderRadius: 5,
-  },
-  itemText: {
-    color: '#fff',
-  },
+    flexWrap: 'wrap',
+    width: '100%'
+  }
 });
