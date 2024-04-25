@@ -44,7 +44,8 @@ const stylesSelected = StyleSheet.create({
       color: '#B6FFFB',
       fontSize: 19,
       fontWeight: '300',
-      fontFamily: 'Inter'
+      fontFamily: 'Inter',
+      width: '90%'
     },
     image: {
         width: 25,
