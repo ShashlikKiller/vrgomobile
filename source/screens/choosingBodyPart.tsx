@@ -100,8 +100,8 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
         </TouchableOpacity>
       </View>
       <View style={styles.bottom_btn_navbar}>
-      <BackButton action={loadScene} />
-        <NextButton action={loadExerciseScene} />
+      {/* <BackButton action={loadScene} /> */}
+      <NextButton action={loadExerciseScene} />
       </View>
       <View style={styles.bodypartsview}>
         <View pointerEvents='none' style={{alignSelf: 'center', marginBottom: 5 }}>

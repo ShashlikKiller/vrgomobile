@@ -8,7 +8,7 @@ interface ButtonProps {
 
 export const NextButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/NextButton.svg')}>
+        <ImageBackground source={require('@images/button/NextButton.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
@@ -16,7 +16,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
 
   export const BackButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/BackButton.svg')}>
+        <ImageBackground source={require('@images/button/BackButton.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
@@ -24,7 +24,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
 
   export const NextExerciseButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/NextExerciseButton.svg')}>
+        <ImageBackground source={require('@images/button/NextExerciseButton.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
@@ -32,15 +32,15 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
 
   export const ContinueExerciseButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/ContinueExerciseButton.svg')}>
+        <ImageBackground source={require('@images/button/ContinueExerciseButton.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
   };
 
-  export const MainScreenButton: React.FC<ButtonProps> = ({action}) => {
+  export const ToMainScreenButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/MainScreenButton.svg')}>
+        <ImageBackground source={require('@images/button/ToMainScreenButton.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
@@ -48,7 +48,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
 
   export const NextDarkButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/NextDarkButton.svg')}>
+        <ImageBackground source={require('@images/button/NextButtonDark.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
@@ -56,7 +56,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
 
   export const StartButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/StartButton.svg')}>
+        <ImageBackground source={require('@images/button/StartButton.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
@@ -64,7 +64,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
 
   export const StartExercisesButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/StartExercisesButton.svg')}>
+        <ImageBackground source={require('@images/button/StartExercisesButton.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
@@ -72,7 +72,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
 
   export const StepBackButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/StepBackButton.svg')}>
+        <ImageBackground source={require('@images/button/StepBackButton.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
@@ -80,7 +80,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
 
   export const UnderstandButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/UnderstandButton.svg')}>
+        <ImageBackground source={require('@images/button/UnderstandButton.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
@@ -88,7 +88,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
 
   export const HelpButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/HelpButton.svg')}>
+        <ImageBackground source={require('@images/button/HelpButton.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_next} onPress={action}/>
         </ImageBackground>
     );
