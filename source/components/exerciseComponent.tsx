@@ -3,6 +3,7 @@ import { Image, Dimensions, View, StyleSheet, Text, Button, ScrollView } from 'r
 import ExerciseStep from '@components/exerciseStep';
 import { Session } from '@models/Session';
 import { Exercise } from '@models/Exercise';
+import { NextButton } from './buttonsComponent';
 
 // interface Exercise {
 //   images: string;
@@ -11,13 +12,14 @@ import { Exercise } from '@models/Exercise';
 // }
 
 interface Props {
-  _exercise: Exercise;
+  _navigation: any
+  // _exercise: Exercise;
 }
 
 const { width: disp_width, height: disp_height } = Dimensions.get('window');
 // Получаем разрешение экрана
 
-const ExerciseComponent: React.FC<Props> = ({ _exercise }) => { 
+const ExerciseComponent: React.FC<Props> = ({ _navigation }) => { 
     const [session, setSession] = useState(new Session());
     const [currExercise, setCurrExercise] = useState(new Exercise(0,0,"",[""],""));
     const [sessionStarted, setSessionStarted] = useState(false);
@@ -37,6 +39,7 @@ const ExerciseComponent: React.FC<Props> = ({ _exercise }) => {
     };
 
     const handleStartSession = () => {
+      session.navigation = _navigation
       const emitter = session.emitter;
       emitter.addListener("refreshExercise", refreshExerciseHandler);
       emitter.addListener("refreshRunTime", refreshRunTimeHandler);
@@ -68,7 +71,7 @@ const ExerciseComponent: React.FC<Props> = ({ _exercise }) => {
             </View>
             <View style={styles1.btnContainer}> 
               <Button title={Math.ceil((runTime+300)/1000).toString()} color="#555" onPress={session.executeExercise} disabled={sessionStarted} />
-              <Button title="Далее >" onPress={session.nextExercise} color="#ddd"/> 
+              <NextButton action={session.nextExercise} /> 
             </View>
           </View>
         </ScrollView>

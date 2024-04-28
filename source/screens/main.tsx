@@ -1,4 +1,5 @@
 import { BodypartsSelected } from "@components/bodypartsSelected";
+import { StartExercisesButton } from "@components/buttonsComponent";
 import DropdownComponent from "@components/patologyDropdownComponent";
 import { useState } from "react";
 import { Button, View, Text, StyleSheet, Dimensions } from "react-native";
@@ -32,10 +33,8 @@ export default function mainScreen({navigation}: {navigation: any}) {
               <BodypartsSelected bodyparts={exampleBodyparts} onPress={loadBodyPartScene}></BodypartsSelected>
             </View>
           </View>
-          <Button
-            title="К упражнениям"
-            onPress={loadExerciseScene}
-            color={'#B6FFFB'}
+          < StartExercisesButton
+            action={loadExerciseScene}
           />
         </View>
       </View>

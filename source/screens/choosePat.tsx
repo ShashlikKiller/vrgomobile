@@ -1,3 +1,4 @@
+import { NextButton } from '@components/buttonsComponent';
 import DropdownComponent from '@components/patologyDropdownComponent';
 import React, { useState } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
@@ -33,7 +34,7 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
           Начните вводить патологию или нарушение необходимое к физиотерапии
         </Text>
         <DropdownComponent onSelect={setSelectedPathology} data={data} />
-        <Button title="Далее" onPress={loadScene} color={'#6CCAFF'} />
+        <NextButton action={loadScene}/>
       </View>
     </View>
   );

@@ -19,7 +19,7 @@ export default function doExercise({navigation}: {navigation: any}){
     return( 
         <View style={styles.container}>
           <BackButton action={clearStackAndNavigate}></BackButton>
-          <ExerciseComponent _exercise={exercise}/>
+          <ExerciseComponent _navigation={navigation}/>
         </View>
         
     );

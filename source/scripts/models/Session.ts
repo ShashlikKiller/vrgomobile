@@ -1,12 +1,14 @@
 import EventEmitter from "react-native/Libraries/vendor/emitter/EventEmitter";
 import { Exercise } from "./Exercise";
 import { Timer } from "@utils/Timer";
+import Navigate, { ClearStackAndNavigate } from "@navigations/navigate";
 
 export class Session {
     private _exerciseQueue: Exercise[];
     public emitter = new EventEmitter();
     public timer: Timer;
     private _currExercise: Exercise | undefined;
+    private _navigation: any;
 
     constructor() {
         this._exerciseQueue = [];
@@ -23,6 +25,14 @@ export class Session {
 
     public set currExercise(val) {
         this._currExercise = val
+    }
+
+    public get navigation() {
+        return this._navigation
+    }
+
+    public set navigation(val) {
+        this._navigation = val
     }
 
     // Добавление упражнения в очередь
@@ -43,6 +53,11 @@ export class Session {
     }
 
     nextExercise = () => {
+        if (this._exerciseQueue.length == 0) {
+            ClearStackAndNavigate({navigation:this.navigation, path:"mainScreen"})
+            // this.navigation.navigate('mainScreen')
+            return
+        }
         const exercise = this._exerciseQueue.shift(); // Получаем первое упражнение из очереди
         this._currExercise = exercise
         this.emitter.emit('refreshExercise', exercise)

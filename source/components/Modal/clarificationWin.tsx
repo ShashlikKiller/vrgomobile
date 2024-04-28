@@ -1,3 +1,4 @@
+import { UnderstandButton } from '@components/buttonsComponent';
 import * as React from 'react';
 import { StyleSheet, Text, Button, Modal, View} from 'react-native';
 
@@ -19,8 +20,8 @@ export default function TooltipWin({isVisibleWindow: modalWindow, header, body, 
            >
                 <Text>{header}</Text>
                 <Text>{body}</Text>
-                <Button title='Понятно' onPress={() => agreeHandler()}></Button>
-                <Button title='Понятно' onPress={() => disagreeHandler()}></Button>
+                <UnderstandButton action={() => agreeHandler()}/>
+                <UnderstandButton action={() => disagreeHandler()}/>
            </Modal>
         </View>
         
