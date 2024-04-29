@@ -1,5 +1,5 @@
-import { Exercise } from '../Exercise'
-import{IBuilder} from './IBuilder'
+import { Exercise } from '@models/Exercise'
+import{IBuilder} from '@scripts/interfaces/IBuilder'
 
 export interface ISelector<T> {
     Select(array:T[]):T[]

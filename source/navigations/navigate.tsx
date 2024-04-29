@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, CommonActions } from "@react-navigation/native";
 import doExercise from "@screens/session";
 import mainScreen from "@screens/main";
+import start from "@screens/start";
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,11 @@ export default function Navigate(initialScreen: string){
     return (
     <NavigationContainer>
         <Stack.Navigator initialRouteName={initialScreen}>
+            <Stack.Screen
+                    name="start"
+                    component={start}
+                    options={{title: 'Выбор патологии',  headerShown: false}}
+                    />
             <Stack.Screen
                 name="choosePat"
                 component={choosePat}

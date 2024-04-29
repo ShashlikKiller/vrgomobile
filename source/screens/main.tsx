@@ -1,5 +1,6 @@
 import { BodypartsSelected } from "@components/bodypartsSelected";
 import DropdownComponent from "@components/patologyDropdownComponent";
+import { DataProvider } from "@scripts/utils/DataProvider";
 import { useState } from "react";
 import { Button, View, Text, StyleSheet, Dimensions } from "react-native";
 
@@ -24,7 +25,7 @@ export default function mainScreen({navigation}: {navigation: any}) {
         <View style={styles.container}>
           <Text style={styles.text}> Ваша патология верна?</Text>
           <View style={{position: 'absolute', top: 60, zIndex: 10}}>
-          <DropdownComponent onSelect={setSelectedPathology}></DropdownComponent>
+          <DropdownComponent onSelect={setSelectedPathology} dataProvider={DataProvider.GetInstance()}></DropdownComponent>
           </View>
           <View style={{flex: 1, marginTop: '15%'}}>
             <Text style={styles.text}> Верны ли области упражнений?</Text>

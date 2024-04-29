@@ -1,4 +1,5 @@
 import DropdownComponent from '@components/patologyDropdownComponent';
+import { DataProvider } from '@scripts/utils/DataProvider';
 import React, { useState } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 
@@ -19,20 +20,19 @@ const sideMargin = 16;
 const data = [...dataFromJson, NoPatology];
 
 
-export default function ChoosePat({ navigation }: { navigation: any }) {
+export default function choosePat({ navigation }: { navigation: any }) {
   const [selectedPathology, setSelectedPathology] = useState<string>('');
 
   const loadScene = () => {
     navigation.navigate('choosingBodyPart', { selectedPathology });
   };
-
   return (
     <View style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.guideText}>
           Начните вводить патологию или нарушение необходимое к физиотерапии
         </Text>
-        <DropdownComponent onSelect={setSelectedPathology} data={data} />
+        <DropdownComponent onSelect={setSelectedPathology} dataProvider={DataProvider.GetInstance()}/>
         <Button title="Далее" onPress={loadScene} color={'#6CCAFF'} />
       </View>
     </View>

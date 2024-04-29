@@ -1,10 +1,11 @@
 // Используй в реализации AssetAsync
 export interface IDataSetter{ 
-    Set<T>(data:T, tag?:string):Promise<void>;
+    Set<T>(data:T, tag:string):Promise<void>;
 }
 
 export interface IDataGetter{ 
-    Get<T>(tag:string):Promise<T>;
+    Get<T>(tag:string):Promise<T | null>;
+    GetSerializable(tag:string):Promise<string | null>;
 }
 
 export interface IDataProvider extends IDataGetter, IDataSetter{}

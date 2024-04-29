@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from '@styles/styles';
-import { View, } from 'react-native';
+import { View } from 'react-native';
 import { Exercise } from '@models/Exercise';
 import { BackButton } from '@components/buttonsComponent';
 import ExerciseComponent from '@components/exerciseComponent';
