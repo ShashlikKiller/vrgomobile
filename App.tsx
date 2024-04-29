@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import Navigate from './source/navigations/navigate';
 import * as Font from 'expo-font';
+import { IDataProvider } from '@scripts/interfaces/content-provider/IDataProvider';
+import { DataProvider } from '@scripts/utils/DataProvider';
+import { Exercise } from '@scripts/models/Exercise';
+import { LogBox } from "react-native"
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);

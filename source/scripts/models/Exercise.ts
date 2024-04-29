@@ -1,4 +1,6 @@
-export class Exercise{
+
+
+export class Exercise implements ISerializable{
     private _description: string;
     private _instruction: string[];
     private _images: string;
@@ -10,6 +12,22 @@ export class Exercise{
         this._images = images;
         this._execTimeSec = execTimeSec;
         this.exerciseCompleted = () => {};
+    }
+    serialize(): string {
+        return JSON.stringify(this);
+    }
+    deserialize(data: string): void {
+        try{
+            const { description, instruction, images, execTimeSec } = JSON.parse(data);
+            this._description = description;
+            this._instruction = instruction;
+            this._images = images;
+            this._execTimeSec = execTimeSec;
+        }
+        catch{
+            console.debug("Serialization errors Exercise");
+        }
+
     }
 
     get description(){
@@ -55,5 +73,6 @@ export class Exercise{
             this.exerciseCompleted(); // Вызываем событие завершения упражнения
         }, 2000);
     }
+
 
 }
