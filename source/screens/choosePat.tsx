@@ -1,7 +1,8 @@
 import { NextButton } from '@components/buttonsComponent';
 import DropdownComponent from '@components/patologyDropdownComponent';
+import { NavigationContext } from '@navigations/navigate';
 import { DataProvider } from '@scripts/utils/DataProvider';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 
 const dataFromJson = [ // Здесь мы берем откуда-то массив патологий
@@ -24,6 +25,10 @@ const data = [...dataFromJson, NoPatology];
 export default function choosePat({ navigation }: { navigation: any }) {
   const [selectedPathology, setSelectedPathology] = useState<string>('');
 
+  const { data, setData } = useContext(NavigationContext);
+  
+  let dataProvider = data.dataProvider;
+  
   const loadScene = () => {
     navigation.navigate('choosingBodyPart', { selectedPathology });
   };
@@ -33,7 +38,7 @@ export default function choosePat({ navigation }: { navigation: any }) {
         <Text style={styles.guideText}>
           Начните вводить патологию или нарушение необходимое к физиотерапии
         </Text>
-        <DropdownComponent onSelect={setSelectedPathology} dataProvider={DataProvider.GetInstance()/>
+        <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}/>
         <NextButton action={loadScene}/>
       </View>
     </View>

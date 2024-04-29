@@ -1,11 +1,21 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Dimensions} from 'react-native';
 import Checkbox from 'expo-checkbox';
-import { HelpButton, UnderstandButton, BackButton, NextButton } from '@components/buttonsComponent';
+import { HelpButton, UnderstandButton, NextButton } from '@components/buttonsComponent';
+import { NavigationContext } from '@navigations/navigate';
+import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
 
 // Получаем разрешение экрана
 const { width: disp_width, height: disp_height } = Dimensions.get('window');
+
+export type ChoseBodyPart = {
+   isCheckedRightHand : Boolean,
+   isCheckedLeftHand : Boolean,
+   isCheckedRightLeg : Boolean,
+   isCheckedLeftLeg : Boolean,
+}
+
 
 export default function choosingBodyPart({navigation}: {navigation: any}) {
 
@@ -18,13 +28,21 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
   const [isCheckedRightLeg, CheckRightLeg] = useState(false);
   const [isCheckedLeftLeg, CheckLeftLeg] = useState(false);
 
-
-  //let fileIO: FileIO = new FileIO()
+  const { data, setData } = useContext(NavigationContext);
+  
+  let dataProvider = data.dataProvider as IDataProvider;
 
   const loadScene = () => {
     navigation.navigate('choosePat')
   }
   const loadExerciseScene = () => {
+    let chose: ChoseBodyPart = {
+      isCheckedRightHand: isCheckedRightHand,
+      isCheckedLeftHand: isCheckedLeftHand,
+      isCheckedRightLeg: isCheckedRightLeg,
+      isCheckedLeftLeg: isCheckedLeftLeg,
+  };
+  dataProvider.Set(chose, Path.choseBodyPart);
     navigation.navigate('doExercise')
   }
 

@@ -1,16 +1,21 @@
-import { DataProvider } from "@scripts/utils/DataProvider";
-import { useEffect } from "react";
+import { ClearStackAndNavigate, NavigationContext } from "@navigations/navigate";
+import { IDataProvider, Path } from "@scripts/interfaces/content-provider/IDataProvider";
+import { useContext, useEffect } from "react";
+import { View } from "react-native";
 
 export default function Start({ navigation }: { navigation: any }) {
+    const { data, setData } = useContext(NavigationContext);
+  
+    let dataProvider = data.dataProvider as IDataProvider;
     useEffect(()=>{
-        let dataProvider = DataProvider.GetInstance();
-        dataProvider.GetSerializable('patology')
+    
+        dataProvider.GetSerializable(Path.pathology)
         .then(result => {
             if(result != null){
-                navigation.navigate('mainScreen');
+                ClearStackAndNavigate(navigation, 'mainScreen');
                 return;
             }
-            navigation.navigate('choosePat');
+            ClearStackAndNavigate(navigation, 'choosePat');
         })
         .catch(error=>{
             console.assert(error);
@@ -18,5 +23,5 @@ export default function Start({ navigation }: { navigation: any }) {
     },[]);
 
 
-    return("");
+    return(<View/>);
   }

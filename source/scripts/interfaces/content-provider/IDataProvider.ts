@@ -9,3 +9,8 @@ export interface IDataGetter{
 }
 
 export interface IDataProvider extends IDataGetter, IDataSetter{}
+
+export enum Path{
+    choseBodyPart = "ChoseBodyPart",
+    pathology = "pathology",
+}

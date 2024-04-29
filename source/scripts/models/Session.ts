@@ -54,9 +54,8 @@ export class Session {
 
     nextExercise = () => {
         if (this._exerciseQueue.length == 0) {
-            ClearStackAndNavigate({navigation:this.navigation, path:"mainScreen"})
-            // this.navigation.navigate('mainScreen')
-            return
+            ClearStackAndNavigate(this.navigation, "mainScreen");
+            return;
         }
         const exercise = this._exerciseQueue.shift(); // Получаем первое упражнение из очереди
         this._currExercise = exercise
@@ -65,26 +64,5 @@ export class Session {
 
     notifyExerciseIsOver() {
 
-    }
-
-    // Выполнение упражнений в очереди
-    start():void {
-        // const interval = setInterval(() => {
-        //     const exercise = this._exerciseQueue.shift(); // Получаем первое упражнение из очереди
-        //     if (exercise) {
-        //         this.emitter.emit('refreshExercise', exercise);
-        //         exercise.execute(); // Выполняем упражнение
-        //         exercise.exerciseCompleted = () => {
-        //             if (this._exerciseQueue.length === 0) {
-        //                 clearInterval(interval); // Остановить интервал, если очередь пуста
-        //             } else {
-        //                 this.start(); // Переходим к следующему упражнению
-        //             }
-        //         };
-        //     } else {
-        //         clearInterval(interval); // Остановить интервал, если очередь пуста
-        //     }
-        // }, 1000);
-        
     }
 }
