@@ -1,3 +1,4 @@
+import { NextButton } from '@components/buttonsComponent';
 import DropdownComponent from '@components/patologyDropdownComponent';
 import { DataProvider } from '@scripts/utils/DataProvider';
 import React, { useState } from 'react';
@@ -32,8 +33,8 @@ export default function choosePat({ navigation }: { navigation: any }) {
         <Text style={styles.guideText}>
           Начните вводить патологию или нарушение необходимое к физиотерапии
         </Text>
-        <DropdownComponent onSelect={setSelectedPathology} dataProvider={DataProvider.GetInstance()}/>
-        <Button title="Далее" onPress={loadScene} color={'#6CCAFF'} />
+        <DropdownComponent onSelect={setSelectedPathology} dataProvider={DataProvider.GetInstance()/>
+        <NextButton action={loadScene}/>
       </View>
     </View>
   );
