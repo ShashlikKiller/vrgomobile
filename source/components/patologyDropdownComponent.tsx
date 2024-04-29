@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {PatologyElement, NoPatologyElement, SelectedPatology} from '@components/patologyElement';
 import { View, TextInput, ScrollView, StyleSheet, Dimensions, } from 'react-native';
-import { IDataProvider } from '@scripts/interfaces/content-provider/IDataProvider';
+import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
 import { DataProvider } from '@scripts/utils/DataProvider';
 
 const { width: disp_width } = Dimensions.get('window');
@@ -38,7 +38,7 @@ export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [isFocused, setIsFocused] = useState(false); // Фокус ввода текста
     useEffect(()=>{
-      dataProvider.Get<Item>('patology').then(result=> {
+      dataProvider.Get<Item>(Path.pathology).then(result=> {
           setSelectedItem(result);
       })
     }, []);
@@ -64,8 +64,9 @@ export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
         setFilteredData(data); 
         //
         setSelectedItem(selectedItem);
-        console.debug(selectedItem);
-        dataProvider.Set(selectedItem, "patology")
+
+        dataProvider.Set(selectedItem, Path.pathology);
+        
         setIsFocused(false);
       }
     };

@@ -1,4 +1,4 @@
-import { ClearStackAndNavigate, NavigationContext } from "@navigations/navigate";
+import { ClearStackAndNavigate, NavigationContext, Screens } from "@navigations/navigate";
 import { IDataProvider, Path } from "@scripts/interfaces/content-provider/IDataProvider";
 import { useContext, useEffect } from "react";
 import { View } from "react-native";
@@ -11,11 +11,13 @@ export default function Start({ navigation }: { navigation: any }) {
     
         dataProvider.GetSerializable(Path.pathology)
         .then(result => {
+
             if(result != null){
-                ClearStackAndNavigate(navigation, 'mainScreen');
+                ClearStackAndNavigate(navigation, Screens.mainScreen);
                 return;
             }
-            ClearStackAndNavigate(navigation, 'choosePat');
+            console.debug(result);
+            ClearStackAndNavigate(navigation, Screens.choosePat);
         })
         .catch(error=>{
             console.assert(error);

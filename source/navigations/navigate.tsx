@@ -23,27 +23,27 @@ export default function Navigate(initialScreen: string){
         <NavigationContext.Provider value={{data, setData}}>
         <Stack.Navigator initialRouteName={initialScreen}>
             <Stack.Screen
-                    name="start"
+                    name={Screens.start}
                     component={start}
                     options={{title: 'Выбор патологии',  headerShown: false}}
                     />
             <Stack.Screen
-                name="choosePat"
+                name={Screens.choosePat}
                 component={choosePat}
                 options={{title: 'Выбор патологии',  headerShown: false}}
                 />
             <Stack.Screen
-                name="choosingBodyPart"
+                name={Screens.choosingBodyPart}
                 component={choosingBodyPart}
                 options={{title: 'Выбор части тела',  headerShown: false}}
                 />
             <Stack.Screen 
-                name="doExercise"
+                name= {Screens.doExercise}
                 component={doExercise}
                 options={{ headerShown: false }}
             />
             <Stack.Screen 
-                name="mainScreen"
+                name={Screens.mainScreen}
                 component={mainScreen}
                 options={{ headerShown: false }}
             />
@@ -58,7 +58,15 @@ export function ClearStackAndNavigate(navigation : any , path: string) {
          index: 0,
          routes: [{name: path}]
     }))
-    console.log(1);
+    console.log(path);
     //navigation.push(path)
     return () => navigation.popToTop()
+}
+
+export enum Screens{
+    start = "start",
+    choosePat = "choosePat",
+    choosingBodyPart = "choosingBodyPart",
+    doExercise = "doExercise",
+    mainScreen = "mainScreen",
 }
