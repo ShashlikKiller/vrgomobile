@@ -33,7 +33,7 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
         <Text style={styles.guideText}>
           Начните вводить патологию или нарушение необходимое к физиотерапии
         </Text>
-        {/* <DropdownComponent onSelect={setSelectedPathology} data={data} /> */}
+          {/* <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}/> */}
         <NextButton action={loadScene}/>
       </View>
     </View>
