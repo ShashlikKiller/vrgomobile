@@ -42,6 +42,7 @@ export default function choosePat({ navigation }: { navigation: any }) {
         <NextButton action={loadScene}/>
       </View>
     </View>
+    
   );
 }
 
