@@ -3,7 +3,7 @@ import { Image, Dimensions, View, StyleSheet, Text, Button, ScrollView } from 'r
 import ExerciseStep from '@components/exerciseStep';
 import { Session } from '@models/Session';
 import { Exercise } from '@models/Exercise';
-import { NextButton } from './buttonsComponent';
+import { NextButton, StartButton, StartButtonEmpty } from './buttonsComponent';
 
 // interface Exercise {
 //   images: string;
@@ -69,9 +69,13 @@ const ExerciseComponent: React.FC<Props> = ({ _navigation }) => {
           <ExerciseStep stepNumb={stepNumb+1} step={step}> </ExerciseStep>
         ))}
             </View>
-            <View style={styles1.btnContainer}> 
-              <Button title={Math.ceil((runTime+300)/1000).toString()} color="#555" onPress={session.executeExercise} disabled={sessionStarted} />
-              <NextButton action={session.nextExercise} /> 
+            <View style={styles1.btnContainer}>
+              <View style={{width: disp_width * 1 / 2 * 0.851, height: disp_height / 16}}>
+                <StartButtonEmpty action={session.executeExercise} title={Math.ceil((runTime+300)/1000).toString()} disabled={sessionStarted}/>
+              </View>
+              <View style={{width: disp_width * 2 / 3 * 0.668}} >
+                <NextButton action={session.nextExercise}/> 
+              </View>
             </View>
           </View>
         </ScrollView>
