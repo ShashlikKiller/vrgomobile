@@ -6,11 +6,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, CommonActions } from "@react-navigation/native";
 import doExercise from "@screens/session";
 import mainScreen from "@screens/main";
+import { StatusBar } from "expo-status-bar";
 
 const Stack = createStackNavigator();
 
 export default function Navigate(initialScreen: string){
     return (
+        <>
+        <StatusBar style="light" backgroundColor="black"/>
     <NavigationContainer>
         <Stack.Navigator initialRouteName={initialScreen}>
             <Stack.Screen
@@ -35,6 +38,7 @@ export default function Navigate(initialScreen: string){
             />
         </Stack.Navigator>
     </NavigationContainer>
+    </>
     )
 }
 
