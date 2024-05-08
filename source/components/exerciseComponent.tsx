@@ -12,14 +12,14 @@ import { NextButton, StartButton, StartButtonEmpty } from './buttonsComponent';
 // }
 
 interface Props {
-  _navigation: any
+  navigation: any
   // _exercise: Exercise;
 }
 
 const { width: disp_width, height: disp_height } = Dimensions.get('window');
 // Получаем разрешение экрана
 
-const ExerciseComponent: React.FC<Props> = ({ _navigation }) => { 
+const ExerciseComponent: React.FC<Props> = ({ navigation }) => { 
     const [session, setSession] = useState(new Session());
     const [currExercise, setCurrExercise] = useState(new Exercise(0,0,"",[""],""));
     const [sessionStarted, setSessionStarted] = useState(false);
@@ -39,7 +39,7 @@ const ExerciseComponent: React.FC<Props> = ({ _navigation }) => {
     };
 
     const handleStartSession = () => {
-      session.navigation = _navigation
+      session.navigation = navigation
       const emitter = session.emitter;
       emitter.addListener("refreshExercise", refreshExerciseHandler);
       emitter.addListener("refreshRunTime", refreshRunTimeHandler);

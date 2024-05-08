@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {PatologyElement, NoPatologyElement, SelectedPatology} from '@components/patologyElement';
 import { View, TextInput, ScrollView, StyleSheet, Dimensions, } from 'react-native';
+import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
+import { DataProvider } from '@scripts/utils/DataProvider';
 
 const { width: disp_width } = Dimensions.get('window');
 const sideMargin = 16;
@@ -26,15 +28,20 @@ interface Item {
 
 interface DropdownProps {
     onSelect: (value: string) => void;
+    dataProvider: IDataProvider;
     //data: Item[];
 }
 
-export const DropdownComponent = ({ onSelect }: DropdownProps) => {
+export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
     const [searchText, setSearchText] = useState('');
     const [filteredData, setFilteredData] = useState(data);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [isFocused, setIsFocused] = useState(false); // Фокус ввода текста
-  
+    useEffect(()=>{
+      dataProvider.Get<Item>(Path.pathology).then(result=> {
+          setSelectedItem(result);
+      })
+    }, []);
     const filterData = (text: string) => {
       const filtered = data.filter(item =>
         item.label.toLowerCase().includes(text.toLowerCase())
@@ -57,6 +64,9 @@ export const DropdownComponent = ({ onSelect }: DropdownProps) => {
         setFilteredData(data); 
         //
         setSelectedItem(selectedItem);
+
+        dataProvider.Set(selectedItem, Path.pathology);
+        
         setIsFocused(false);
       }
     };

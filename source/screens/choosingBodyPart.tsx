@@ -1,12 +1,21 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Dimensions, Button} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { HelpButton, UnderstandButton, BackButton, NextButton, NextButtonDark } from '@components/buttonsComponent';
-//import { FileIO } from '../Model/FileIO';
+import { useContext, useState } from 'react';
+import { NavigationContext } from '@navigations/navigate';
+import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
 
-const { width: disp_width, height: disp_height } = Dimensions.get('window');
 // Получаем разрешение экрана
+const { width: disp_width, height: disp_height } = Dimensions.get('window');
+
+export type ChoseBodyPart = {
+   isCheckedRightHand : Boolean,
+   isCheckedLeftHand : Boolean,
+   isCheckedRightLeg : Boolean,
+   isCheckedLeftLeg : Boolean,
+}
+
 
 export default function choosingBodyPart({navigation}: {navigation: any}) {
 
@@ -19,17 +28,21 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
   const [isCheckedRightLeg, CheckRightLeg] = useState(false);
   const [isCheckedLeftLeg, CheckLeftLeg] = useState(false);
 
-
-  //let fileIO: FileIO = new FileIO()
+  const { data, setData } = useContext(NavigationContext);
+  
+  let dataProvider = data.dataProvider as IDataProvider;
 
   const loadScene = () => {
     navigation.navigate('choosePat')
   }
   const loadExerciseScene = () => {
-    // пишем в файл, что паталогии и части тела назначены p.s. не работает в браузере
-    // fileIO.Set(1 ,"./View/have_pat.txt")
-    // .then(() => console.log("success"))
-    // .catch(function(e) {console.log(e)})
+    let chose: ChoseBodyPart = {
+      isCheckedRightHand: isCheckedRightHand,
+      isCheckedLeftHand: isCheckedLeftHand,
+      isCheckedRightLeg: isCheckedRightLeg,
+      isCheckedLeftLeg: isCheckedLeftLeg,
+  };
+  dataProvider.Set(chose, Path.choseBodyPart);
     navigation.navigate('doExercise')
   }
 
@@ -47,24 +60,12 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
                value={isCheckedModalWin}
                onValueChange={setCheckedModalWin}
                color={isCheckedModalWin ? '#4630EB' : undefined}/>
-
            <Text>Больше не показывать</Text>
-
            <UnderstandButton action={() => setModalWindow(false)}></UnderstandButton>
-
        </Modal>
-
     <View style={{...styles.container}}>
       <View style={styles.row}>
-      <TouchableOpacity 
-      style=
-      {
-        {
-        ...styles.expanded, 
-        backgroundColor: isCheckedRightHand ? '#393220' : '#323939'
-        }
-      } 
-      onPress={() => CheckRightHand(!isCheckedRightHand)}>
+      <TouchableOpacity style={{...styles.expanded, backgroundColor: isCheckedRightHand ? '#393220' : '#323939'}} onPress={() => CheckRightHand(!isCheckedRightHand)}>
             <View style={{flex: 1, justifyContent: 'flex-start'}}>
               <Text style={{...styles.sideText, textAlign: 'left', marginLeft: 15, marginTop: 15}}>Правая</Text>
               <Text style={{...styles.sideText, textAlign: 'left', marginLeft: 15}}>Сторона</Text>

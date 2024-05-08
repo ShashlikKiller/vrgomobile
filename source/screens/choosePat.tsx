@@ -1,25 +1,30 @@
 import { NextButton } from '@components/buttonsComponent';
 import DropdownComponent from '@components/patologyDropdownComponent';
-import React, { useState } from 'react';
+import { NavigationContext } from '@navigations/navigate';
+import { DataProvider } from '@scripts/utils/DataProvider';
+import React, { useContext, useState } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 
 const sideMargin = 16;
 
 
-export default function ChoosePat({ navigation }: { navigation: any }) {
+export default function choosePat({ navigation }: { navigation: any }) {
   const [selectedPathology, setSelectedPathology] = useState<string>('');
 
+  const { data, setData } = useContext(NavigationContext);
+  
+  let dataProvider = data.dataProvider;
+  
   const loadScene = () => {
     navigation.navigate('choosingBodyPart', { selectedPathology });
   };
-
   return (
     <View style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.guideText}>
           Начните вводить патологию или нарушение необходимое к физиотерапии
         </Text>
-          <DropdownComponent onSelect={setSelectedPathology}/>
+        <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}/>
         <NextButton action={loadScene}/>
       </View>
     </View>
