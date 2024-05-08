@@ -1,8 +1,6 @@
 import * as React from 'react';
-import styles from '@styles/styles';
-import { View } from 'react-native';
-import { Exercise } from '@models/Exercise';
-import { BackButton } from '@components/buttonsComponent';
+import { View, StyleSheet} from 'react-native';
+import { BackButtonLittle } from '@components/buttonsComponent';
 import ExerciseComponent from '@components/exerciseComponent';
 import { ClearStackAndNavigate } from '@navigations/navigate';
 
@@ -17,9 +15,15 @@ export default function doExercise({navigation}: {navigation: any}){
   }
     return( 
         <View style={styles.container}>
-          <BackButton action={clearStackAndNavigate}></BackButton>
+          <BackButtonLittle action={clearStackAndNavigate}></BackButtonLittle>
           <ExerciseComponent navigation={navigation} />
         </View>
-
     );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#232323'
+  }
+})

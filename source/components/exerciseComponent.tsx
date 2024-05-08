@@ -3,7 +3,7 @@ import { Image, Dimensions, View, StyleSheet, Text, Button, ScrollView } from 'r
 import ExerciseStep from '@components/exerciseStep';
 import { Session } from '@models/Session';
 import { Exercise } from '@models/Exercise';
-import { NextButton } from './buttonsComponent';
+import { NextButton, StartButton, StartButtonEmpty } from './buttonsComponent';
 
 // interface Exercise {
 //   images: string;
@@ -44,8 +44,8 @@ const ExerciseComponent: React.FC<Props> = ({ navigation }) => {
       emitter.addListener("refreshExercise", refreshExerciseHandler);
       emitter.addListener("refreshRunTime", refreshRunTimeHandler);
 
-      session.enqueue(new Exercise(1, 5, "ddddd",["sdsdsd", "ssss"], "https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album"))
-      session.enqueue(new Exercise(1, 5, "hehe",["11!!111!!", "ccc"], "https://sun9-31.userapi.com/impg/Y-Ku1XquxYqhBCfDKIT2CnBxrbJtXWjkRn_pAQ/Oio67jyEWjk.jpg?size=2560x1920&quality=95&sign=ce8af5cd150fa7eae9679a4298840bf9&type=album"))
+      session.enqueue(new Exercise(1, 5, "Поставьте две бутылки на расстоянии 1,5 м,",["Пройдите над бутылками гемиплегичной ногой.", "Развернитесь и начните снова"], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"))
+      session.enqueue(new Exercise(1, 5, "Передвиньте бутылки на 2 метра вперед,",["Сделайте шаг назад, затем влево и вправо", "Посмотрите в окно и послушайте это весеннее чириканье птичек,", "Насладитесь этим прекрасным днем."], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"))
 
       session.nextExercise()
       setSession(session)
@@ -58,98 +58,54 @@ const ExerciseComponent: React.FC<Props> = ({ navigation }) => {
     }, []);
 
     return (
-        <ScrollView style={styles1.body}>
-          <View style={styles1.content}>
-            <Text style={styles1.instructions}>{exDescription}</Text>
-            <View style={styles1.imageContainer}>
-              <Image style={styles1.image} resizeMode='contain' source={{uri: exImages }}/>
-            </View>
+      <>
+        <ScrollView style={styles.body}>
+          <View style={styles.content}>
+            <Text style={styles.instructions}>{exDescription}</Text>
+              <Image style={styles.image} source={{uri: exImages }}/>
             <View>
         {exInstrution?.map((step: string, stepNumb: number) => (
           <ExerciseStep stepNumb={stepNumb+1} step={step}> </ExerciseStep>
         ))}
-            </View>
-            <View style={styles1.btnContainer}> 
-              <Button title={Math.ceil((runTime+300)/1000).toString()} color="#555" onPress={session.executeExercise} disabled={sessionStarted} />
-              <NextButton action={session.nextExercise} /> 
-            </View>
+          </View>
           </View>
         </ScrollView>
+        <View style={styles.btnContainer}>
+          <View style={{width: disp_width * 1 / 2 * 0.851, height: disp_height / 16}}>
+            <StartButtonEmpty action={session.executeExercise} title={Math.ceil((runTime+300)/1000).toString()} disabled={sessionStarted}/>
+          </View>
+          <View style={{width: disp_width * 2 / 3 * 0.668}} >
+            <NextButton action={session.nextExercise}/> 
+          </View>
+        </View>
+        </>
       );
     };
     
-    const styles1 = StyleSheet.create({
+    const styles = StyleSheet.create({
       body: {
-        //backgroundColor: '#232323',
-        //color: 'white',
-        //fontFamily: 'Arial',
         flex: 1,
-
-      },
-      navbar: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        margin: 20,
       },
       content: {
-        margin: 20,
-        flexGrow: 1,
-        alignContent: 'center',
-        verticalAlign: 'middle'
+        margin: 16
       },
       instructions: {
-        marginBottom: 20,
-
         color: '#CFCFCF',
         fontSize: 18,
         fontFamily: 'RobotoMono',
         fontWeight: '300'
       },
-      steps: {
-        //listStyleType: 'none',
-        fontSize: 40,
-        flex: 1
-      },
-      step: {
-        position: 'relative',
-        fontSize: 40,
-        flex: 1
-      },
-      btn: {
-        backgroundColor: '#ddd',
-        color: 'black',
-        padding: 20,
-        textAlign: 'center',
-        textDecorationLine: 'none',
-        maxHeight: 50,
-        //display: 'inline-block',
-        margin: 4,
-        flex: 1
-        //cursor: 'pointer',
-      },
-      btnTimer: {
-        backgroundColor: '#555',
-        color: 'white',
-        flex: 1
-      },
       btnContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignContent: 'flex-end',
+        marginBottom: 10
       },
       image: {
-        flex: 1,
-        resizeMode: 'contain',
-        width: '100%',
-        height: '100%'
-
-      },
-      imageContainer: {
-        flex: 1,
-        alignSelf: 'center',
-        marginBottom: 30,
-        marginTop: 30,
-        width: disp_width - 40,
-        aspectRatio: 1
+        aspectRatio: 1.5,
+        width: disp_width - 32,
+        marginTop: 20,
+        marginBottom: 20
       },
       text: {
         fontSize: 19,

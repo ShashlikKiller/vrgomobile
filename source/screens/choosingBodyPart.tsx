@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
-import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Dimensions} from 'react-native';
+import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Dimensions, Button} from 'react-native';
 import Checkbox from 'expo-checkbox';
-import { HelpButton, UnderstandButton, NextButton } from '@components/buttonsComponent';
+import { HelpButton, UnderstandButton, BackButton, NextButton, NextButtonDark } from '@components/buttonsComponent';
+import { useContext, useState } from 'react';
 import { NavigationContext } from '@navigations/navigate';
 import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
 
@@ -101,8 +101,8 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
         </TouchableOpacity>
       </View>
       <View style={styles.bottom_btn_navbar}>
-      {/* <BackButton action={loadScene} /> */}
-      <NextButton action={loadExerciseScene} />
+      <BackButton action={loadScene} />
+      <NextButtonDark action={loadExerciseScene} />
       </View>
       <View style={styles.bodypartsview}>
         <View pointerEvents='none' style={{alignSelf: 'center', marginBottom: 5 }}>

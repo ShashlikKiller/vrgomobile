@@ -6,11 +6,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, CommonActions } from "@react-navigation/native";
 import doExercise from "@screens/session";
 import mainScreen from "@screens/main";
+
+import { StatusBar } from "expo-status-bar";
 import start from "@screens/start";
 import { DataProvider } from "@scripts/utils/DataProvider";
 
 // Создаем контекст
 export const NavigationContext = createContext<any>(null);
+
 
 const Stack = createStackNavigator();
 
@@ -19,6 +22,8 @@ export default function Navigate(initialScreen: string){
     const [data, setData] = useState({ dataProvider: DataProvider.GetInstance() });
     
     return (
+        <>
+        <StatusBar style="light" backgroundColor="black"/>
     <NavigationContainer>
         <NavigationContext.Provider value={{data, setData}}>
         <Stack.Navigator initialRouteName={initialScreen}>
@@ -50,6 +55,7 @@ export default function Navigate(initialScreen: string){
         </Stack.Navigator>
         </NavigationContext.Provider>
     </NavigationContainer>
+    </>
     )
 }
 

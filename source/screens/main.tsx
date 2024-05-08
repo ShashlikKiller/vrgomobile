@@ -68,7 +68,7 @@ export default function mainScreen({navigation}: {navigation: any}) {
               <BodypartsSelected bodyparts={selectedBodyParts} onPress={loadBodyPartScene}></BodypartsSelected>
             </View>
           </View>
-          < StartExercisesButton
+          <StartExercisesButton
             action={loadExerciseScene}
           />
         </View>

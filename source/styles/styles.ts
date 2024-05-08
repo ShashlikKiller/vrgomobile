@@ -1,6 +1,10 @@
 import { StyleSheet } from 'react-native';
 // import styles from './styles'; - вот так получать потом
 
+import { Dimensions } from 'react-native';
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
 export default StyleSheet.create({
   // Универсальные стили
     container: {
@@ -15,9 +19,49 @@ export default StyleSheet.create({
     fontWeight: '300',
     flexWrap: 'wrap' // break-word
   },
+  btn_1of3_wide: {
+    width: screenWidth / 3,
+    height: screenHeight / 16,
+    padding: 8,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btn_3of3_wide: {
+    width: screenWidth - 40,
+    height: screenHeight / 16,
+    padding: 8,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btn_2of3_wide: {
+    width: screenWidth * 2 / 3 ,
+    height: screenHeight / 16,
+    padding: 8,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btn_1of2_wide: {
+    width: screenWidth / 2 , 
+    height: screenHeight / 16,
+    padding: 8,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btn_1of6_wide: {
+    width: screenWidth / 6 ,
+    height: screenHeight / 16,
+    padding: 8,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   btn_next: { // Надо обернуть ее через <ImageBackground> в svgшку кнопки
-    width: 328,
-    height: 46,
+    width: 1,
+    height: 1,
     padding: 8,
     backgroundColor: 'transparent',
     justifyContent: 'center',

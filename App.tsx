@@ -1,10 +1,6 @@
 import { useState } from 'react';
-import Navigate from './source/navigations/navigate';
+import Navigate, { Screens } from './source/navigations/navigate';
 import * as Font from 'expo-font';
-import { IDataProvider } from '@scripts/interfaces/content-provider/IDataProvider';
-import { DataProvider } from '@scripts/utils/DataProvider';
-import { Exercise } from '@scripts/models/Exercise';
-import { LogBox } from "react-native"
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -21,15 +17,8 @@ export default function App() {
 
   if (!fontsLoaded) {
     loadFonts();
-    return Navigate('choosePat');
+    return Navigate(Screens.start);
   }
 
-  // нужно будет брать флаг из файла, выбраны ли части тела и патологии или нет 
-  // например, это первый вход и ещё ничто НЕ выбрано, поэтому false
-  if (true) { 
-    return Navigate('choosePat')
-  } else {
-    return Navigate('mainScreen')
-  }
-
+  return Navigate(Screens.start);
 }
