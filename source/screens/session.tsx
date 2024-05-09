@@ -3,7 +3,8 @@ import { View, StyleSheet} from 'react-native';
 import { BackButtonLittle } from '@components/buttonsComponent';
 import ExerciseComponent from '@components/exerciseComponent';
 import { ClearStackAndNavigate } from '@navigations/navigate';
-
+import TooltipWin from '@components/Modal/tooltipWin';
+import { useState } from 'react';
 
 export default function doExercise({navigation}: {navigation: any}){
   const loadScene = () => {
@@ -13,8 +14,16 @@ export default function doExercise({navigation}: {navigation: any}){
   const clearStackAndNavigate = () => {
     ClearStackAndNavigate(navigation, 'mainScreen');
   }
+
+  const text_1: string = "Желательно выполнять под присмотром или с тростью \n После ознакомления с инструкцией нажмите 'старт'"
+  const [modalWindow, setModalWindow] = useState(true);
+  const toggleModal = () => {
+    setModalWindow(!modalWindow);
+  }
+
     return( 
         <View style={styles.container}>
+          <TooltipWin modalWindow = {modalWindow} textHead = 'Инструкция' textBody = {text_1} toggleModal = {toggleModal}/>
           <BackButtonLittle action={clearStackAndNavigate}></BackButtonLittle>
           <ExerciseComponent navigation={navigation} />
         </View>

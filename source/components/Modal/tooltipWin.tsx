@@ -2,13 +2,9 @@ import * as React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, Button, Modal, View} from 'react-native';
 import Checkbox from 'expo-checkbox';
-<<<<<<<< HEAD:tooltipWin.tsx
 import { AntDesign } from '@expo/vector-icons';
-import styles from './styles/styles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-========
+import styles from '@styles/styles';
 import { UnderstandButton } from '@components/buttonsComponent';
->>>>>>>> 7d36d30b7cbab1cd9cc649e53b2012f8cf5cbf2e:source/components/Modal/tooltipWin.tsx
 
 
 interface TooltipProps { 
@@ -27,54 +23,34 @@ export default function TooltipWin({modalWindow, textHead, textBody, toggleModal
       }
 
     return(
-<<<<<<<< HEAD:tooltipWin.tsx
-            
-                <Modal
-                visible={modalWindow}
-                transparent={true}
-                >
-                    <View style={styles1.centeredView}>
-                        <View 
-                        style={styles1.modalView}>
-                            <AntDesign name='close' style={styles1.close} size={24} color='#B6FFFB' onPress={() => toggleModal()}/>
-                            <Text style={styles.textTitle}>{textHead}</Text>
-                            <Text style={styles.textModalWindow}>{textBody}</Text>
-                            <View style={styles1.row}>
-                                <Checkbox
-                                    style={styles1.checkbox}
-                                    value={isCheckedModalWin}
-                                    onValueChange={setCheckedModalWin}
-                                    color={isCheckedModalWin ? '#FFB800' : undefined}
-                                />
-                                <Text style={isCheckedModalWin ? styles.textDontShowAgainChecked : styles.textDontShowAgain}>Больше не показывать</Text>
-                            </View>
-                            <Button title='Понятно' onPress={() => close()}></Button>
-                        </View>
+        <Modal
+        visible={modalWindow}
+        transparent={true}
+        >
+            <View style={CustomStyles.centeredView}>
+                <View 
+                style={CustomStyles.modalView}>
+                    <AntDesign name='close' style={CustomStyles.close} size={24} color='#B6FFFB' onPress={() => close()}/>
+                    <Text style={styles.textTitle}>{textHead}</Text>
+                    <Text style={styles.textModalWindow}>{textBody}</Text>
+                    <View style={CustomStyles.row}>
+                        <Checkbox
+                            style={CustomStyles.checkbox}
+                            value={isCheckedModalWin}
+                            onValueChange={setCheckedModalWin}
+                            color={isCheckedModalWin ? '#FFB800' : undefined}
+                        />
+                        <Text style={isCheckedModalWin ? styles.textDontShowAgainChecked : styles.textDontShowAgain}>Больше не показывать</Text>
                     </View>
-               </Modal>
-========
-        <View>
-           <Modal
-           visible={modalWindow}
-           >
-                <Text>{textHead}</Text>
-                <Text>{textBody}</Text>
-                <Checkbox
-                   style={styles.checkbox}
-                   value={isCheckedModalWin}
-                   onValueChange={setCheckedModalWin}
-                   color={isCheckedModalWin ? '#4630EB' : undefined}
-                />
-                <Text>Больше не показывать</Text>
-                <UnderstandButton action={() => toggleModal()}></UnderstandButton>
-           </Modal>
-        </View>
+                    <UnderstandButton action ={() => close()}></UnderstandButton>
+                </View>
+            </View>
+        </Modal>
         
->>>>>>>> 7d36d30b7cbab1cd9cc649e53b2012f8cf5cbf2e:source/components/Modal/tooltipWin.tsx
     )
 }
 
-const styles1 = StyleSheet.create({
+const CustomStyles = StyleSheet.create({
     row: {
         flex: 1,
         flexDirection: "row",
@@ -119,5 +95,5 @@ const styles1 = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(0,0,0,0.5)',
-      },
+    },
 })
