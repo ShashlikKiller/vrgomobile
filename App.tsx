@@ -1,39 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Exercise } from './Model/Exercise';
-import ExerciseScreen from './View/Screens/Exercise-screen';
-
-
-
+import { useState } from 'react';
+import Navigate, { Screens } from './source/navigations/navigate';
+import * as Font from 'expo-font';
 
 export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
-  // test object
-  const Instructions = [
-    "1 шаг инструкции",
-    "2 шаг инструкции",
-    "3 шаг инструкции",
-    "4 шаг инструкции",
-  ];
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      Inter: require('@fonts/Inter-Regular.ttf'),
+      'Inter-Bold': require('@fonts/Inter-Bold.ttf'),
+      'RobotoMono': require('@fonts/RobotoMono-Regular.ttf'),
+      'RobotoMono-Bold': require('@fonts/RobotoMono-Bold.ttf'),
+    });
+    setFontsLoaded(true);
+  };
 
-let _exercise: Exercise = new Exercise(1, "Описание упражнения", Instructions, 
-"https://sun9-68.userapi.com/impg/l4BLPLtsXUEVok-wHlEquqo7LiYZxENkQc7ldg/t5zGQjoSO9Y.jpg?size=809x1080&quality=95&sign=7bd712449dd6c9f423248c4fbf890483&type=album");
-  // test object
+  if (!fontsLoaded) {
+    loadFonts();
+    return Navigate(Screens.start);
+  }
 
-
-  return (
-    <View style={styles.container}>
-            <ExerciseScreen _exercise={_exercise}></ExerciseScreen>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return Navigate(Screens.start);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

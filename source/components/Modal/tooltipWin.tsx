@@ -2,8 +2,13 @@ import * as React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, Button, Modal, View} from 'react-native';
 import Checkbox from 'expo-checkbox';
+<<<<<<<< HEAD:tooltipWin.tsx
 import { AntDesign } from '@expo/vector-icons';
-import styles from '@styles/styles';
+import styles from './styles/styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+========
+import { UnderstandButton } from '@components/buttonsComponent';
+>>>>>>>> 7d36d30b7cbab1cd9cc649e53b2012f8cf5cbf2e:source/components/Modal/tooltipWin.tsx
 
 
 interface TooltipProps { 
@@ -22,6 +27,7 @@ export default function TooltipWin({modalWindow, textHead, textBody, toggleModal
       }
 
     return(
+<<<<<<<< HEAD:tooltipWin.tsx
             
                 <Modal
                 visible={modalWindow}
@@ -46,6 +52,25 @@ export default function TooltipWin({modalWindow, textHead, textBody, toggleModal
                         </View>
                     </View>
                </Modal>
+========
+        <View>
+           <Modal
+           visible={modalWindow}
+           >
+                <Text>{textHead}</Text>
+                <Text>{textBody}</Text>
+                <Checkbox
+                   style={styles.checkbox}
+                   value={isCheckedModalWin}
+                   onValueChange={setCheckedModalWin}
+                   color={isCheckedModalWin ? '#4630EB' : undefined}
+                />
+                <Text>Больше не показывать</Text>
+                <UnderstandButton action={() => toggleModal()}></UnderstandButton>
+           </Modal>
+        </View>
+        
+>>>>>>>> 7d36d30b7cbab1cd9cc649e53b2012f8cf5cbf2e:source/components/Modal/tooltipWin.tsx
     )
 }
 
