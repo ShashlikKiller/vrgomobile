@@ -45,6 +45,7 @@ const CustomStyles = StyleSheet.create({
         marginTop: 22,
     },
     modalView: {
+        flex: 1,
         backgroundColor: '#93949A',
         borderRadius: 8,
         margin: 10,

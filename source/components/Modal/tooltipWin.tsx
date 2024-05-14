@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, Button, Modal, View} from 'react-native';
+import { StyleSheet, Text, Button, Modal, View, Dimensions} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { AntDesign } from '@expo/vector-icons';
 import styles from '@styles/styles';
@@ -40,7 +40,7 @@ export default function TooltipWin({modalWindow, textHead, textBody, toggleModal
                             onValueChange={setCheckedModalWin}
                             color={isCheckedModalWin ? '#FFB800' : undefined}
                         />
-                        <Text style={isCheckedModalWin ? styles.textDontShowAgainChecked : styles.textDontShowAgain}>Больше не показывать</Text>
+                        <Text style={isCheckedModalWin ? styles.textDefault : styles.textDefault}>Больше не показывать</Text>
                     </View>
                     <UnderstandButton action ={() => close()}></UnderstandButton>
                 </View>
@@ -52,15 +52,16 @@ export default function TooltipWin({modalWindow, textHead, textBody, toggleModal
 
 const CustomStyles = StyleSheet.create({
     row: {
-        flex: 1,
         flexDirection: "row",
         justifyContent: 'flex-start',
         alignItems: 'center',
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
+        marginTop:5,
       },
     close:{
         alignSelf: 'flex-end',
-        marginTop: -5,
+        top: 5,
+        right: 5,
         position: 'absolute',
     },
     checkbox: {
@@ -74,8 +75,7 @@ const CustomStyles = StyleSheet.create({
         marginTop: 22,
     },
     modalView: {
-        //height: (Dimensions.get('window').height) * 0.65,
-        //width: (Dimensions.get('window').width) * 0.9,
+        width: (Dimensions.get('window').width) * 0.9,
         backgroundColor: '#93949A',
         borderRadius: 8,
         margin: 10,
