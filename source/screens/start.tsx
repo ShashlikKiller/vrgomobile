@@ -20,6 +20,7 @@ export default function Start({ navigation }: { navigation: any }) {
         .catch(error=>{
             console.assert(error);
         });
+
     },[]);
 
 

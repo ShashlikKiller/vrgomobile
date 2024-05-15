@@ -18,22 +18,22 @@ function ExerciseComponent(prop: Prop){
     setExDescription(exercise.description);
     console.debug(exImages)
   };
-
+  var exercise = prop.exercise;
   useEffect(()=>{
-    refreshExerciseHandler(prop.exercise);
-    console.debug("ExerciseComponent", prop.exercise);
+    refreshExerciseHandler(exercise);
+    console.debug("ExerciseComponent", exercise);
   },[]);
     return (
       
         <ScrollView style={styles.body}>
           <View style={styles.content}>
             
-            <Text style={styles.instructions}>{prop.exercise.description}</Text>
+            <Text style={styles.instructions}>{exercise.description}</Text>
             
-            <Image style={styles.image} source={{uri: prop.exercise.image }}/>
+            <Image style={styles.image} source={{uri: exercise.image }}/>
             
             <View>
-              {prop.exercise.instruction?.map((step: string, stepNumb: number) => (
+              {exercise.instruction?.map((step: string, stepNumb: number) => (
                 <ExerciseStep stepNumb={stepNumb+1} step={step}></ExerciseStep>
               ))}
             </View>

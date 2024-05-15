@@ -30,7 +30,6 @@ export class Session {
         this._timer = new Timer(0);
         this._isInited = false;
         this._isStarted = false;
-        console.debug("constructor:Session");
     }
 
     // Добавление упражнения в очередь
@@ -58,22 +57,17 @@ export class Session {
         this._currentExercise = exercise!;
 
         this._isInited = true;
-        console.debug("start:Session", this._isInited)
-
         
         return this._currentExercise;
     }
 
     start(): void{
-        console.debug("start:Session");
-        console.debug("start:Session", this._isInited)
         if(!this._isInited) return;
         this.executeExercise();
         this._isStarted = true;
     }
 
     next(): Exercise {
-        console.debug("next:Session");
         
         if(this._isStarted){
             
@@ -94,7 +88,6 @@ export class Session {
     }
 
     close(): void {
-        console.debug("close:Session");
 
         clearInterval(this._intervalID);
 
@@ -105,7 +98,6 @@ export class Session {
     } 
 
     private executeExercise(): void {
-        console.debug("execute:Session");
 
         this.emitter.emit(SessionEvent.refreshRunTimeNotify, 0);
         

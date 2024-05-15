@@ -7,6 +7,7 @@ import { disp_height, disp_width } from '@scripts/utils/Const';
 import { useEffect, useState } from 'react';
 import { Session, SessionEvent } from '@scripts/models/Session';
 import { Exercise } from '@scripts/models/Exercise';
+import TooltipWin from '@components/Modal/tooltipWin';
 
 var sessionDefault = new Session(); 
 export default function doExercise({navigation}: {navigation: any}){
@@ -20,7 +21,6 @@ export default function doExercise({navigation}: {navigation: any}){
     emitter.addListener(SessionEvent.refreshExerciseNotify, refreshExerciseHandler);
     emitter.addListener(SessionEvent.refreshRunTimeNotify, refreshRunTimeHandler);
     emitter.addListener(SessionEvent.closeSessionNotify, clearStackAndNavigate);
-
     session!.enqueue(new Exercise(1, 5, "Поставьте две бутылки на расстоянии 1,5 м,",["Пройдите над бутылками гемиплегичной ногой.", "Развернитесь и начните снова"], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"));
     session!.enqueue(new Exercise(2, 5, "Передвиньте бутылки на 2 метра вперед,",["Сделайте шаг назад, затем влево и вправо", "Посмотрите в окно и послушайте это весеннее чириканье птичек,", "Насладитесь этим прекрасным днем."], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"));
     let ex = session!.init();
@@ -33,6 +33,13 @@ export default function doExercise({navigation}: {navigation: any}){
   const clearStackAndNavigate = () => {
     ClearStackAndNavigate(navigation, Screens.mainScreen);
   }
+
+  const text_1: string = "Желательно выполнять под присмотром или с тростью \n После ознакомления с инструкцией нажмите 'старт'"
+  const [modalWindow, setModalWindow] = useState(true);
+  const toggleModal = () => {
+    setModalWindow(!modalWindow);
+  }
+
   const refreshExerciseHandler = () => {
     console.debug("refreshExerciseHandler", session.currentExercise);
     setExercise(session!.currentExercise)
@@ -40,6 +47,7 @@ export default function doExercise({navigation}: {navigation: any}){
     return( 
       <>
         <View style={styles.container}>
+          <TooltipWin modalWindow = {modalWindow} textHead = 'Инструкция' textBody = {text_1} toggleModal = {toggleModal}/>
           <BackButtonLittle action={clearStackAndNavigate}></BackButtonLittle>
           <ExerciseComponent exercise={exercise} />
           <View style={styles.btnContainer}>
