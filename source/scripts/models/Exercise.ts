@@ -1,11 +1,16 @@
 
 
 export class Exercise implements ISerializable{
+    
+    public static emptyExercise: Exercise = new Exercise(0,0,"", [],"");
+
+    public exerciseCompleted: () => void;
+
     private _description: string;
     private _instruction: string[];
     private _images: string;
     private _execTimeSec: number;
-    public exerciseCompleted: () => void;
+
     constructor(exerciseId: number, execTimeSec: number, description: string, instruction: string[], images: string ){
         this._description = description;
         this._instruction = instruction;
@@ -13,9 +18,11 @@ export class Exercise implements ISerializable{
         this._execTimeSec = execTimeSec;
         this.exerciseCompleted = () => {};
     }
+
     serialize(): string {
         return JSON.stringify(this);
     }
+
     deserialize(data: string): void {
         try{
             const { description, instruction, images, execTimeSec } = JSON.parse(data);
@@ -46,11 +53,11 @@ export class Exercise implements ISerializable{
         this._instruction = value
     }
 
-    get images(){
+    get image(){
         return this._images
     }
 
-    set images(value){
+    set image(value){
         this._images = value
     }
 

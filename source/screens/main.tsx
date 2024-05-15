@@ -31,7 +31,6 @@ export default function mainScreen({navigation}: {navigation: any}) {
     useEffect(()=>{
       dataProvider.Get<ChoseBodyPart>(Path.choseBodyPart)
         .then( result =>{
-          console.debug(result, "asdsad");
           if(result?.isCheckedLeftHand && result?.isCheckedRightHand){
               BodyParts.push("Левая и правая рука");
           }

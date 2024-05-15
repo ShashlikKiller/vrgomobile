@@ -23,7 +23,7 @@ export class Factory implements IFactory<Exercise>
         exercise.description = description;
     })
     .catch((err) => {
-        console.error("Exercise description DataProvider error: ", err);
+        .error("Exercise description DataProvider error: ", err);
     }),
 
     this._dataProvider.Get<string[]>("exercise/exers-steps")
@@ -31,20 +31,20 @@ export class Factory implements IFactory<Exercise>
         exercise.instruction = instruction;
     })
     .catch((err) => {
-        console.error("Exercise instructions DataProvider error: ", err);
+        .error("Exercise instructions DataProvider error: ", err);
     }),
 
     this._dataProvider.Get<string>("exercise/imgs-urls")
     .then ((images) => {
-        exercise.images = images;
+        exercise.image = images;
     })
     .catch((err) => {
-        console.error("Exercise images DataProvider error: ", err)
+        .error("Exercise images DataProvider error: ", err)
     })
 ]).then(() => {
     return exercise;
 });
-console.error("Something went wrong: factory.ts, can't return an exercise");
+.error("Something went wrong: factory.ts, can't return an exercise");
 return exercise;
 }
 }

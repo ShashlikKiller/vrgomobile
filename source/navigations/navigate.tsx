@@ -64,7 +64,6 @@ export function ClearStackAndNavigate(navigation : any , path: string) {
          index: 0,
          routes: [{name: path}]
     }))
-    console.log(path);
     //navigation.push(path)
     return () => navigation.popToTop()
 }
