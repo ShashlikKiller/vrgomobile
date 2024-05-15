@@ -16,7 +16,6 @@ export default function doExercise({navigation}: {navigation: any}){
   var [exercise, setExercise]= useState<Exercise>(new Exercise(1, 5, "Поставьте две бутылки на расстоянии 1,5 м,",["Пройдите над бутылками гемиплегичной ногой.", "Развернитесь и начните снова"], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"));
   
   useEffect(() => {
-    (async function() {
     const emitter = session!.emitter;
     emitter.addListener(SessionEvent.refreshExerciseNotify, refreshExerciseHandler);
     emitter.addListener(SessionEvent.refreshRunTimeNotify, refreshRunTimeHandler);
@@ -24,7 +23,7 @@ export default function doExercise({navigation}: {navigation: any}){
     session!.enqueue(new Exercise(1, 5, "Поставьте две бутылки на расстоянии 1,5 м,",["Пройдите над бутылками гемиплегичной ногой.", "Развернитесь и начните снова"], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"));
     session!.enqueue(new Exercise(2, 5, "Передвиньте бутылки на 2 метра вперед,",["Сделайте шаг назад, затем влево и вправо", "Посмотрите в окно и послушайте это весеннее чириканье птичек,", "Насладитесь этим прекрасным днем."], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"));
     let ex = session!.init();
-    setExercise(ex)})();
+    setExercise(ex);
   }, []);
  
   const refreshRunTimeHandler = (runTime: number) => {
@@ -51,7 +50,7 @@ export default function doExercise({navigation}: {navigation: any}){
               <StartButtonEmpty action={() => session!.start()} title={Math.ceil((runTime+300)/1000).toString()} disabled={sessionStarted}/>
             </View>
             <View style={{width: disp_width * 2 / 3 * 0.668}} >
-              <NextButton action={() => setExercise(session!.next())}/> 
+              <NextButton action={() => session.next()}/> 
             </View>
           </View>
         </View>

@@ -3,46 +3,50 @@ import { Image, View, StyleSheet, Text, Button, ScrollView } from 'react-native'
 import ExerciseStep from '@components/exerciseStep';
 import { disp_width } from '@scripts/utils/Const';
 import { Exercise } from '@scripts/models/Exercise';
+interface Prop {
+   exercise: Exercise
+}
 
-
-function ExerciseComponent(exercise: any){
-  const [exInstrution, setExInstrution] = useState(exercise.instruction);
-  const [exImages, setExImages] = useState(exercise.image);
-  const [exDescription, setExDescription] = useState(exercise.description);
+function ExerciseComponent(prop: Prop){
+  const [exInstrution, setExInstrution] = useState<string[]>();
+  const [exImages, setExImages] = useState<string>();
+  const [exDescription, setExDescription] = useState<string>();
   
   const refreshExerciseHandler = (exercise: Exercise) => {
     setExInstrution(exercise.instruction);
     setExImages(exercise.image);
     setExDescription(exercise.description);
+    console.debug(exImages)
   };
 
-  useEffect(()=>{refreshExerciseHandler(exercise);
-    console.debug("ExerciseComponent", exercise);
-
+  useEffect(()=>{
+    refreshExerciseHandler(prop.exercise);
+    console.debug("ExerciseComponent", prop.exercise);
   },[]);
     return (
-      <>
+      
         <ScrollView style={styles.body}>
           <View style={styles.content}>
             
-            <Text style={styles.instructions}>{exDescription}</Text>
+            <Text style={styles.instructions}>{prop.exercise.description}</Text>
             
-            <Image style={styles.image} source={{uri: exImages }}/>
+            <Image style={styles.image} source={{uri: prop.exercise.image }}/>
             
             <View>
-              {exInstrution?.map((step: string, stepNumb: number) => (
+              {prop.exercise.instruction?.map((step: string, stepNumb: number) => (
                 <ExerciseStep stepNumb={stepNumb+1} step={step}></ExerciseStep>
               ))}
             </View>
           </View>
         </ScrollView>
-        </>
+
       );
     };
     
     const styles = StyleSheet.create({
       body: {
         flex: 1,
+        
       },
       content: {
         margin: 16

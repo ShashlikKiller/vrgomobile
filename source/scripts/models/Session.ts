@@ -28,7 +28,6 @@ export class Session {
     constructor() {
         this._exerciseQueue = [];
         this._timer = new Timer(0);
-        this._currentExercise = Exercise.emptyExercise;
         this._isInited = false;
         this._isStarted = false;
         console.debug("constructor:Session");
