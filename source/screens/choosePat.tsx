@@ -1,9 +1,8 @@
 import { NextButton } from '@components/buttonsComponent';
 import DropdownComponent from '@components/patologyDropdownComponent';
 import { NavigationContext } from '@navigations/navigate';
-import { DataProvider } from '@scripts/utils/DataProvider';
 import React, { useContext, useState } from 'react';
-import { View, Button, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 const sideMargin = 16;
 
@@ -28,7 +27,6 @@ export default function choosePat({ navigation }: { navigation: any }) {
         <NextButton action={loadScene}/>
       </View>
     </View>
-    
   );
 }
 

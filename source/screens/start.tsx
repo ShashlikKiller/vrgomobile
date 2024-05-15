@@ -15,7 +15,6 @@ export default function Start({ navigation }: { navigation: any }) {
                 ClearStackAndNavigate(navigation, Screens.mainScreen);
                 return;
             }
-            console.debug(result);
             ClearStackAndNavigate(navigation, Screens.choosePat);
         })
         .catch(error=>{

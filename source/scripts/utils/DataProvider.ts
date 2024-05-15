@@ -56,7 +56,6 @@ export class DataProvider implements IDataProvider{
                             reject(new Error("Object is not deserializable"));
                         } else {
                             resolve(obj);
-                            console.debug(obj)
 
                         }
                     })
@@ -101,70 +100,4 @@ export class DataProvider implements IDataProvider{
         return 
     } 
 }
-   
-
-// export async function get<T>(key: string): Promise<T | null> {
-//     try {
-//       const data = await AsyncStorage.getItem(key);
-//       return data ? JSON.parse(data) as T : null;
-//     } catch (error) {
-//       console.log(error);
-//       return null;
-//     }
-//   }
-  
-//   export async function setData(key: string, value: any): Promise<void> {
-//     try {
-//       await AsyncStorage.setItem(key, JSON.stringify(value));
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
-  
-//   export async function getAllData(): Promise<IUserData | null> {
-//     return await get<IUserData>('patient');
-//   }
-  
-//   export async function createData(): Promise<void> {
-//     const value: IUserData = {
-//       pathology: '',
-//       bodyPart: []
-//     };
-//     await setData('patient', value);
-//   }
-  
-//   export async function mergePathology(param: string): Promise<void> {
-//     const value = {
-//       pathology: param
-//     };
-//     await AsyncStorage.mergeItem('patient', JSON.stringify(value));
-//   }
-  
-//   export async function mergeBodyPart(param: string[]): Promise<void> {
-//     const value = {
-//       bodyPart: param
-//     };
-//     await AsyncStorage.mergeItem('patient', JSON.stringify(value));
-//   }
-  
-//   export async function removeData(key: string): Promise<void> {
-//     try {
-//       await AsyncStorage.removeItem(key);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
-  
-//   export async function createShowOrNot(): Promise<void> {
-//     const value: IShowOrNot = {
-//       showOrNot: false
-//     };
-//     await setData('showOrNot', value);
-//   }
-  
-//   export async function mergeShowOrNot(param: boolean): Promise<void> {
-//     const value = {
-//       showOrNot: param
-//     };
-//     await AsyncStorage.mergeItem('showOrNot', JSON.stringify(value));
-//   }
+ 
