@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, StyleSheet} from 'react-native';
 import { BackButtonLittle, NextButton, StartButtonEmpty } from '@components/buttonsComponent';
 import ExerciseComponent from '@components/exerciseComponent';
-import { ClearStackAndNavigate } from '@navigations/navigate';
+import { ClearStackAndNavigate, Screens } from '@navigations/navigate';
 import { disp_height, disp_width } from '@scripts/utils/Const';
 import { useEffect, useState } from 'react';
 import { Session, SessionEvent } from '@scripts/models/Session';
@@ -10,7 +10,7 @@ import { Exercise } from '@scripts/models/Exercise';
 
 var sessionDefault = new Session(); 
 export default function doExercise({navigation}: {navigation: any}){
-  var [session, setSession] = useState<Session>(new Session());
+  var [session, setSession] = useState<Session>(sessionDefault);
   var [sessionStarted, setSessionStarted] = useState(false);
   var [runTime, setRunTime] = useState(0);
   var [exercise, setExercise]= useState<Exercise>(new Exercise(1, 5, "Поставьте две бутылки на расстоянии 1,5 м,",["Пройдите над бутылками гемиплегичной ногой.", "Развернитесь и начните снова"], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"));
@@ -19,6 +19,7 @@ export default function doExercise({navigation}: {navigation: any}){
     const emitter = session!.emitter;
     emitter.addListener(SessionEvent.refreshExerciseNotify, refreshExerciseHandler);
     emitter.addListener(SessionEvent.refreshRunTimeNotify, refreshRunTimeHandler);
+    emitter.addListener(SessionEvent.closeSessionNotify, clearStackAndNavigate);
 
     session!.enqueue(new Exercise(1, 5, "Поставьте две бутылки на расстоянии 1,5 м,",["Пройдите над бутылками гемиплегичной ногой.", "Развернитесь и начните снова"], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"));
     session!.enqueue(new Exercise(2, 5, "Передвиньте бутылки на 2 метра вперед,",["Сделайте шаг назад, затем влево и вправо", "Посмотрите в окно и послушайте это весеннее чириканье птичек,", "Насладитесь этим прекрасным днем."], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"));
@@ -29,12 +30,8 @@ export default function doExercise({navigation}: {navigation: any}){
   const refreshRunTimeHandler = (runTime: number) => {
     setRunTime(runTime);
   };
-  const loadScene = () => {
-    navigation.navigate('initialScreen')
-    navigation.popToTop()
-  }
   const clearStackAndNavigate = () => {
-    ClearStackAndNavigate(navigation, 'mainScreen');
+    ClearStackAndNavigate(navigation, Screens.mainScreen);
   }
   const refreshExerciseHandler = () => {
     console.debug("refreshExerciseHandler", session.currentExercise);
