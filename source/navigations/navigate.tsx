@@ -1,14 +1,14 @@
 import React, { createContext, useState } from "react";
-import choosingBodyPart from "@screens/choosingBodyPart";
+import ChoosingBodyPart from "@screens/choosingBodyPart";
 
-import choosePat from "@screens/choosePat";
+import ChoosePat from "@screens/choosePat";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, CommonActions } from "@react-navigation/native";
-import doExercise from "@screens/session";
-import mainScreen from "@screens/main";
+import SessionScreen from "@screens/session";
+import MainScreen from "@screens/main";
 
 import { StatusBar } from "expo-status-bar";
-import start from "@screens/start";
+import Start from "@screens/start";
 import { DataProvider } from "@scripts/utils/DataProvider";
 
 // Создаем контекст
@@ -28,28 +28,28 @@ export default function Navigate(initialScreen: string){
         <NavigationContext.Provider value={{data, setData}}>
         <Stack.Navigator initialRouteName={initialScreen}>
             <Stack.Screen
-                    name={Screens.start}
-                    component={start}
+                    name={Screens.Start}
+                    component={Start}
                     options={{title: 'Выбор патологии',  headerShown: false}}
                     />
             <Stack.Screen
-                name={Screens.choosePat}
-                component={choosePat}
+                name={Screens.ChoosePat}
+                component={ChoosePat}
                 options={{title: 'Выбор патологии',  headerShown: false}}
                 />
             <Stack.Screen
-                name={Screens.choosingBodyPart}
-                component={choosingBodyPart}
+                name={Screens.ChoosingBodyPart}
+                component={ChoosingBodyPart}
                 options={{title: 'Выбор части тела',  headerShown: false}}
                 />
             <Stack.Screen 
-                name= {Screens.doExercise}
-                component={doExercise}
+                name= {Screens.SessionScreen}
+                component={SessionScreen}
                 options={{ headerShown: false }}
             />
             <Stack.Screen 
-                name={Screens.mainScreen}
-                component={mainScreen}
+                name={Screens.MainScreen}
+                component={MainScreen}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>
@@ -69,9 +69,9 @@ export function ClearStackAndNavigate(navigation : any , path: string) {
 }
 
 export enum Screens{
-    start = "start",
-    choosePat = "choosePat",
-    choosingBodyPart = "choosingBodyPart",
-    doExercise = "doExercise",
-    mainScreen = "mainScreen",
+    Start = "Start",
+    ChoosePat = "ChoosePat",
+    ChoosingBodyPart = "ChoosingBodyPart",
+    SessionScreen = "SessionScreen",
+    MainScreen = "MainScreen",
 }

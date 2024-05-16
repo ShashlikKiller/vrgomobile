@@ -15,10 +15,11 @@ const ExerciseProgression: React.FC<Props> = ({ currentExercise, totalExercises 
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    padding: 4,
+    alignItems: 'flex-end',
+    padding: 20,
+    alignSelf: 'flex-end',
+    flex: 1
   },
   fractionText: {
     color: '#B6FFFB',

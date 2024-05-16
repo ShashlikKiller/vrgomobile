@@ -17,7 +17,7 @@ export type ChoseBodyPart = {
 }
 
 
-export default function choosingBodyPart({navigation}: {navigation: any}) {
+export default function ChoosingBodyPart({navigation}: {navigation: any}) {
 
   const text_1: string = "Аватар будет к вам лицом. \nВам необходимо нажать на те части аватара, где у вас находятся нарушения. \nС этими областями вам будет предложено работать через упражнения. Вы всегда сможете изменить их, вернувшись на соответствующий экран."
   const text_2: string ='Вам необходимо нажать на те части аватара, где у вас находятся нарушения. \nС этими областями вам будет предложено работать через упражнения. Вы всегда сможете изменить их, вернувшись на соответствующий экран.'
@@ -42,7 +42,7 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
   let dataProvider = data.dataProvider as IDataProvider;
 
   const loadScene = () => {
-    navigation.navigate('choosePat')
+    navigation.navigate('ChoosePat')
   }
   const loadExerciseScene = () => {
     let chose: ChoseBodyPart = {
@@ -52,7 +52,7 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
       isCheckedLeftLeg: isCheckedLeftLeg,
   };
   dataProvider.Set(chose, Path.choseBodyPart);
-    navigation.navigate('doExercise')
+    navigation.navigate('SessionScreen')
   }
 
   return (

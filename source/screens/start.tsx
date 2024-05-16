@@ -12,10 +12,10 @@ export default function Start({ navigation }: { navigation: any }) {
         .then(result => {
 
             if(result != null){
-                ClearStackAndNavigate(navigation, Screens.mainScreen);
+                ClearStackAndNavigate(navigation, Screens.MainScreen);
                 return;
             }
-            ClearStackAndNavigate(navigation, Screens.choosePat);
+            ClearStackAndNavigate(navigation, Screens.ChoosePat);
         })
         .catch(error=>{
             console.assert(error);

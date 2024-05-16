@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet} from 'react-native';
+import { View, StyleSheet, Text} from 'react-native';
 import { BackButtonLittle, NextButton, StartButtonEmpty } from '@components/buttonsComponent';
 import ExerciseComponent from '@components/exerciseComponent';
 import { ClearStackAndNavigate, Screens } from '@navigations/navigate';
@@ -8,9 +8,11 @@ import { useEffect, useState } from 'react';
 import { Session, SessionEvent } from '@scripts/models/Session';
 import { Exercise } from '@scripts/models/Exercise';
 import TooltipWin from '@components/Modal/tooltipWin';
+import SessionTooltips from '@components/sessionTooltips';
+import ExerciseProgression from '@components/exerciseProgression';
 
 var sessionDefault = new Session(); 
-export default function doExercise({navigation}: {navigation: any}){
+export default function SessionScreen({navigation}: {navigation: any}){
   var [session, setSession] = useState<Session>(sessionDefault);
   var [sessionStarted, setSessionStarted] = useState(false);
   var [runTime, setRunTime] = useState(0);
@@ -31,7 +33,7 @@ export default function doExercise({navigation}: {navigation: any}){
     setRunTime(runTime);
   };
   const clearStackAndNavigate = () => {
-    ClearStackAndNavigate(navigation, Screens.mainScreen);
+    ClearStackAndNavigate(navigation, Screens.MainScreen);
   }
 
   const text_1: string = "Желательно выполнять под присмотром или с тростью \n После ознакомления с инструкцией нажмите 'старт'"
@@ -48,16 +50,19 @@ export default function doExercise({navigation}: {navigation: any}){
       <>
         <View style={styles.container}>
           <TooltipWin modalWindow = {modalWindow} textHead = 'Инструкция' textBody = {text_1} toggleModal = {toggleModal}/>
-          <BackButtonLittle action={clearStackAndNavigate}></BackButtonLittle>
-          <ExerciseComponent exercise={exercise} />
-          <View style={styles.btnContainer}>
-            <View style={{width: disp_width * 1 / 2 * 0.851, height: disp_height / 16}}>
-              <StartButtonEmpty action={() => session!.start()} title={Math.ceil((runTime+300)/1000).toString()} disabled={sessionStarted}/>
-            </View>
-            <View style={{width: disp_width * 2 / 3 * 0.668}} >
-              <NextButton action={() => session.next()}/> 
-            </View>
+          <View style={styles.top_navbar}>
+              <BackButtonLittle action={clearStackAndNavigate}></BackButtonLittle>
+              <ExerciseProgression currentExercise={1} totalExercises={3}/>
           </View>
+          <ExerciseComponent exercise={exercise} />
+          <SessionTooltips FirstWidth={disp_width * 1 / 2 * 0.851}
+            FirstHeight={disp_height / 16}
+            StartButtonAction={() => session!.start()}
+            StartButtonTitle={Math.ceil((runTime+300)/1000).toString()}
+            StartButtonDisabled={sessionStarted}
+            SecondWidth={disp_width * 2 / 3 * 0.668}
+            NextButtonAction={() => session.next()}>
+          </SessionTooltips>
         </View>
         </>
     );
@@ -68,11 +73,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#232323'
   },
-  btnContainer: {
+  top_navbar: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignContent: 'flex-end',
-    marginBottom: 10
+    width: '100%',
+    alignContent: 'space-around'
   },
 })
 
