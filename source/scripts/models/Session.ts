@@ -67,10 +67,18 @@ export class Session {
         this._isStarted = true;
     }
 
+    stopTimer(): void{
+        console.debug('stop timer');
+        // заглушка
+    }
+    continueTimer(): void{
+        console.debug('continue timer');
+        // заглушка
+    }
+
     next(): Exercise {
         
         if(this._isStarted){
-            
             if(this._exerciseQueue.length === 0){
                 this.close();
             }

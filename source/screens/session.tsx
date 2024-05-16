@@ -58,6 +58,10 @@ export default function SessionScreen({navigation}: {navigation: any}){
           <SessionTooltips FirstWidth={disp_width * 1 / 2 * 0.851}
             FirstHeight={disp_height / 16}
             StartButtonAction={() => session!.start()}
+
+            StopTimerAction={() => session!.stopTimer()} // остановка таймера
+            ContinueTimerAction={() => session!.continueTimer()} // возобновление
+
             StartButtonTitle={Math.ceil((runTime+300)/1000).toString()}
             StartButtonDisabled={sessionStarted}
             SecondWidth={disp_width * 2 / 3 * 0.668}
@@ -75,7 +79,6 @@ const styles = StyleSheet.create({
   },
   top_navbar: {
     flexDirection: 'row',
-    width: '100%',
     alignContent: 'space-around'
   },
 })

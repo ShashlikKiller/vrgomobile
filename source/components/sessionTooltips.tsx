@@ -7,6 +7,8 @@ interface Prop {
     FirstHeight: number;
     SecondWidth: number;
     StartButtonAction: () => void;
+    StopTimerAction: () => void;
+    ContinueTimerAction: () => void;
     StartButtonTitle: string;
     StartButtonDisabled: boolean;
     NextButtonAction: () => void;
@@ -14,28 +16,34 @@ interface Prop {
 
 export default function SessionTooltips(prop: Prop) {
     const [isActive, setIsActive] = useState<boolean>(true);
+    const [isTimerStartedAlready, setIsTimerStartedAlready] = useState<boolean>(false);
 
-    const startTimer =() =>
+    const startOrContinueTimer =() =>
         {
-            prop.StartButtonAction();
+            if (!isTimerStartedAlready)
+            {
+                prop.StartButtonAction();
+                setIsTimerStartedAlready(true);
+            }
+            else
+            {
+                prop.ContinueTimerAction();
+            }
             setIsActive(false);
-            console.log('таймер запущен / возобновлен.');
-            // Вот тут старт времени и его возобновление.
         }
 
     const stopTimer = () =>
         {
             setIsActive(true)
-            console.log('таймер остановлен.');
+            prop.StopTimerAction();
             // И вот тут еще остановку времени.
         }
 
-    const startButtonProps = useMemo(() => ({ // Пропы для кнопки старта ОТДЕЛЬНО,
-                                              // Чтобы он перерендерился только при изменении значения таймера
-        action: startTimer,
-        title: prop.StartButtonTitle,
-        disabled: prop.StartButtonDisabled
-    }), [prop.StartButtonTitle]);
+    // const startButtonProps = useMemo(() => ({ // Пропы для кнопки старта ОТДЕЛЬНО,
+    //                                           // Чтобы он перерендерился только при изменении значения таймера
+    //     title: prop.StartButtonTitle,
+    //     disabled: prop.StartButtonDisabled
+    // }), [prop.StartButtonTitle]);
 
     return (
         <View style={styles.btnContainer}>
@@ -48,7 +56,7 @@ export default function SessionTooltips(prop: Prop) {
       ) : (
         <>
           <View style={{width: prop.FirstWidth, height: prop.FirstHeight}}>
-            <StartButtonEmpty {...startButtonProps}/>
+            <StartButtonEmpty title={prop.StartButtonTitle} disabled={false} action={startOrContinueTimer}/>
           </View>
           <View style={{width: prop.SecondWidth}} >
             <NextButton action={prop.NextButtonAction}/> 
