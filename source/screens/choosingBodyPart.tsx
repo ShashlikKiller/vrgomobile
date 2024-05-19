@@ -5,6 +5,7 @@ import Checkbox from 'expo-checkbox';
 import { HelpButton, UnderstandButton, NextButton, BackButton, NextButtonDark } from '@components/buttonsComponent';
 import { NavigationContext } from '@navigations/navigate';
 import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
+import TooltipWin from '@components/Modal/tooltipWin';
 
 // Получаем разрешение экрана
 const { width: disp_width, height: disp_height } = Dimensions.get('window');
@@ -19,8 +20,17 @@ export type ChoseBodyPart = {
 
 export default function choosingBodyPart({navigation}: {navigation: any}) {
 
+  const text_1: string = "Аватар будет к вам лицом. \nВам необходимо нажать на те части аватара, где у вас находятся нарушения. \nС этими областями вам будет предложено работать через упражнения. Вы всегда сможете изменить их, вернувшись на соответствующий экран."
+  const text_2: string ='Вам необходимо нажать на те части аватара, где у вас находятся нарушения. \nС этими областями вам будет предложено работать через упражнения. Вы всегда сможете изменить их, вернувшись на соответствующий экран.'
+  
   const [isCheckedModalWin, setCheckedModalWin] = useState(false);
+  const toggleModal2 = () => {
+    setCheckedModalWin(!isCheckedModalWin);
+  }
   const [modalWindow, setModalWindow] = useState(true);
+  const toggleModal = () => {
+    setModalWindow(!modalWindow);
+  }
 
   // Логические выражения поврежденных частей тела:
   const [isCheckedRightHand, CheckRightHand] = useState(false);
@@ -48,21 +58,9 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
 
   return (
     <View style={{...styles.background}}>
-            <HelpButton action={() => setModalWindow(true)}></HelpButton>
-            <Modal visible={modalWindow}>
-           <Text> Инструкция</Text>
-           <Text>Аватар будет к вам лицом. 
-                 Вам необходимо нажать на те части аватара, где у вас находятся нарушения. 
-                 С этими областями вам будет предложено работать через упражнения. 
-                 Вы всегда сможете изменить их, вернувшись на соответствующий экран.                
-            </Text>
-           <Checkbox
-               value={isCheckedModalWin}
-               onValueChange={setCheckedModalWin}
-               color={isCheckedModalWin ? '#4630EB' : undefined}/>
-           <Text>Больше не показывать</Text>
-           <UnderstandButton action={() => setModalWindow(false)}></UnderstandButton>
-       </Modal>
+            <HelpButton action={() => setCheckedModalWin(true)}></HelpButton>
+            <TooltipWin modalWindow = {modalWindow} textHead = 'Инструкция' textBody = {text_1} toggleModal = {toggleModal}/>
+            <TooltipWin modalWindow = {isCheckedModalWin} textHead = 'Инструкция2' textBody = {text_2} toggleModal = {toggleModal2}/>
     <View style={{...styles.container}}>
       <View style={styles.row}>
       <TouchableOpacity style={{...styles.expanded, backgroundColor: isCheckedRightHand ? '#393220' : '#323939'}} onPress={() => CheckRightHand(!isCheckedRightHand)}>

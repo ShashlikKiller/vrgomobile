@@ -9,7 +9,7 @@ interface ButtonProps {
 interface ExtendedButtonProps {
     action: () => void;
     title: string;
-    disabled: boolean;
+    disabled: Boolean;
   }
 
 export const NextButton: React.FC<ButtonProps> = ({action}) => {

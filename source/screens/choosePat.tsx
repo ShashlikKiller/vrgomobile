@@ -1,25 +1,10 @@
 import { NextButton } from '@components/buttonsComponent';
 import DropdownComponent from '@components/patologyDropdownComponent';
 import { NavigationContext } from '@navigations/navigate';
-import { DataProvider } from '@scripts/utils/DataProvider';
 import React, { useContext, useState } from 'react';
-import { View, Button, Text, StyleSheet } from 'react-native';
-
-const dataFromJson = [ // Здесь мы берем откуда-то массив патологий
-  { label: 'Инсульт', value: '1' },
-  { label: 'Инфаркт', value: '2' },
-  { label: 'Инклюзия', value: '3' },
-  { label: 'Красный нос', value: '4' },
-  { label: 'Простуда', value: '5' },
-  { label: 'Кашель', value: '6' },
-  { label: 'Мозг рака', value: '7' },
-  { label: 'Инсульт2', value: '8' }];
-
-const NoPatology = {label: 'Нет моей патологии', value: '0'};
+import { View, Text, StyleSheet } from 'react-native';
 
 const sideMargin = 16;
-
-const data = [...dataFromJson, NoPatology];
 
 
 export default function choosePat({ navigation }: { navigation: any }) {
@@ -42,7 +27,6 @@ export default function choosePat({ navigation }: { navigation: any }) {
         <NextButton action={loadScene}/>
       </View>
     </View>
-    
   );
 }
 
