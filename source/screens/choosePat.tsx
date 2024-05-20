@@ -1,4 +1,4 @@
-import { NextButtonDark } from '@components/buttonsComponent';
+import { NextButtonLight } from '@components/buttonsComponent';
 import DropdownComponent from '@components/patologyDropdownComponent';
 import { NavigationContext } from '@navigations/navigate';
 import React, { useContext, useState } from 'react';
@@ -24,7 +24,7 @@ export default function choosePat({ navigation }: { navigation: any }) {
           Начните вводить патологию или нарушение необходимое к физиотерапии
         </Text>
         <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}/>
-        <NextButtonDark action={loadScene}/>
+        <NextButtonLight action={loadScene}/>
       </View>
     </View>
   );
