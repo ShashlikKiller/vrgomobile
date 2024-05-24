@@ -1,5 +1,7 @@
 import { ImageBackground, Text, TouchableOpacity } from "react-native";
 import default_styles from '@styles/styles';
+import { disp_width } from "@scripts/utils/Const";
+import { isEnabled } from "react-native/Libraries/Performance/Systrace";
 
 
 interface ButtonProps {
@@ -9,7 +11,7 @@ interface ButtonProps {
 interface ExtendedButtonProps {
     action: () => void;
     title: string;
-    disabled: Boolean;
+    enabled: Boolean;
   }
 
 export const NextButton: React.FC<ButtonProps> = ({action}) => {
@@ -60,19 +62,22 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
     );
   };
 
-  export const NextButtonDark: React.FC<ButtonProps> = ({action}) => {
-    return (
-        <ImageBackground source={require('@images/button/NextButtonDark.png')} resizeMode="contain" style={{marginLeft: 0, marginRight: 0}}>
-            <TouchableOpacity style={default_styles.btn_2of3_wide} onPress={action}/>
-        </ImageBackground>
-    );
-  };
+  // export const NextButtonDark: React.FC<ExtendedButtonProps> = ({action, title, enabled}) => {
+  //   if(enabled) {
+  //     return (
+  //       <ImageBackground source={require('@images/button/NextButtonDark.png')} resizeMode="contain" style={{marginLeft: 0, marginRight: 0}}>
+  //           <TouchableOpacity style={default_styles.btn_2of3_wide} onPress={action}/>
+  //       </ImageBackground>
+  //   );
+  //   }
+  // };
 
-  export const StartButtonEmpty: React.FC<ExtendedButtonProps> = ({action, title, disabled}) => {
+  //  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  export const StartButtonEmpty: React.FC<ExtendedButtonProps> = ({action, title, enabled}) => {
 
     return (
         <ImageBackground source={require('@images/button/StartButtonEmpty.png')} resizeMode="contain">
-          <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action} disabled={disabled}>
+          <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action}> 
             <Text style={{fontSize:22, paddingLeft: 50 }}>{title}</Text> 
           </TouchableOpacity>
         </ImageBackground>
@@ -82,7 +87,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
   export const StartExercisesButton: React.FC<ButtonProps> = ({action}) => {
     return (
         <ImageBackground source={require('@images/button/StartExercisesButton.png')} resizeMode="contain" style={{marginLeft: 20, marginRight: 20}}>
-            <TouchableOpacity style={default_styles.btn_3of3_wide} onPress={action}/>
+            <TouchableOpacity style={default_styles.btn_3of3_wide_in_main_menu} onPress={action}/>
         </ImageBackground>
     );
   };
@@ -98,33 +103,56 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
   export const UnderstandButton: React.FC<ButtonProps> = ({action}) => {
     return (
         <ImageBackground source={require('@images/button/UnderstandButton.png')} resizeMode="contain" style={{margin:20}}>
-            <TouchableOpacity style={default_styles.btn_3of3_wide} onPress={action}/>
+            <TouchableOpacity style={default_styles.btn_3of3_wide_in_modal_win} onPress={action}/>
         </ImageBackground>
     );
   };
 
   export const HelpButton: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/HelpButton.png')} resizeMode="contain" style={{marginLeft: 0, marginRight: 0, marginTop: 40}}>
+        <ImageBackground source={require('@images/button/HelpButton.png')} resizeMode="contain" style={default_styles.btn_3of3_wide} >
+          {/* style={{width: disp_width, marginTop:200}} */}
+          {/* resizeMode="contain" */}
+           {/* style={{marginTop:40}}> */}
             <TouchableOpacity style={default_styles.btn_3of3_wide} onPress={action}/>
         </ImageBackground>
     );
   };
 
-  export const NextButtonLight: React.FC<ButtonProps> = ({action}) => {
-    return (
+  // export const NextButtonLight: React.FC<ExtendedButtonProps> = ({action, title, disabled}) => {
+  //   if(!disabled) {
+  //     return (
+  //         <ImageBackground source={require('@images/button/NextButtonLight.png')} resizeMode="contain">
+  //             <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action}/>
+  //         </ImageBackground>
+  //     );
+  //   } else {
+  //     return 
+  //   }
+  // };
+
+  export const NextButtonEnabling: React.FC<ExtendedButtonProps> = ({action, title, enabled}) => {
+    if(enabled) {
+      return (
         <ImageBackground source={require('@images/button/NextButtonLight.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action}/>
         </ImageBackground>
     );
+    } else {
+      return (
+        <ImageBackground source={require('@images/button/NextButtonDark.png')} resizeMode="contain" >
+            <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action} disabled={true}/>
+        </ImageBackground>
+    );
+    }
   };
 
   export const NextButtonLightWide: React.FC<ButtonProps> = ({action}) => {
     return (
-        <ImageBackground source={require('@images/button/NextButtonLightWide.png')} resizeMode="contain">
-            <TouchableOpacity style={default_styles.btn_2of3_wide} onPress={action}/>
-        </ImageBackground>
-    );
+      <ImageBackground source={require('@images/button/NextButtonLightWide.png')} resizeMode="contain">
+        <TouchableOpacity style={default_styles.btn_2of3_wide} onPress={action}/>
+      </ImageBackground>
+    )
   };
 
   export const StartButton: React.FC<ButtonProps> = ({action}) => {
@@ -139,6 +167,16 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
     return (
         <ImageBackground source={require('@images/button/StartButtonInactive.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action}/>
+        </ImageBackground>
+    );
+  };
+
+  export const RunningExerciseButton: React.FC<ExtendedButtonProps> = ({action, title, enabled}) => {
+    return (
+        <ImageBackground source={require('@images/button/RunningExerciseButton.png')} resizeMode="contain">
+            <TouchableOpacity style={default_styles.btn_3of3_wide} onPress={action}>
+              <Text style={{fontSize:22, paddingLeft: 10 }}>{title}</Text> 
+            </TouchableOpacity>
         </ImageBackground>
     );
   };

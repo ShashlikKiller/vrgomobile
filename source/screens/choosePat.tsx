@@ -1,4 +1,4 @@
-import { NextButton } from '@components/buttonsComponent';
+import { NextButton, NextButtonLightWide } from '@components/buttonsComponent';
 import DropdownComponent from '@components/patologyDropdownComponent';
 import { NavigationContext } from '@navigations/navigate';
 import React, { useContext, useState } from 'react';
@@ -17,6 +17,7 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
   const loadScene = () => {
     navigation.navigate('ChoosingBodyPart', { selectedPathology });
   };
+
   return (
     <View style={styles.background}>
       <View style={styles.container}>
@@ -24,7 +25,7 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
           Начните вводить патологию или нарушение необходимое к физиотерапии
         </Text>
         <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}/>
-        <NextButton action={loadScene}/>
+        {selectedPathology == '' ? <></> : <NextButtonLightWide action={loadScene}/>}
       </View>
     </View>
   );

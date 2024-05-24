@@ -50,6 +50,8 @@ export default function SessionScreen({navigation}: {navigation: any}){
       <>
         <View style={styles.container}>
           <TooltipWin modalWindow = {modalWindow} textHead = 'Инструкция' textBody = {text_1} toggleModal = {toggleModal}/>
+          <View/>
+            
           <View style={styles.top_navbar}>
               <BackButtonLittle action={clearStackAndNavigate}></BackButtonLittle>
               <ExerciseProgression currentExercise={1} totalExercises={3}/>
