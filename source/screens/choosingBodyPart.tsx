@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Dimensions, Button} from 'react-native';
-import { HelpButton, UnderstandButton, BackButton, NextButton, NextButtonDark } from '@components/buttonsComponent';
 import { useContext, useState } from 'react';
-import TooltipWin from '@components/Modal/tooltipWin';
+import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Dimensions} from 'react-native';
+import Checkbox from 'expo-checkbox';
+import { HelpButton, UnderstandButton, NextButton, BackButton, NextButtonEnabling } from '@components/buttonsComponent';
 import { NavigationContext } from '@navigations/navigate';
 import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
+import TooltipWin from '@components/Modal/tooltipWin';
 
 // Получаем разрешение экрана
 const { width: disp_width, height: disp_height } = Dimensions.get('window');
@@ -18,6 +19,7 @@ export type ChoseBodyPart = {
 
 
 export default function choosingBodyPart({navigation}: {navigation: any}) {
+  let buttonDisabled: boolean = false
 
   const text_1: string = "Аватар будет к вам лицом. \nВам необходимо нажать на те части аватара, где у вас находятся нарушения. \nС этими областями вам будет предложено работать через упражнения. Вы всегда сможете изменить их, вернувшись на соответствующий экран."
   const text_2: string ='Вам необходимо нажать на те части аватара, где у вас находятся нарушения. \nС этими областями вам будет предложено работать через упражнения. Вы всегда сможете изменить их, вернувшись на соответствующий экран.'
@@ -57,9 +59,11 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
 
   return (
     <View style={{...styles.background}}>
-            <HelpButton action={() => setCheckedModalWin(true)}></HelpButton>
-            <TooltipWin modalWindow = {modalWindow} textHead = 'Инструкция' textBody = {text_1} toggleModal = {toggleModal}/>
-            <TooltipWin modalWindow = {isCheckedModalWin} textHead = 'Инструкция2' textBody = {text_2} toggleModal = {toggleModal2}/>
+      <View style={{width: disp_width, marginTop: '12%'}}>
+        <HelpButton action={() => setCheckedModalWin(true)}></HelpButton>
+        <TooltipWin modalWindow = {modalWindow} textHead = 'Инструкция' textBody = {text_1} toggleModal = {toggleModal}/>
+        <TooltipWin modalWindow = {isCheckedModalWin} textHead = 'Инструкция2' textBody = {text_2} toggleModal = {toggleModal2}/>
+      </View>
     <View style={{...styles.container}}>
       <View style={styles.row}>
       <TouchableOpacity style={{...styles.expanded, backgroundColor: isCheckedRightHand ? '#393220' : '#323939'}} onPress={() => CheckRightHand(!isCheckedRightHand)}>
@@ -97,9 +101,13 @@ export default function choosingBodyPart({navigation}: {navigation: any}) {
             </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.bottom_btn_navbar}>
-      <BackButton action={loadScene} />
-      <NextButtonDark action={loadExerciseScene} />
+      <View style={styles.btnContainer} >
+        <View style={{width: disp_width * 0.34, marginBottom: '2%'}}>
+          <BackButton action={loadScene} />
+        </View>
+        <View style={{width: disp_width * 0.62, marginBottom: '2%'}}>
+          <NextButtonEnabling action={loadExerciseScene} enabled={(isCheckedRightHand || isCheckedLeftHand || isCheckedLeftLeg || isCheckedRightLeg)} title=''/>
+        </View>
       </View>
       <View style={styles.bodypartsview}>
         <View pointerEvents='none' style={{alignSelf: 'center', marginBottom: 5 }}>
@@ -150,7 +158,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center', 
     justifyContent: 'center',
-    transform: [{scale: (disp_width/disp_height) * disp_height/620}],
+    transform: [{scale: (disp_width/disp_height) * disp_height/620 * 0.9}],
+    marginBottom: disp_height * 0.2
   },
   sideText: {
     fontSize: 18,
@@ -178,5 +187,13 @@ const styles = StyleSheet.create({
 
     fontFamily: 'Inter',
     fontWeight: '400',
+  },
+
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'flex-end',
+    marginBottom: '2%',
+    marginTop: '24%'
   },
 });

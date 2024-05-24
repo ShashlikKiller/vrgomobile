@@ -52,7 +52,7 @@ export default function doExercise({navigation}: {navigation: any}){
           <ExerciseComponent exercise={exercise} />
           <View style={styles.btnContainer}>
             <View style={{width: disp_width * 1 / 2 * 0.851, height: disp_height / 16}}>
-              <StartButtonEmpty action={() => session!.start()} title={Math.ceil((runTime+300)/1000).toString()} disabled={sessionStarted}/>
+              <StartButtonEmpty action={() => session!.start()} title={Math.ceil((runTime+300)/1000).toString()} enabled={sessionStarted}/>
             </View>
             <View style={{width: disp_width * 2 / 3 * 0.668}} >
               <NextButton action={() => session.next()}/> 
