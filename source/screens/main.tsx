@@ -3,14 +3,13 @@ import { StartExercisesButton } from "@components/buttonsComponent";
 import DropdownComponent from "@components/patologyDropdownComponent";
 import { NavigationContext } from "@navigations/navigate";
 import { IDataProvider, Path } from "@scripts/interfaces/content-provider/IDataProvider";
-import { DataProvider } from "@scripts/utils/DataProvider";
 import { useContext, useEffect, useState } from "react";
-import { Button, View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { ChoseBodyPart } from "./choosingBodyPart";
 
 const { width: disp_width } = Dimensions.get('window');
 
-export default function mainScreen({navigation}: {navigation: any}) {
+export default function MainScreen({navigation}: {navigation: any}) {
     const [selectedPathology, setSelectedPathology] = useState<string>('');
     const [selectedBodyParts, setSelectedBodyParts] = useState<string[]>([]);
     const [isFocused, setIsFocused] = useState(false);
@@ -20,11 +19,11 @@ export default function mainScreen({navigation}: {navigation: any}) {
     let dataProvider = data.dataProvider as IDataProvider;
     
     const loadExerciseScene = () => {
-      navigation.navigate('doExercise')
+      navigation.navigate('SessionScreen')
     }
 
     const loadBodyPartScene = () => {
-      navigation.navigate('choosingBodyPart', {backScene: 'mainScreen'})
+      navigation.navigate('ChoosingBodyPart', {backScene: 'MainScreen'})
     }
 
     var BodyParts: string[] = [];

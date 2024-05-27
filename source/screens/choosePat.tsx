@@ -7,7 +7,7 @@ import { View, Text, StyleSheet } from 'react-native';
 const sideMargin = 16;
 
 
-export default function choosePat({ navigation }: { navigation: any }) {
+export default function ChoosePat({ navigation }: { navigation: any }) {
   const [selectedPathology, setSelectedPathology] = useState<string>('');
 
   const { data, setData } = useContext(NavigationContext);
@@ -15,7 +15,7 @@ export default function choosePat({ navigation }: { navigation: any }) {
   let dataProvider = data.dataProvider;
   
   const loadScene = () => {
-    navigation.navigate('choosingBodyPart', { selectedPathology });
+    navigation.navigate('ChoosingBodyPart', { selectedPathology });
   };
 
   return (

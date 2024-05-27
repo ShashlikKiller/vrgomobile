@@ -8,7 +8,7 @@ export default function App() {
 
   const loadFonts = async () => {
     await Font.loadAsync({
-      Inter: require('@fonts/Inter-Regular.ttf'),
+      'Inter': require('@fonts/Inter-Regular.ttf'),
       'Inter-Bold': require('@fonts/Inter-Bold.ttf'),
       'RobotoMono': require('@fonts/RobotoMono-Regular.ttf'),
       'RobotoMono-Bold': require('@fonts/RobotoMono-Bold.ttf'),
@@ -18,8 +18,8 @@ export default function App() {
 
   if (!fontsLoaded) {
     loadFonts();
-    return Navigate(Screens.start);
+    return Navigate(Screens.Start);
   }
 
-  return Navigate(Screens.start);
+  return Navigate(Screens.Start);
 }
