@@ -1,5 +1,5 @@
 import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
-import { StartButtonEmpty, NextButton } from './buttonsComponent';
+import { StartButtonEmpty, NextButton, RunningExerciseButton} from './buttonsComponent';
 import { useMemo, useState } from 'react';
 
 interface Prop {
@@ -48,15 +48,16 @@ export default function SessionTooltips(prop: Prop) {
     return (
         <View style={styles.btnContainer}>
       {!isActive ? (
-        <TouchableOpacity onPress={stopTimer} style={{
-            backgroundColor: '#FFFF00',
-            width: prop.FirstWidth, height: prop.FirstHeight, justifyContent: 'center', alignItems: 'center'}}>
-          <Text>{prop.StartButtonTitle}</Text>
-        </TouchableOpacity>
+        <RunningExerciseButton action={stopTimer} enabled={true} title={prop.StartButtonTitle}/>
+        // <TouchableOpacity onPress={stopTimer} style={{
+        //     backgroundColor: '#FFFF00',
+        //     width: prop.FirstWidth, height: prop.FirstHeight, justifyContent: 'center', alignItems: 'center'}}>
+        //   <Text>{prop.StartButtonTitle}</Text>
+        // </TouchableOpacity>
       ) : (
         <>
           <View style={{width: prop.FirstWidth, height: prop.FirstHeight}}>
-            <StartButtonEmpty title={prop.StartButtonTitle} disabled={false} action={startOrContinueTimer}/>
+            <StartButtonEmpty title={prop.StartButtonTitle} enabled={true} action={startOrContinueTimer}/>
           </View>
           <View style={{width: prop.SecondWidth}} >
             <NextButton action={prop.NextButtonAction}/> 
