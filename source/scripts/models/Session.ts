@@ -37,10 +37,6 @@ export class Session {
         this._exerciseQueue.push(exercise);
     }
 
-    getQueueLength(): number {
-        return this._exerciseQueue.length;
-    }
-
     init(): Exercise  {
         console.debug("init:Session");
 
