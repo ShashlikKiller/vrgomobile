@@ -14,17 +14,17 @@ export class Timer {
     }
 
     public get runTime(){
-      if (!this._isStopped) this._runTime = new Date().getTime() - this._startTime //времени прошло
+      if (!this._isStopped) this._runTime = this._startTime - new Date().getTime() //времени осталось
       return this._runTime
     }
   
     startTimer(): void {
-      this._startTime = new Date().getTime(); // время старта
+      this._startTime = new Date().getTime() + this._duration; // время окончания
 
       this._timerId = setTimeout(() => { // запускаем таймер
         this.stopTimer();
         console.log("Таймер завершил свою работу");
-      }, (this._duration - this._runTime)); // на оставшееся время
+      }, this._duration); // на оставшееся время
     }
     
     pauseTimer():void {
