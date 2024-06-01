@@ -2,7 +2,7 @@
 
 export class Exercise implements ISerializable{
     
-    public static emptyExercise: Exercise = new Exercise(0,0,"", [],"");
+    public static emptyExercise: Exercise = new Exercise(1,1,"", [" "," "]," ");
 
     public exerciseCompleted: () => void;
 
@@ -61,24 +61,12 @@ export class Exercise implements ISerializable{
         this._images = value
     }
 
-    get execTimeSec(){
+    get executionTime(){
         return this._execTimeSec
     }
 
-    set execTimeSec(value){
+    set executionTime(value){
         this._execTimeSec = value
-    }
-
-    /**
-     * execute
-     */
-    public execute() {
-        //Здесь происходит логика упражнения 
-        // Симуляция выполнения упражнения
-        setTimeout(() => {
-            console.log(`Exercise ${this._instruction[0]} completed.`);
-            this.exerciseCompleted(); // Вызываем событие завершения упражнения
-        }, 2000);
     }
 
 

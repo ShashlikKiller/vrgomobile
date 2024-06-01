@@ -1,16 +1,19 @@
 import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import { StartButtonEmpty, NextButton } from './buttonsComponent';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import EventEmitter from 'react-native/Libraries/vendor/emitter/EventEmitter';
+import { SessionEvent } from '@scripts/models/Session';
 
 interface Prop {
     FirstWidth: number;
     FirstHeight: number;
     SecondWidth: number;
+    StartButtonTitle: string;
+    StartButtonDisabled: boolean;
+    emiter : EventEmitter;
     StartButtonAction: () => void;
     StopTimerAction: () => void;
     ContinueTimerAction: () => void;
-    StartButtonTitle: string;
-    StartButtonDisabled: boolean;
     NextButtonAction: () => void;
 }
 
@@ -18,6 +21,11 @@ export default function SessionTooltips(prop: Prop) {
     const [isActive, setIsActive] = useState<boolean>(true);
     const [isTimerStartedAlready, setIsTimerStartedAlready] = useState<boolean>(false);
 
+    useEffect(()=>{
+      prop.emiter.addListener(SessionEvent.refreshExerciseNotify, ()=>{
+        setIsActive(true);
+      });
+    },[])
     const startOrContinueTimer =() =>
         {
             if (!isTimerStartedAlready)
@@ -39,12 +47,6 @@ export default function SessionTooltips(prop: Prop) {
             // И вот тут еще остановку времени.
         }
 
-    // const startButtonProps = useMemo(() => ({ // Пропы для кнопки старта ОТДЕЛЬНО,
-    //                                           // Чтобы он перерендерился только при изменении значения таймера
-    //     title: prop.StartButtonTitle,
-    //     disabled: prop.StartButtonDisabled
-    // }), [prop.StartButtonTitle]);
-
     return (
         <View style={styles.btnContainer}>
       {!isActive ? (
@@ -56,7 +58,7 @@ export default function SessionTooltips(prop: Prop) {
       ) : (
         <>
           <View style={{width: prop.FirstWidth, height: prop.FirstHeight}}>
-            <StartButtonEmpty title={prop.StartButtonTitle} disabled={false} action={startOrContinueTimer}/>
+            <StartButtonEmpty title={prop.StartButtonTitle} enabled={false} action={startOrContinueTimer}/>
           </View>
           <View style={{width: prop.SecondWidth}} >
             <NextButton action={prop.NextButtonAction}/> 

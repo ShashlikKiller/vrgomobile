@@ -9,6 +9,7 @@ interface Prop {
 
 function ExerciseComponent(prop: Prop){
   var exercise = prop.exercise;
+
     return (
         <ScrollView style={styles.body}>
           <View style={styles.content}>

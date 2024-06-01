@@ -16,7 +16,8 @@ export default function SessionScreen({navigation}: {navigation: any}){
   var [session, setSession] = useState<Session>(sessionDefault);
   var [sessionStarted, setSessionStarted] = useState(false);
   var [runTime, setRunTime] = useState(0);
-  var [exercise, setExercise]= useState<Exercise>(new Exercise(1, 5, "Поставьте две бутылки на расстоянии 1,5 м,",["Пройдите над бутылками гемиплегичной ногой.", "Развернитесь и начните снова"], "https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album"));
+  var [IsActive, setIsActive] = useState(false);
+  var [exercise, setExercise]= useState<Exercise>(Exercise.emptyExercise);
   
   useEffect(() => {
     const emitter = session!.emitter;
@@ -31,6 +32,7 @@ export default function SessionScreen({navigation}: {navigation: any}){
  
   const refreshRunTimeHandler = (runTime: number) => {
     setRunTime(runTime);
+    console.debug(runTime);
   };
   const clearStackAndNavigate = () => {
     ClearStackAndNavigate(navigation, Screens.MainScreen);
@@ -43,7 +45,8 @@ export default function SessionScreen({navigation}: {navigation: any}){
   }
 
   const refreshExerciseHandler = () => {
-    console.debug("refreshExerciseHandler", session.currentExercise);
+    setIsActive(false);
+    refreshRunTimeHandler(0);
     setExercise(session!.currentExercise)
   } 
     return( 
@@ -60,13 +63,12 @@ export default function SessionScreen({navigation}: {navigation: any}){
           <SessionTooltips FirstWidth={disp_width * 1 / 2 * 0.851}
             FirstHeight={disp_height / 16}
             StartButtonAction={() => session!.start()}
-
             StopTimerAction={() => session!.stopTimer()} // остановка таймера
             ContinueTimerAction={() => session!.continueTimer()} // возобновление
-
-            StartButtonTitle={Math.ceil((runTime+300)/1000).toString()}
+            StartButtonTitle={Math.ceil(runTime/1000).toString()}
             StartButtonDisabled={sessionStarted}
             SecondWidth={disp_width * 2 / 3 * 0.668}
+            emiter={ session.emitter}
             NextButtonAction={() => session.next()}>
           </SessionTooltips>
         </View>
