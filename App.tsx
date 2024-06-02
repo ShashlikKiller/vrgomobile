@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Navigate, { Screens } from './source/navigations/navigate';
 import * as Font from 'expo-font';
 
-
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -20,6 +19,6 @@ export default function App() {
     loadFonts();
     return Navigate(Screens.Start);
   }
-
+  
   return Navigate(Screens.Start);
 }
