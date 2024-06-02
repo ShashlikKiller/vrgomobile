@@ -1,4 +1,4 @@
-import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text, Modal} from 'react-native';
 import { StartButtonEmpty, NextButton, RunningExerciseButton} from './buttonsComponent';
 import { useMemo, useState } from 'react';
 
@@ -6,9 +6,10 @@ interface Prop {
     FirstWidth: number;
     FirstHeight: number;
     SecondWidth: number;
-    StartButtonAction: () => void;
-    StopTimerAction: () => void;
-    ContinueTimerAction: () => void;
+    NumbOfReps?: number; // Необязательный параметр
+    StartButtonAction: () => void; //
+    StopTimerAction: () => void; //    Эти поля тоже нужно сделать необязательными
+    ContinueTimerAction: () => void; // Чтобы было либо кол-во повторений, либо таймер
     StartButtonTitle: string;
     StartButtonDisabled: boolean;
     NextButtonAction: () => void;
@@ -17,6 +18,7 @@ interface Prop {
 export default function SessionTooltips(prop: Prop) {
     const [isActive, setIsActive] = useState<boolean>(true);
     const [isTimerStartedAlready, setIsTimerStartedAlready] = useState<boolean>(false);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const startOrContinueTimer =() =>
         {
@@ -42,29 +44,61 @@ export default function SessionTooltips(prop: Prop) {
     // const startButtonProps = useMemo(() => ({ // Пропы для кнопки старта ОТДЕЛЬНО,
     //                                           // Чтобы он перерендерился только при изменении значения таймера
     //     title: prop.StartButtonTitle,
-    //     disabled: prop.StartButtonDisabled
     // }), [prop.StartButtonTitle]);
 
     return (
-        <View style={styles.btnContainer}>
-      {!isActive ? (
-        <RunningExerciseButton action={stopTimer} enabled={true} title={prop.StartButtonTitle}/>
-        // <TouchableOpacity onPress={stopTimer} style={{
-        //     backgroundColor: '#FFFF00',
-        //     width: prop.FirstWidth, height: prop.FirstHeight, justifyContent: 'center', alignItems: 'center'}}>
-        //   <Text>{prop.StartButtonTitle}</Text>
-        // </TouchableOpacity>
-      ) : (
-        <>
-          <View style={{width: prop.FirstWidth, height: prop.FirstHeight}}>
-            <StartButtonEmpty title={prop.StartButtonTitle} enabled={true} action={startOrContinueTimer}/>
+      <View style={styles.btnContainer}>
+
+        {/* ВОТ ЭТО МОДАЛЬНОЕ ОКНО СДЕЛАТЬ КАК НА МАКЕТЕ */}
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+        setModalVisible(!modalVisible);
+        }}
+        >
+          <View>
+            <Text> Модальное окно с инструкцией</Text>
+            <Text> Надо сделать {prop.NumbOfReps} повторений.</Text>
+            <TouchableOpacity style={{
+              width: 50,
+              height: 50,
+              backgroundColor: '#FFFFFF'
+            }}
+            onPress={() => setModalVisible(false)}>
+              <Text>Закрыть</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{width: prop.SecondWidth}} >
-            <NextButton action={prop.NextButtonAction}/> 
-          </View>
-        </>
-      )}
-    </View>
+        </Modal>
+
+
+        {prop.NumbOfReps ? ( // Если упражнение на кол-во
+          <>
+            <View style={{width: prop.FirstWidth, height: prop.FirstHeight}}>
+              <StartButtonEmpty title={`${prop.NumbOfReps} раз`} enabled={true} 
+              action={()=> setModalVisible(true)}/>
+            </View>
+            <View style={{width: prop.SecondWidth}} >
+              <NextButton action={prop.NextButtonAction}/> 
+            </View>
+          </>
+        ) : (
+          // Если переменной NumbOfReps нет, то проверяем isActive
+          !isActive ? (
+            <RunningExerciseButton action={stopTimer} enabled={true} title={prop.StartButtonTitle}/>
+          ) : (
+            <>
+              <View style={{width: prop.FirstWidth, height: prop.FirstHeight}}>
+                <StartButtonEmpty title={prop.StartButtonTitle} enabled={true} action={startOrContinueTimer}/>
+              </View>
+              <View style={{width: prop.SecondWidth}} >
+                <NextButton action={prop.NextButtonAction}/> 
+              </View>
+            </>
+          )
+        )}
+      </View>
     );
 }
 

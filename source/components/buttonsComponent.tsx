@@ -9,7 +9,9 @@ interface ButtonProps {
   }
 
 interface ExtendedButtonProps {
-    action: () => void;
+    action: any; // Тут был void.
+                 // Я изменил для того, чтобы можно было
+                 // Выводить верстку по нажатию
     title: string;
     enabled: Boolean;
   }
