@@ -2,9 +2,10 @@ import * as React from 'react';
 import { View, StyleSheet} from 'react-native';
 import { BackButtonLittle } from '@components/buttonsComponent';
 import ExerciseComponent from '@components/exerciseComponent';
-import { ClearStackAndNavigate } from '@navigations/navigate';
+// import { ClearStackAndNavigate } from '@navigations/navigate';
 import TooltipWin from '@components/Modal/tooltipWin';
 import { useState } from 'react';
+import { ClearStackAndNavigate, NavigationContext, Screens } from "@navigations/navigate";
 
 export default function doExercise({navigation}: {navigation: any}){
   const loadScene = () => {

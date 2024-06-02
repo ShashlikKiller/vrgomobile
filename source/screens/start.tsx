@@ -13,6 +13,7 @@ export default function Start({ navigation }: { navigation: any }) {
         .then(result => {
 
             if(result != null){
+                // StaticVariables.pathology = result
                 ClearStackAndNavigate(navigation, Screens.mainScreen);
                 return;
             }
