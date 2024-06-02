@@ -1,17 +1,20 @@
-import {View, StyleSheet, TouchableOpacity, Text, Modal} from 'react-native';
-import { StartButtonEmpty, NextButton, RunningExerciseButton} from './buttonsComponent';
-import { useMemo, useState } from 'react';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import { StartButtonEmpty, NextButton } from './buttonsComponent';
+import { useEffect, useMemo, useState } from 'react';
+import EventEmitter from 'react-native/Libraries/vendor/emitter/EventEmitter';
+import { SessionEvent } from '@scripts/models/Session';
 
 interface Prop {
     FirstWidth: number;
     FirstHeight: number;
     SecondWidth: number;
-    NumbOfReps?: number; // Необязательный параметр
+    StartButtonTitle: string;
+    StartButtonDisabled: boolean;
+    emiter : EventEmitter;
+	NumbOfReps?: number; // Необязательный параметр
     StartButtonAction: () => void; //
     StopTimerAction: () => void; //    Эти поля тоже нужно сделать необязательными
     ContinueTimerAction: () => void; // Чтобы было либо кол-во повторений, либо таймер
-    StartButtonTitle: string;
-    StartButtonDisabled: boolean;
     NextButtonAction: () => void;
 }
 
@@ -20,6 +23,11 @@ export default function SessionTooltips(prop: Prop) {
     const [isTimerStartedAlready, setIsTimerStartedAlready] = useState<boolean>(false);
     const [modalVisible, setModalVisible] = useState(false);
 
+    useEffect(()=>{
+      prop.emiter.addListener(SessionEvent.refreshExerciseNotify, ()=>{
+        setIsActive(true);
+      });
+    },[])
     const startOrContinueTimer =() =>
         {
             if (!isTimerStartedAlready)

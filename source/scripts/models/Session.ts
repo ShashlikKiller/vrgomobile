@@ -1,8 +1,7 @@
 import EventEmitter from "react-native/Libraries/vendor/emitter/EventEmitter";
 import { Exercise } from "./Exercise";
 import { Timer } from "@utils/Timer";
-import Navigate, { ClearStackAndNavigate } from "@navigations/navigate";
-const timerRefreshRate = 1000 // 1 секуда
+const timerRefreshRate = 100 // 0.1 секуда
 
 export class Session {
     
@@ -27,7 +26,8 @@ export class Session {
 
     constructor() {
         this._exerciseQueue = [];
-        this._timer = new Timer(0);
+        this.timerStopHandler = this.timerStopHandler.bind(this);
+        this._timer = new Timer(0, this.timerStopHandler);
         this._isInited = false;
         this._isStarted = false;
     }
@@ -47,12 +47,12 @@ export class Session {
         }
         
         const exercise = this._exerciseQueue.shift(); // Получаем первое упражнение из очереди
-
         if(exercise === null){
             
             console.error("Упражнение оказалось null: Session")
             return Exercise.emptyExercise;
         }
+        this._timer.reset(exercise!.executionTime);
         
         this._currentExercise = exercise!;
 
@@ -68,12 +68,15 @@ export class Session {
     }
 
     stopTimer(): void{
-        console.debug('stop timer');
-        // заглушка
+        clearTimeout(this._intervalID);
+
+        this._timer.pause();
     }
+
     continueTimer(): void{
-        console.debug('continue timer');
-        // заглушка
+        this.emitter.emit(SessionEvent.refreshRunTimeNotify, this.runtime)
+        this._intervalID = setInterval(() => {this.emitter.emit(SessionEvent.refreshRunTimeNotify, this.runtime)}, timerRefreshRate);
+        this._timer.start();
     }
 
     next(): Exercise {
@@ -88,7 +91,7 @@ export class Session {
             if(exercise != null){
                 this._currentExercise = exercise!;
             }
-
+            this._timer.reset(this._currentExercise.executionTime);
 
             this.emitter.emit(SessionEvent.refreshExerciseNotify, this._currentExercise);
         }
@@ -106,14 +109,15 @@ export class Session {
     } 
 
     private executeExercise(): void {
-
         this.emitter.emit(SessionEvent.refreshRunTimeNotify, 0);
-        
-        this._timer = new Timer(this._currentExercise.execTimeSec);
         
         this._intervalID = setInterval(() => {this.emitter.emit(SessionEvent.refreshRunTimeNotify, this.runtime)}, timerRefreshRate);
         
-        this._timer.startTimer();
+        this._timer.start();
+    }
+    private timerStopHandler():void{
+        clearInterval(this._intervalID);
+        this.next();
     }
 }
 export enum SessionEvent{
