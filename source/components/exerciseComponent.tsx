@@ -1,3 +1,4 @@
+// <<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { Image, View, StyleSheet, Text, Button, ScrollView } from 'react-native';
 import ExerciseStep from '@components/exerciseStep';
@@ -13,7 +14,7 @@ function ExerciseComponent(prop: Prop){
         <ScrollView style={styles.body}>
           <View style={styles.content}>
             <Text style={styles.instructions}>{exercise.description}</Text>
-            <Image style={styles.image} source={{uri: exercise.image }}/>
+            <Image style={styles.image} source={typeof exercise.image === 'string' ? { uri: exercise.image } : exercise.image}/>
             <View>
               {exercise.instruction?.map((step: string, stepNumb: number) => (
                 <ExerciseStep stepNumb={stepNumb+1} step={step}></ExerciseStep>
