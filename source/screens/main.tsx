@@ -12,7 +12,7 @@ const { width: disp_width } = Dimensions.get('window');
 export default function MainScreen({navigation}: {navigation: any}) {
     const [selectedPathology, setSelectedPathology] = useState<string>('');
     const [selectedBodyParts, setSelectedBodyParts] = useState<string[]>([]);
-    const [isFocused, setIsFocused] = useState(false);
+    //const [isFocused, setIsFocused] = useState(false);
     
     const { data, setData } = useContext(NavigationContext);
     
@@ -56,7 +56,7 @@ export default function MainScreen({navigation}: {navigation: any}) {
     return (
       <View style={styles.background}>
         <View style={styles.container}>
-          <Text style={styles.text}> Ваша патология верна?</Text>
+          <Text style={{...styles.text, marginTop: 30}}> Ваша патология верна?</Text>
           <View style={{position: 'absolute', top: 60, zIndex: 10}}>
           <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}></DropdownComponent>
           </View>
