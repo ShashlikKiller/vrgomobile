@@ -1,4 +1,3 @@
-// <<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { Image, View, StyleSheet, Text, Button, ScrollView } from 'react-native';
 import ExerciseStep from '@components/exerciseStep';

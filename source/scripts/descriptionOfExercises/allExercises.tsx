@@ -7,8 +7,8 @@ export enum Pathology {
 }
 
 export enum BodyPart {
-    LEG = "leg",
-    ARM = "arm"
+    LEG = "Нога",
+    ARM = "Рука"
 }
 
 export const allExercises = [
