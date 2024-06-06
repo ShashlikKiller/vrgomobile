@@ -1,5 +1,5 @@
 import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
-import { StartButtonEmpty, NextButton } from './buttonsComponent';
+import { StartButtonEmpty, NextButtonEnablingDark } from './buttonsComponent';
 import { useMemo, useState } from 'react';
 
 interface Prop {
@@ -56,10 +56,10 @@ export default function SessionTooltips(prop: Prop) {
       ) : (
         <>
           <View style={{width: prop.FirstWidth, height: prop.FirstHeight}}>
-            <StartButtonEmpty title={prop.StartButtonTitle} disabled={false} action={startOrContinueTimer}/>
+            <StartButtonEmpty title={prop.StartButtonTitle} enabled={true} action={startOrContinueTimer}/>
           </View>
           <View style={{width: prop.SecondWidth}} >
-            <NextButton action={prop.NextButtonAction}/> 
+              <NextButtonEnablingDark action={prop.NextButtonAction} title='Next' enabled={isTimerStartedAlready} />
           </View>
         </>
       )}

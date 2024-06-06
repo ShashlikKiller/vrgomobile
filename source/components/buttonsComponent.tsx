@@ -147,6 +147,22 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
     }
   };
 
+  export const NextButtonEnablingDark: React.FC<ExtendedButtonProps> = ({action, title, enabled}) => {
+    if(enabled) {
+      return (
+        <ImageBackground source={require('@images/button/NextButton.png')} resizeMode="contain">
+            <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action}/>
+        </ImageBackground>
+    );
+    } else {
+      return (
+        <ImageBackground source={require('@images/button/NextButtonDark.png')} resizeMode="contain" >
+            <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action} disabled={true}/>
+        </ImageBackground>
+    );
+    }
+  };
+
   export const NextButtonLightWide: React.FC<ButtonProps> = ({action}) => {
     return (
       <ImageBackground source={require('@images/button/NextButtonLightWide.png')} resizeMode="contain">
