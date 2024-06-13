@@ -6,6 +6,7 @@ import { IDataProvider, Path } from "@scripts/interfaces/content-provider/IDataP
 import { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { ChoseBodyPart } from "./choosingBodyPart";
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const { width: disp_width } = Dimensions.get('window');
 
@@ -56,8 +57,8 @@ export default function MainScreen({navigation}: {navigation: any}) {
     return (
       <View style={styles.background}>
         <View style={styles.container}>
-          <Text style={{...styles.text, marginTop: 30}}> Ваша патология верна?</Text>
-          <View style={{position: 'absolute', top: 60, zIndex: 10}}>
+          <Text style={{...styles.text, marginTop: getStatusBarHeight()}}> Ваша патология верна?</Text>
+          <View style={{position: 'absolute', top: getStatusBarHeight() + 30, zIndex: 10}}>
           <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}></DropdownComponent>
           </View>
           <View style={{flex: 1, marginTop: '15%'}}>
