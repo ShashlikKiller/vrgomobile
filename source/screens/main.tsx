@@ -61,9 +61,9 @@ export default function MainScreen({navigation}: {navigation: any}) {
           <View style={{position: 'absolute', top: getStatusBarHeight() + 30, zIndex: 10}}>
           <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}></DropdownComponent>
           </View>
-          <View style={{flex: 1, marginTop: '15%'}}>
+          <View style={{flex: 1, marginTop: '15%', width: disp_width - sideMargin*2}}>
             <Text style={styles.text}> Верны ли области упражнений?</Text>
-            <View style={{width: disp_width - sideMargin*2, height: 200}}>
+            <View style={{height: 200}}>
               <BodypartsSelected bodyparts={selectedBodyParts} onPress={loadBodyPartScene}></BodypartsSelected>
             </View>
           </View>
@@ -98,8 +98,9 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginTop: 10,
     marginBottom: 10,
-    textAlign: 'left',
+    textAlign: 'justify',
     flexWrap: 'wrap',
-    width: '100%'
+    width: '100%',
+    //textAlign: 'justify'
   }
 });

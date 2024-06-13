@@ -27,7 +27,7 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
     emitter.addListener(SessionEvent.closeSessionNotify, clearStackAndNavigate);
 
     session!.enqueue(new Exercise(1,5,'Поставьте две бутылки на расстоянии 1,5 м,',['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
-    session!.enqueue(new Exercise(2,5,'Передвиньте бутылки на 2 метра вперед,',['Сделайте шаг назад, затем влево и вправо','Посмотрите в окно и послушайте это весеннее чириканье птичек,','Насладитесь этим прекрасным днем.'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
+    session!.enqueue(new Exercise(2,5,'Передвиньте бутылки на 2 метра вперед,',['Сделайте шаг назад, затем влево и вправо','Посмотрите в окно и послушайте это весеннее чириканье птичек,','Насладитесь этим прекрасным днем.', 'test', 'test scroll', 'test', 'test'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
     setTotalExercises(session!.getQueueLength());
     setCompletedExercises(0);
 
@@ -74,7 +74,7 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
         <SessionTooltips
           FirstWidth={disp_width * 1 / 2 * 0.851}
           FirstHeight={disp_height / 16}
-          margin={16}
+          margin={16} // Вот сюда передаем margin всех остальных элементов в content
           StartButtonAction={() => session!.start()}
           //NumbOfReps={15} // Необязательный параметр
           StopTimerAction={() => session!.stopTimer()} // остановка таймера
