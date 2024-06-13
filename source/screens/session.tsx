@@ -74,6 +74,7 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
         <SessionTooltips
           FirstWidth={disp_width * 1 / 2 * 0.851}
           FirstHeight={disp_height / 16}
+          margin={16}
           StartButtonAction={() => session!.start()}
           //NumbOfReps={15} // Необязательный параметр
           StopTimerAction={() => session!.stopTimer()} // остановка таймера
