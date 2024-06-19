@@ -23,6 +23,5 @@ export default function Start({ navigation }: { navigation: any }) {
 
     },[]);
 
-
     return(<View/>);
   }
