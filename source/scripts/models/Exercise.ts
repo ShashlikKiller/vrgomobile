@@ -6,6 +6,9 @@ export class Exercise implements ISerializable{
 
     public exerciseCompleted: () => void;
 
+    private _pathology: string = "";
+    private _bodyPart: string = "";
+
     private _description: string;
     private _instruction: string[];
     private _images: string;
@@ -35,6 +38,19 @@ export class Exercise implements ISerializable{
             console.debug("Serialization errors Exercise");
         }
 
+    }
+
+    get pathology() {
+        return this._pathology
+    }
+    get bodyPart() {
+        return this._bodyPart
+    }
+    set pathology(value) {
+        this._pathology = value
+    }
+    set bodyPart(value) {
+        this._bodyPart = value
     }
 
     get description(){
