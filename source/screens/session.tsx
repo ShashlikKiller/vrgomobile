@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { BackButtonLittle, NextButton, StartButtonEmpty } from '@components/buttonsComponent';
+import { BackButtonLittle, StartButtonEmpty } from '@components/buttonsComponent';
 import ExerciseComponent from '@components/exerciseComponent';
 import { ClearStackAndNavigate, Screens } from '@navigations/navigate';
 import { disp_height, disp_width } from '@scripts/utils/Const';
@@ -20,7 +20,7 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
   var [session, setSession] = useState<Session>(sessionDefault);
   var [sessionStarted, setSessionStarted] = useState(false);
   var [runTime, setRunTime] = useState(0);
-  var [exercise, setExercise] = useState<Exercise>(new Exercise(1,5,'Поставьте две бутылки на расстоянии 1,5 м,',['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
+  var [exercise, setExercise] = useState<Exercise>(new Exercise(1, 5, 'Поставьте две бутылки на расстоянии 1,5 м,', ['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'], 'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
   var [completedExercises, setCompletedExercises] = useState(0);
   var [totalExercises, setTotalExercises] = useState(0);
 
@@ -108,6 +108,11 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
     console.debug("refreshExerciseHandler", session.currentExercise);
     setExercise(session!.currentExercise)
     setCompletedExercises(completedExercises + 1);
+  }
+
+  const startSession = () => {
+    session!.start();
+    setSessionStarted(true);
   }
 
   return (
