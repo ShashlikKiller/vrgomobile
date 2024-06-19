@@ -1,6 +1,6 @@
 import { Exercise } from "@models/Exercise";
 import { IExerciseSelectorBuilder, ISelector } from "../interfaces/IExerciseSelector";
-
+ 
 class Selector implements ISelector<Exercise> {
     private pathology: string;
     private affectedRegions: string[];
@@ -14,14 +14,15 @@ class Selector implements ISelector<Exercise> {
         return array.filter(item => {
             if (item instanceof Exercise) {
                 let exercise = item as Exercise;
-                return exercise.description.indexOf(this.pathology) !== -1 && this.affectedRegions.some(region => exercise.description.indexOf(region) !== -1);
+                return this.affectedRegions.some(region => exercise.bodyPart == region) && this.pathology == exercise.pathology
+                // return exercise.description.indexOf(this.pathology) !== -1 && this.affectedRegions.some(region => exercise.description.indexOf(region) !== -1);
             }
             return false;
         });
     }
 }
 
-class ExerciseSelectorBuilder implements IExerciseSelectorBuilder {
+export class ExerciseSelectorBuilder implements IExerciseSelectorBuilder {
     private pathology: string = "";
     private affectedRegion: string[] = [];
 

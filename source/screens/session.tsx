@@ -4,12 +4,16 @@ import { BackButtonLittle, NextButton, StartButtonEmpty } from '@components/butt
 import ExerciseComponent from '@components/exerciseComponent';
 import { ClearStackAndNavigate, Screens } from '@navigations/navigate';
 import { disp_height, disp_width } from '@scripts/utils/Const';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Session, SessionEvent } from '@scripts/models/Session';
 import { Exercise } from '@scripts/models/Exercise';
 import TooltipWin from '@components/Modal/tooltipWin';
 import SessionTooltips from '@components/sessionTooltips';
 import ExerciseProgression from '@components/exerciseProgression';
+import { allExercises, Pathology, BodyPart } from '@scripts/descriptionOfExercises/allExercises';
+import { NavigationContext } from '@navigations/navigate';
+import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
+import { ExerciseSelectorBuilder } from '@scripts/utils/Selector';
 
 var sessionDefault = new Session();
 export default function SessionScreen({ navigation }: { navigation: any }) {
@@ -20,20 +24,71 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
   var [completedExercises, setCompletedExercises] = useState(0);
   var [totalExercises, setTotalExercises] = useState(0);
 
+  const {data, setData} = useContext(NavigationContext);
+  let pathology: string | null
+  let affectedRegion: string[] = []
+  let exercises: Exercise[] = []
+  let dataProvider = data.dataProvider as IDataProvider;
+
   useEffect(() => {
     const emitter = session!.emitter;
     emitter.addListener(SessionEvent.refreshExerciseNotify, refreshExerciseHandler);
     emitter.addListener(SessionEvent.refreshRunTimeNotify, refreshRunTimeHandler);
     emitter.addListener(SessionEvent.closeSessionNotify, clearStackAndNavigate);
 
-    session!.enqueue(new Exercise(1,5,'Поставьте две бутылки на расстоянии 1,5 м,',['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
-    session!.enqueue(new Exercise(2,5,'Передвиньте бутылки на 2 метра вперед,',['Сделайте шаг назад, затем влево и вправо','Посмотрите в окно и послушайте это весеннее чириканье птичек,','Насладитесь этим прекрасным днем.'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
+    fetchData().then(processExercises).then(initSession)
+    },[])
+
+  const fetchData = async () => {
+    const [pathologyResult, bodyPartResult] = await Promise.all([
+      dataProvider.GetSerializable(Path.pathology),
+      dataProvider.GetSerializable(Path.choseBodyPart)
+    ]);
+
+    if (pathologyResult != null) {
+      const parsedData = JSON.parse(pathologyResult);
+      pathology = parsedData.label;
+    }
+
+    if (bodyPartResult != null) {
+      const parsedData = JSON.parse(bodyPartResult);
+      const { isCheckedRightHand, isCheckedLeftHand, isCheckedRightLeg, isCheckedLeftLeg } = parsedData;
+      if (isCheckedRightHand || isCheckedLeftHand) affectedRegion.push("Рука")
+      if (isCheckedRightLeg || isCheckedLeftLeg) affectedRegion.push("Нога")
+    }
+
+    allExercises.forEach(element => {
+      element.exercises.forEach(exercise => {
+        let ex = new Exercise(1, 5, exercise.description, exercise.instruction, exercise.images)
+        ex.bodyPart = element.bodyPart
+        ex.pathology = element.pathology
+        exercises.push(ex)
+      })
+    });
+  };
+
+  const processExercises = () => {
+    let selectorBuilder = new ExerciseSelectorBuilder()
+    console.log("AAAAAAAAAAAa"+affectedRegion+pathology)
+    if (affectedRegion.length != 0 && pathology != null) {
+      let selector = selectorBuilder.AddAffectedRegion(affectedRegion).AddPathology(pathology).Build()
+      selector.Select(exercises).forEach(exercise => {
+        console.log("DDDDDDDDDDDDd"+exercise)
+        session!.enqueue(exercise)
+      });
+    }
+  };
+
+  const initSession = () => {
     setTotalExercises(session!.getQueueLength());
     setCompletedExercises(0);
 
     let ex = session!.init();
     setExercise(ex);
-  }, []);
+  }
+
+    // session!.enqueue(new Exercise(1,5,'Поставьте две бутылки на расстоянии 1,5 м,',['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
+    // session!.enqueue(new Exercise(2,5,'Передвиньте бутылки на 2 метра вперед,',['Сделайте шаг назад, затем влево и вправо','Посмотрите в окно и послушайте это весеннее чириканье птичек,','Насладитесь этим прекрасным днем.'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
 
   const refreshRunTimeHandler = (runTime: number) => {
     setRunTime(runTime);
