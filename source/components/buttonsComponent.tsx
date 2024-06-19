@@ -150,13 +150,13 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
   export const NextButtonEnablingDark: React.FC<ExtendedButtonProps> = ({action, title, enabled}) => {
     if(enabled) {
       return (
-        <ImageBackground source={require('@images/button/NextButton.png')} resizeMode="contain">
+        <ImageBackground source={require('@images/button/NextButtonLightExercise.png')} resizeMode="contain">
             <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action}/>
         </ImageBackground>
     );
     } else {
       return (
-        <ImageBackground source={require('@images/button/NextButtonDark.png')} resizeMode="contain" >
+        <ImageBackground source={require('@images/button/NextButtonDarkExercise.png')} resizeMode="contain" >
             <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action} disabled={true}/>
         </ImageBackground>
     );
