@@ -6,6 +6,7 @@ interface Prop {
     FirstWidth: number;
     FirstHeight: number;
     SecondWidth: number;
+    margin: number;
 
     // Сделать эти поля также необязательными:
     StartButtonAction: () => void;
@@ -52,7 +53,7 @@ export default function SessionTooltips(prop: Prop) {
     // }), [prop.StartButtonTitle]);
 
     return (
-      <View style={styles.btnContainer}>
+      <View style={{...styles.btnContainer, margin: prop.margin}}>
 
         {/* ВОТ ЭТО МОДАЛЬНОЕ ОКНО СДЕЛАТЬ КАК НА МАКЕТЕ */}
         <Modal
@@ -112,7 +113,6 @@ const styles = StyleSheet.create({
     btnContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignContent: 'flex-end',
-      marginBottom: 10
+      alignContent: 'flex-end'
     }
   })
