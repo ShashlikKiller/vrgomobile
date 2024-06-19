@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     btnContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignContent: 'flex-end'
+      alignContent: 'flex-end',
+      backgroundColor: '#232323'
     }
   })

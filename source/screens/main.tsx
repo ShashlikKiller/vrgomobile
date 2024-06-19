@@ -6,6 +6,7 @@ import { IDataProvider, Path } from "@scripts/interfaces/content-provider/IDataP
 import { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { ChoseBodyPart } from "./choosingBodyPart";
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const { width: disp_width } = Dimensions.get('window');
 
@@ -56,13 +57,13 @@ export default function MainScreen({navigation}: {navigation: any}) {
     return (
       <View style={styles.background}>
         <View style={styles.container}>
-          <Text style={{...styles.text, marginTop: 30}}> Ваша патология верна?</Text>
-          <View style={{position: 'absolute', top: 60, zIndex: 10}}>
+          <Text style={{...styles.text, marginTop: getStatusBarHeight()}}> Ваша патология верна?</Text>
+          <View style={{position: 'absolute', top: getStatusBarHeight() + 30, zIndex: 10}}>
           <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}></DropdownComponent>
           </View>
-          <View style={{flex: 1, marginTop: '15%'}}>
+          <View style={{flex: 1, marginTop: '15%', width: disp_width - sideMargin*2}}>
             <Text style={styles.text}> Верны ли области упражнений?</Text>
-            <View style={{width: disp_width - sideMargin*2, height: 200}}>
+            <View style={{height: 200}}>
               <BodypartsSelected bodyparts={selectedBodyParts} onPress={loadBodyPartScene}></BodypartsSelected>
             </View>
           </View>
@@ -97,8 +98,9 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginTop: 10,
     marginBottom: 10,
-    textAlign: 'left',
+    textAlign: 'justify',
     flexWrap: 'wrap',
-    width: '100%'
+    width: '100%',
+    //textAlign: 'justify'
   }
 });
