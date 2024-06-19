@@ -1,5 +1,5 @@
-import {View, StyleSheet, TouchableOpacity, Text, Modal} from 'react-native';
-import { StartButtonEmpty, NextButton, RunningExerciseButton} from './buttonsComponent';
+import { View, StyleSheet, TouchableOpacity, Text, Modal} from 'react-native';
+import { StartButtonEmpty, NextButtonEnablingDark, RunningExerciseButton} from './buttonsComponent';
 import { useMemo, useState } from 'react';
 
 interface Prop {
@@ -86,7 +86,7 @@ export default function SessionTooltips(prop: Prop) {
               action={()=> setModalVisible(true)}/>
             </View>
             <View style={{width: prop.SecondWidth}} >
-              <NextButton action={prop.NextButtonAction}/>
+               <NextButtonEnablingDark action={prop.NextButtonAction} title='Next' enabled={isTimerStartedAlready} />
             </View>
           </>
         ) : (
@@ -99,7 +99,7 @@ export default function SessionTooltips(prop: Prop) {
                 <StartButtonEmpty title={prop.StartButtonTitle} enabled={true} action={startOrContinueTimer}/>
               </View>
               <View style={{width: prop.SecondWidth}} >
-                <NextButton action={prop.NextButtonAction}/> 
+                  <NextButtonEnablingDark action={prop.NextButtonAction} title='Next' enabled={isTimerStartedAlready} />
               </View>
             </>
           )
