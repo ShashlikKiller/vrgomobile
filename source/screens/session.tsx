@@ -19,7 +19,9 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
   var [session, setSession] = useState<Session>(sessionDefault);
   var [sessionStarted, setSessionStarted] = useState(false);
   var [runTime, setRunTime] = useState(0);
-  var [exercise, setExercise] = useState<Exercise>(new Exercise(1,5,'Поставьте две бутылки на расстоянии 1,5 м,',['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
+  // new Exercise(1,5,'Поставьте две бутылки на расстоянии 1,5 м,',['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album')
+  var [exercise, setExercise] = useState<any>(null);
+  // var [exercise, setExercise] = useState<Exercise>(new Exercise(1,5,'Поставьте две бутылки на расстоянии 1,5 м,',['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
   var [completedExercises, setCompletedExercises] = useState(0);
   var [totalExercises, setTotalExercises] = useState(0);
 
@@ -103,35 +105,35 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
   }
 
   return (
-    <>
-      <View style={styles.container}>
-        <TooltipWin
-          modalWindow={modalWindow}
-          textHead='Инструкция'
-          textBody={text_1}
-          toggleModal={toggleModal}
-        />
-        <View />
+    <View style={styles.container}>
+      <TooltipWin
+        modalWindow={modalWindow}
+        textHead='Инструкция'
+        textBody={text_1}
+        toggleModal={toggleModal}
+      />
+      <View />
 
-        <View style={styles.top_navbar}>
-          <BackButtonLittle action={clearStackAndNavigate} />
-          <ExerciseProgression currentExercise={completedExercises + 1} totalExercises={totalExercises} />
-        </View>
-        <ExerciseComponent exercise={exercise} />
-        <SessionTooltips
-          FirstWidth={disp_width * 1 / 2 * 0.851}
-          FirstHeight={disp_height / 16}
-          StartButtonAction={() => session!.start()}
-          //NumbOfReps={15} // Необязательный параметр
-          StopTimerAction={() => session!.stopTimer()} // остановка таймера
-          ContinueTimerAction={() => session!.continueTimer()} // возобновление
-          StartButtonTitle={Math.ceil((runTime + 300) / 1000).toString()}
-          StartButtonDisabled={sessionStarted}
-          SecondWidth={disp_width * 2 / 3 * 0.668}
-          NextButtonAction={() => session.next()}
-        />
+      <View style={styles.top_navbar}>
+        <BackButtonLittle action={clearStackAndNavigate} />
+        <ExerciseProgression currentExercise={completedExercises + 1} totalExercises={totalExercises} />
       </View>
-    </>
+      {exercise?
+        <ExerciseComponent exercise={exercise} /> : <></>
+      }
+      <SessionTooltips
+        FirstWidth={disp_width * 1 / 2 * 0.851}
+        FirstHeight={disp_height / 16}
+        StartButtonAction={() => session!.start()}
+        //NumbOfReps={15} // Необязательный параметр
+        StopTimerAction={() => session!.stopTimer()} // остановка таймера
+        ContinueTimerAction={() => session!.continueTimer()} // возобновление
+        StartButtonTitle={Math.ceil((runTime + 300) / 1000).toString()}
+        StartButtonDisabled={sessionStarted}
+        SecondWidth={disp_width * 2 / 3 * 0.668}
+        NextButtonAction={() => session.next()}
+      />
+    </View>
   );
 }
 
