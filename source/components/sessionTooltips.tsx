@@ -1,40 +1,52 @@
 import { View, StyleSheet, TouchableOpacity, Text, Modal} from 'react-native';
 import { StartButtonEmpty, NextButtonEnablingDark, RunningExerciseButton} from './buttonsComponent';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import EventEmitter from 'react-native/Libraries/vendor/emitter/EventEmitter';
+import { SessionEvent } from '@scripts/models/Session';
 
-interface Prop {
+export interface tooltipProp {
     FirstWidth: number;
     FirstHeight: number;
     SecondWidth: number;
     margin: number;
 
-    // Сделать эти поля также необязательными:
-    StartButtonAction: () => void;
-    StopTimerAction: () => void; 
-    ContinueTimerAction: () => void;
 
-    NumbOfReps?: number; // Необязательный параметр.
-    // Если не передавать - будет работать с таймером
+
     StartButtonTitle: string;
     StartButtonDisabled: boolean;
     NextButtonAction: () => void;
+
+    // Необязательные параметры
+    StartButtonAction?: () => void;
+    StopTimerAction?: () => void; 
+    ContinueTimerAction?: () => void;
+    NumbOfReps?: number; // Если не передавать - будет работать с таймером
+    emitter?: EventEmitter; 
+    // Необязательные параметры
 }
 
-export default function SessionTooltips(prop: Prop) {
+export default function SessionTooltips(prop: tooltipProp) {
     const [isActive, setIsActive] = useState<boolean>(true);
     const [isTimerStartedAlready, setIsTimerStartedAlready] = useState<boolean>(false);
     const [modalVisible, setModalVisible] = useState(false);
 
+  useEffect(()=>{
+    if(prop.emitter){
+      prop.emitter.addListener(SessionEvent.timerOverNotify, ()=>{
+        stopTimer();
+      });
+    }
+  },[])
     const startOrContinueTimer =() =>
         {
             if (!isTimerStartedAlready)
             {
-                prop.StartButtonAction();
+                prop.StartButtonAction!();
                 setIsTimerStartedAlready(true);
             }
             else
             {
-                prop.ContinueTimerAction();
+                prop.ContinueTimerAction!();
             }
             setIsActive(false);
         }
@@ -42,15 +54,10 @@ export default function SessionTooltips(prop: Prop) {
     const stopTimer = () =>
         {
             setIsActive(true)
-            prop.StopTimerAction();
+            prop.StopTimerAction!();
             // И вот тут еще остановку времени.
         }
 
-    // const startButtonProps = useMemo(() => ({ // Пропы для кнопки старта ОТДЕЛЬНО,
-    //                                           // Чтобы он перерендерился только при изменении значения таймера
-    //     title: prop.StartButtonTitle,
-    //     disabled: prop.StartButtonDisabled
-    // }), [prop.StartButtonTitle]);
 
     return (
       <View style={{...styles.btnContainer, margin: prop.margin}}>
@@ -86,7 +93,7 @@ export default function SessionTooltips(prop: Prop) {
               action={()=> setModalVisible(true)}/>
             </View>
             <View style={{width: prop.SecondWidth}} >
-               <NextButtonEnablingDark action={prop.NextButtonAction} title='Next' enabled={isTimerStartedAlready} />
+               <NextButtonEnablingDark action={prop.NextButtonAction} title='Next' enabled={true} />
             </View>
           </>
         ) : (

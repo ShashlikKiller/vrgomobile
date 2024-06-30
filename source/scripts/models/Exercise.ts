@@ -1,24 +1,37 @@
+import { ExerciseType } from "@scripts/descriptionOfExercises/allExercises";
 
 
 export class Exercise implements ISerializable{
     
-    public static emptyExercise: Exercise = new Exercise(0,0,"", [],"");
+    public static emptyExercise: Exercise = new Exercise(0,"", [],"");
 
     public exerciseCompleted: () => void;
 
     private _pathology: string = "";
     private _bodyPart: string = "";
 
+    private _exerciseType: ExerciseType;
     private _description: string;
     private _instruction: string[];
     private _images: string;
-    private _execTimeSec: number;
+    private _executeTime: number;
+    private _countOfRepeat: number;
 
-    constructor(exerciseId: number, execTimeSec: number, description: string, instruction: string[], images: string ){
+    constructor(
+        executeTime: number, 
+        description: string, 
+        instruction: string[], 
+        images: string, 
+        exerciseType: ExerciseType = ExerciseType.COUNT,
+        countOfRepeat: number = 2){
+
         this._description = description;
         this._instruction = instruction;
         this._images = images;
-        this._execTimeSec = execTimeSec;
+        this._executeTime = executeTime;
+        this._exerciseType = exerciseType
+        this._countOfRepeat = countOfRepeat;
+
         this.exerciseCompleted = () => {};
     }
 
@@ -32,7 +45,7 @@ export class Exercise implements ISerializable{
             this._description = description;
             this._instruction = instruction;
             this._images = images;
-            this._execTimeSec = execTimeSec;
+            this._executeTime = execTimeSec;
         }
         catch{
             console.debug("Serialization errors Exercise");
@@ -77,25 +90,19 @@ export class Exercise implements ISerializable{
         this._images = value
     }
 
-    get execTimeSec(){
-        return this._execTimeSec
+    get executeTime(){
+        return this._executeTime
     }
 
-    set execTimeSec(value){
-        this._execTimeSec = value
+    set executeTime(value){
+        this._executeTime = value
     }
 
-    /**
-     * execute
-     */
-    public execute() {
-        //Здесь происходит логика упражнения 
-        // Симуляция выполнения упражнения
-        setTimeout(() => {
-            console.log(`Exercise ${this._instruction[0]} completed.`);
-            this.exerciseCompleted(); // Вызываем событие завершения упражнения
-        }, 2000);
+    get exerciseType(){
+        return this._exerciseType;
     }
-
+    get countOfReapeat(){
+        return this._countOfRepeat;
+    }
 
 }

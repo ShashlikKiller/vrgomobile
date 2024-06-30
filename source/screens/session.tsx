@@ -8,33 +8,38 @@ import { useContext, useEffect, useState } from 'react';
 import { Session, SessionEvent } from '@scripts/models/Session';
 import { Exercise } from '@scripts/models/Exercise';
 import TooltipWin from '@components/Modal/tooltipWin';
-import SessionTooltips from '@components/sessionTooltips';
+import SessionTooltips, { tooltipProp } from '@components/sessionTooltips';
 import ExerciseProgression from '@components/exerciseProgression';
-import { allExercises, Pathology, BodyPart } from '@scripts/descriptionOfExercises/allExercises';
+import { allExercises, Pathology, BodyPart, ExerciseType } from '@scripts/descriptionOfExercises/allExercises';
 import { NavigationContext } from '@navigations/navigate';
 import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
 import { ExerciseSelectorBuilder } from '@scripts/utils/Selector';
+import IntermediateScreen from '@components/intermediateScreen';
 
 var sessionDefault = new Session();
 export default function SessionScreen({ navigation }: { navigation: any }) {
   var [session, setSession] = useState<Session>(sessionDefault);
   var [sessionStarted, setSessionStarted] = useState(false);
   var [runTime, setRunTime] = useState(0);
-  var [exercise, setExercise] = useState<Exercise>(new Exercise(1, 5, 'Поставьте две бутылки на расстоянии 1,5 м,', ['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'], 'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
+  var [exercise, setExercise] = useState<Exercise>(new Exercise(5, 'Поставьте две бутылки на расстоянии 1,5 м,', ['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'], 'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
   var [completedExercises, setCompletedExercises] = useState(0);
   var [totalExercises, setTotalExercises] = useState(0);
+  const [isViewIntermediateScreen, setIsViewIntermediateScreen ] = useState(false);
 
   const {data, setData} = useContext(NavigationContext);
   let pathology: string | null
   let affectedRegion: string[] = []
   let exercises: Exercise[] = []
   let dataProvider = data.dataProvider as IDataProvider;
+  let tooltipTimerEvent : () => void = () => {};
 
   useEffect(() => {
     const emitter = session!.emitter;
     emitter.addListener(SessionEvent.refreshExerciseNotify, refreshExerciseHandler);
     emitter.addListener(SessionEvent.refreshRunTimeNotify, refreshRunTimeHandler);
     emitter.addListener(SessionEvent.closeSessionNotify, clearStackAndNavigate);
+    emitter.addListener(SessionEvent.timerOverNotify, tooltipTimerEvent);
+
 
     fetchData().then(processExercises).then(initSession)
     },[])
@@ -59,7 +64,7 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
 
     allExercises.forEach(element => {
       element.exercises.forEach(exercise => {
-        let ex = new Exercise(1, 5, exercise.description, exercise.instruction, exercise.images)
+        let ex = new Exercise(5, exercise.description, exercise.instruction, exercise.images)
         ex.bodyPart = element.bodyPart
         ex.pathology = element.pathology
         exercises.push(ex)
@@ -69,13 +74,19 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
 
   const processExercises = () => {
     let selectorBuilder = new ExerciseSelectorBuilder()
-    console.log("AAAAAAAAAAAa"+affectedRegion+pathology)
+
     if (affectedRegion.length != 0 && pathology != null) {
-      let selector = selectorBuilder.AddAffectedRegion(affectedRegion).AddPathology(pathology).Build()
-      selector.Select(exercises).forEach(exercise => {
-        console.log("DDDDDDDDDDDDd"+exercise)
-        session!.enqueue(exercise)
-      });
+
+      let selector = selectorBuilder
+      .AddAffectedRegion(affectedRegion)
+      .AddPathology(pathology)
+      .Build()
+
+      selector.Select(exercises)
+      .forEach(exercise => 
+        {
+          session!.enqueue(exercise)
+        });
     }
   };
 
@@ -84,11 +95,8 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
     setCompletedExercises(0);
 
     let ex = session!.init();
-    setExercise(ex);
+    setExercise(ex!);
   }
-
-    // session!.enqueue(new Exercise(1,5,'Поставьте две бутылки на расстоянии 1,5 м,',['Пройдите над бутылками гемиплегичной ногой.', 'Развернитесь и начните снова'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
-    // session!.enqueue(new Exercise(2,5,'Передвиньте бутылки на 2 метра вперед,',['Сделайте шаг назад, затем влево и вправо','Посмотрите в окно и послушайте это весеннее чириканье птичек,','Насладитесь этим прекрасным днем.'],'https://sun9-42.userapi.com/impg/fEvxHf8mpXulAPGdg4BMvLIhxxjyw64EWB0ESw/zBDIDjYdTT4.jpg?size=656x438&quality=96&sign=89698193cc9ea3648bb9cc29cec65a09&type=album'));
 
   const refreshRunTimeHandler = (runTime: number) => {
     setRunTime(runTime);
@@ -105,16 +113,48 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
   };
 
   const refreshExerciseHandler = () => {
-    console.debug("refreshExerciseHandler", session.currentExercise);
-    setExercise(session!.currentExercise)
-    setCompletedExercises(completedExercises + 1);
+    setExercise(session!.currentExercise!)
+    setCompletedExercises(i => i + 1);
   }
 
-  const startSession = () => {
-    session!.start();
-    setSessionStarted(true);
+  const numberToTime = (runTime: number): string => {
+    const totalSeconds = Math.ceil(runTime / 1000);
+
+    if(totalSeconds <= 0) return `Start`;
+
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+  
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(seconds).padStart(2, '0');
+  
+    return `${formattedMinutes}:${formattedSeconds}`;
   }
 
+  const viewIntermediateScreen = () => {
+    setIsViewIntermediateScreen(true)
+  }
+
+  let tooltipProps :tooltipProp = {
+    FirstWidth: disp_width * 1 / 2 * 0.851,
+    FirstHeight: disp_height / 16,
+    margin: 16, // Вот сюда передаем margin всех остальных элементов в content
+    StartButtonTitle: numberToTime(runTime),
+    StartButtonDisabled: sessionStarted,
+    SecondWidth: disp_width * 2 / 3 * 0.668,
+    NextButtonAction: viewIntermediateScreen,
+  };
+  if(session.currentExercise){
+    if(session.currentExercise.exerciseType === ExerciseType.COUNT){
+      tooltipProps.NumbOfReps = session.currentExercise.countOfReapeat;
+    }
+    else{
+      tooltipProps.StartButtonAction = session!.startTimer,
+      tooltipProps.StopTimerAction = session!.stopTimer; 
+      tooltipProps.ContinueTimerAction = session!.startTimer;
+      tooltipProps.emitter =  session!.emitter;
+    }
+  }
   return (
     <>
       <View style={styles.container}>
@@ -129,21 +169,17 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
         <View style={styles.top_navbar}>
           <BackButtonLittle action={clearStackAndNavigate} />
           <ExerciseProgression currentExercise={completedExercises + 1} totalExercises={totalExercises} />
+          
         </View>
-        <ExerciseComponent exercise={exercise} />
-        <SessionTooltips
-          FirstWidth={disp_width * 1 / 2 * 0.851}
-          FirstHeight={disp_height / 16}
-          margin={16} // Вот сюда передаем margin всех остальных элементов в content
-          StartButtonAction={() => session!.start()}
-          //NumbOfReps={15} // Необязательный параметр
-          StopTimerAction={() => session!.stopTimer()} // остановка таймера
-          ContinueTimerAction={() => session!.continueTimer()} // возобновление
-          StartButtonTitle={Math.ceil((runTime + 300) / 1000).toString()}
-          StartButtonDisabled={sessionStarted}
-          SecondWidth={disp_width * 2 / 3 * 0.668}
-          NextButtonAction={() => session.next()}
-        />
+        {isViewIntermediateScreen ? 
+        (<IntermediateScreen nextButtonAction={session.dequeue} totalExercises={totalExercises} completedExercises={completedExercises + 1} /> ):
+        (
+          <>
+          <ExerciseComponent exercise={exercise} />
+          <SessionTooltips {...tooltipProps}/>
+          </>
+        )}
+  
       </View>
     </>
   );

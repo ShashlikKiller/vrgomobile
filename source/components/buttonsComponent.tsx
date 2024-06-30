@@ -1,4 +1,4 @@
-import { ImageBackground, Text, TouchableOpacity } from "react-native";
+import { ImageBackground, Text, StyleSheet, TouchableOpacity } from "react-native";
 import default_styles from '@styles/styles';
 import { disp_width } from "@scripts/utils/Const";
 import { isEnabled } from "react-native/Libraries/Performance/Systrace";
@@ -78,7 +78,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
     return (
         <ImageBackground source={require('@images/button/StartButtonEmpty.png')} resizeMode="contain">
           <TouchableOpacity style={default_styles.btn_1of2_wide} onPress={action}> 
-            <Text style={{fontSize:22, paddingLeft: 50 }}>{title}</Text> 
+            <Text style={{fontSize:22, paddingLeft: 20 }}>{title}</Text> 
           </TouchableOpacity>
         </ImageBackground>
     );
@@ -189,11 +189,18 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
 
   export const RunningExerciseButton: React.FC<ExtendedButtonProps> = ({action, title, enabled}) => {
     return (
-        <ImageBackground source={require('@images/button/RunningExerciseButton.png')} resizeMode="contain">
+        <ImageBackground style={ styles.imageBackground} source={require('@images/button/RunningExerciseButton.png')} resizeMode="stretch">
             <TouchableOpacity style={default_styles.btn_3of3_wide} onPress={action}>
               <Text style={{fontSize:22, paddingLeft: 10 }}>{title}</Text> 
             </TouchableOpacity>
         </ImageBackground>
     );
   };
-  
+  const styles = StyleSheet.create({
+    imageBackground: {
+      flex: 1, // Используем flex для автоматического подстраивания по размеру контейнера
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+
+  });
