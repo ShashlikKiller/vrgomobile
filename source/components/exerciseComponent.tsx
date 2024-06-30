@@ -25,18 +25,20 @@ const CustomButton: FC<CustomButtonProps> = ({ source, onPress }) => (
 );
 
 function getMaxHeight(): number {
-  let height_percent = disp_height / 2000;
+  let height_percent = disp_height / 2400;
   return height_percent * disp_height;
 }
 function ExerciseComponent(prop: Prop){
   var exercise = prop.exercise;
   const slickRef = useRef<Slick>(null);
+  const scrollViewRef = useRef<ScrollView>(null);
   const [totalSlides, setTotalSlides] = useState(0);
   const [currentInstructionIndex, setCurrentInstructionIndex] = useState(0)
 
   useEffect(() => {
-    slickRef.current?.scrollTo(0);
-    setTotalSlides(exercise.instruction.length);
+    scrollViewRef.current?.scrollTo({x: 0, y: 0, animated: true});
+    slickRef.current?.scrollTo(0)
+    setTotalSlides(exercise.instruction.length)
   }, [exercise]);
 
   const goNext = useCallback(() => {
@@ -59,7 +61,7 @@ function ExerciseComponent(prop: Prop){
     <View style={styles.body}>
       <View style={styles.content}>
         <Text style={styles.instructions}>{exercise.description}</Text>
-        <ScrollView style={{maxHeight: getMaxHeight()}}>
+        <View style={{height: exercise.images.length === 1? disp_height * 0.37 : disp_height * 0.42, marginTop: 16}}>
           <Slick
             ref={slickRef}
             loop={false}
@@ -67,7 +69,7 @@ function ExerciseComponent(prop: Prop){
             activeDot={<View style={styles.activeDot} />}
             showsButtons={false}
             onIndexChanged={handleIndexChanged}
-            height={exercise.images.length === 1? disp_height * 0.37 : disp_height * 0.42}
+            height={exercise.images.length === 1? disp_height * 0.3 : disp_height * 0.42}
             >
             {exercise.images?.map((val, ind) => (
               <Image key={ind} 
@@ -75,14 +77,15 @@ function ExerciseComponent(prop: Prop){
               source={typeof val === 'string' ? { uri: val } : val} />
             ))}
           </Slick>
-        </ScrollView>
+        </View>
         {exercise.images.length !== 1 ? 
           <View style={styles.buttonContainer}>
             <CustomButton source={leftArrowImage} onPress={goPrev} />
             <CustomButton source={rightArrowImage} onPress={goNext} />
           </View> : <></>
         }
-        <View>
+        <ScrollView style={{maxHeight: getMaxHeight()}}
+          ref={scrollViewRef}>
           {exercise.instruction?.map((step: string, stepNumb: number) => (
             currentInstructionIndex === stepNumb 
               ? <ExerciseStepActive key={stepNumb} stepNumb={stepNumb + 1} step={step} />
@@ -94,7 +97,7 @@ function ExerciseComponent(prop: Prop){
                 <ExerciseStep key={stepNumb} stepNumb={stepNumb + 1} step={step} />
               </TouchableOpacity>
           ))}
-        </View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -117,23 +120,12 @@ const styles = StyleSheet.create({
     fontSize: 19,
     flex: 1
   },
-  // content: {
-  //   margin: 16,
-  //   flexDirection: 'column', // Ensure vertical stacking
-  // },
   instructions: {
     color: '#CFCFCF',
     fontSize: 18,
     fontFamily: 'Roboto Mono',
     fontWeight: '300',
   },
-  // image: {
-  //   // width: disp_width - 32,
-  //   // height: disp_height * 0.4,
-  //   // height: imageHeight,
-  //   resizeMode: 'contain',
-  //   // marginBottom: 16, // Add margin to space out elements
-  // },
   dot: {
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     width: 8,
