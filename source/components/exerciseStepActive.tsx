@@ -6,7 +6,7 @@ import { StyleSheet, Text, View } from "react-native";
     step: string;
   }
 
-const ExerciseStep: React.FC<PropsWithChildren<Props>> = ({ stepNumb, step }) => {
+const ExerciseStepActive: React.FC<PropsWithChildren<Props>> = ({ stepNumb, step }) => {
 return (
         <View style={styles.container}>
           <View style={styles.stepNumberContainer}>
@@ -24,7 +24,9 @@ return (
         maxHeight: 100,
         flex: 1,
         marginBottom: 15,
-        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        backgroundColor: 'rgba(182, 255, 251, 0.10)',
+        borderColor: 'rgba(182, 255, 251, 0.20)',
+        borderWidth: 2,
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
@@ -34,13 +36,13 @@ return (
         width:'7%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        backgroundColor: 'rgba(35, 35, 35, 0.30)',
         padding: 2,
         marginRight: 8
       },
       stepNumber: {
         textAlign: 'center',
-        color: 'rgba(255, 255, 255, 0.70)',
+        color: '#B6FFFB',
         fontSize: 19,
         fontFamily: 'Inter',
         fontWeight: '400',
@@ -56,4 +58,4 @@ return (
     });
 
 
-export default ExerciseStep;
+export default ExerciseStepActive;
