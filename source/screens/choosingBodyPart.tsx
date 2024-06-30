@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Dimensions} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { HelpButton, UnderstandButton, NextButton, BackButton, NextButtonEnabling } from '@components/buttonsComponent';
-import { NavigationContext } from '@navigations/navigate';
+import { NavigationContext, Screens } from '@navigations/navigate';
 import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
 import TooltipWin from '@components/Modal/tooltipWin';
 
@@ -44,7 +44,7 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
   let dataProvider = data.dataProvider as IDataProvider;
 
   const loadScene = () => {
-    navigation.navigate('ChoosePat')
+    navigation.navigate(Screens.MainScreen)
   }
   const loadExerciseScene = () => {
     let chose: ChoseBodyPart = {
@@ -54,7 +54,7 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
       isCheckedLeftLeg: isCheckedLeftLeg,
   };
   dataProvider.Set(chose, Path.choseBodyPart);
-    navigation.navigate('SessionScreen')
+    navigation.navigate(Screens.SessionScreen)
   }
 
   return (

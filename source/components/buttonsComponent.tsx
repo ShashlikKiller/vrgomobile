@@ -166,7 +166,7 @@ export const NextButton: React.FC<ButtonProps> = ({action}) => {
   export const NextButtonLightWide: React.FC<ButtonProps> = ({action}) => {
     return (
       <ImageBackground source={require('@images/button/NextButtonLightWide.png')} resizeMode="contain">
-        <TouchableOpacity style={default_styles.btn_2of3_wide} onPress={action}/>
+        <TouchableOpacity style={default_styles.btn_3of3_wide} onPress={action}/>
       </ImageBackground>
     )
   };

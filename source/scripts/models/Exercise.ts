@@ -2,7 +2,7 @@
 
 export class Exercise implements ISerializable{
     
-    public static emptyExercise: Exercise = new Exercise(0,0,"", [],"");
+    public static emptyExercise: Exercise = new Exercise(0,0,"", [], []);
 
     public exerciseCompleted: () => void;
 
@@ -11,10 +11,10 @@ export class Exercise implements ISerializable{
 
     private _description: string;
     private _instruction: string[];
-    private _images: string;
+    private _images: string[];
     private _execTimeSec: number;
 
-    constructor(exerciseId: number, execTimeSec: number, description: string, instruction: string[], images: string ){
+    constructor(exerciseId: number, execTimeSec: number, description: string, instruction: string[], images: string[] ){
         this._description = description;
         this._instruction = instruction;
         this._images = images;
@@ -69,11 +69,11 @@ export class Exercise implements ISerializable{
         this._instruction = value
     }
 
-    get image(){
+    get images(){
         return this._images
     }
 
-    set image(value){
+    set images(value){
         this._images = value
     }
 
